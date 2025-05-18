@@ -8,6 +8,10 @@ environment:
 
 dependencies:
   window_manager: ^0.4.3
+  auto_size_text: ^3.0.0
+  #flutter_animate: ^4.5.2
+  #responsive_framework: ^1.5.1
+  flutter_screenutil: ^5.9.3
   flutter_svg: ^2.1.0
   flutter:
     sdk: flutter
@@ -18,4 +22,20 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 
 flutter:
+
+  fonts:
+  - family: Inria Sans
+    fonts:
+      - asset: fonts/InriaSans-Regular.ttf
+        weight: 400
+      - asset: fonts/InriaSans-Bold.ttf
+        weight: 700
+
+  assets:
+  - assets/svg/controlbuttonsframe.svg
+  - assets/svg/stopwatch.svg
+  - assets/svg/minimize.svg
+  - assets/svg/close.svg
+  - assets/svg/plus.svg
+
   uses-material-design: true
