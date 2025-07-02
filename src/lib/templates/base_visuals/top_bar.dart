@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/templates/buttons/control_button.dart';
+
+
+const Color controlButtonFrameColor = Color(0xFF384151);
 
 
 class TopBar extends StatelessWidget {
@@ -25,46 +28,43 @@ class TopBar extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              SizedBox(
-                width: 67,
-                height: 32,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      height: 28,
-                      width: 65,
-                      left: 2,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start, //Change later
-                        children: [
-                          Flexible(
-                            flex: 1,
-                            child: ControlButton(
-                              iconName: 'minimize',
-                              onPressed: () {
-                                windowManager.minimize();
-                              },
-                            ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: ControlButton(
-                              iconName: 'close',
-                              onPressed: () {
-                                windowManager.close();
-                              },
-                            ),
-                          )
-                        ],
-                      ),
+              Container(
+                width: 76.5,
+                height: 31.5,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8)),
+                  border: Border(
+                    left: BorderSide(
+                      color: controlButtonFrameColor,
+                      width: 1.5,
                     ),
-                    IgnorePointer(
-                      child: SvgPicture.asset(
-                        'assets/svg/controlbuttonsframe.svg',
-                        fit: BoxFit.contain,
-                      ),
+                    bottom: BorderSide(
+                      color: controlButtonFrameColor,
+                      width: 1.5,
                     ),
-                  ],
+                  )
+                ),
+                child: Positioned(
+                  height: 30,
+                  width: 75,
+                  left: 2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      ControlButton(
+                        iconName: 'minimize',
+                        onPressed: () {
+                          windowManager.minimize();
+                        },
+                      ),
+                      ControlButton(
+                        iconName: 'close',
+                        onPressed: () {
+                          windowManager.close();
+                        },
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],
