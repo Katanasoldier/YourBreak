@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:yourbreak/templates/control_button.dart';
+import 'package:yourbreak/templates/buttons/control_button.dart';
 
 
 class TopBar extends StatelessWidget {
@@ -15,7 +15,7 @@ class TopBar extends StatelessWidget {
     
     return SizedBox(
       width: 500.w,
-      height: 28,
+      height: 32,
       child: Stack(
         children: [
           GestureDetector(
@@ -28,11 +28,11 @@ class TopBar extends StatelessWidget {
             children: [
               SizedBox(
                 width: 67,
-                height: 28,
+                height: 32,
                 child: Stack(
                   children: [
                     Positioned(
-                      height: 26,
+                      height: 28,
                       width: 65,
                       left: 2,
                       child: Row(

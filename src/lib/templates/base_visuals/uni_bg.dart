@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yourbreak/constants/color_constants.dart';
 
 class UniBg extends StatelessWidget {
   
@@ -7,12 +8,9 @@ class UniBg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            Color(0xFF0B0822),
-            Color(0xFF091E31),
-          ],
+          colors: backgroundGradient(),
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
