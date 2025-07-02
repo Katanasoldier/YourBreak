@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:yourbreak/pages/timer_creation_pages/timertype.dart';
-
-//import 'package:flutter_screenutil/flutter_screenutil.dart';
-//import 'package:window_manager/window_manager.dart';
-import 'package:yourbreak/templates/buttons/square_button/square_button.dart';
-import 'package:yourbreak/templates/base_visuals/topbar.dart';
-import 'package:yourbreak/templates/base_visuals/uni_bg.dart';
+import 'package:yourbreak/pages/timer_creation_pages/timer_type.dart';
+import 'package:yourbreak/templates/buttons/square_button.dart';
+import 'package:yourbreak/templates/base_visuals.dart';
 import 'package:yourbreak/templates/stat_text.dart';
-import 'package:yourbreak/templates/base_visuals/page_header.dart';
 
 class Home extends StatefulWidget {
 
@@ -56,7 +51,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return Scaffold(
       body: Stack(
         children: [
-          UniBg(),
+          AppBg(),
           TopBar(),
           Center(
             child: Padding(

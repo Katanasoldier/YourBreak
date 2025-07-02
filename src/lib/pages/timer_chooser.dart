@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:yourbreak/templates/base_visuals/topbar.dart';
-import 'package:yourbreak/templates/base_visuals/uni_bg.dart';
+import 'package:yourbreak/templates/base_visuals.dart';
 import 'package:yourbreak/templates/buttons/return_button.dart';
-import 'package:yourbreak/templates/timerchoice_components/timer_column.dart';
+import 'package:yourbreak/templates/timer_chooser_components/timer_column.dart';
 import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
 
@@ -49,7 +48,7 @@ class TimerChooserState extends State<TimerChooser> with SingleTickerProviderSta
     return Scaffold(
       body: Stack(
         children: [
-          UniBg(),
+          AppBg(),
           TopBar(),
           Center(
             child: Padding(

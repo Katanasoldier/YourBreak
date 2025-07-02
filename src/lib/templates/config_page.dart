@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:yourbreak/templates/base_visuals/topbar.dart';
-import 'package:yourbreak/templates/base_visuals/uni_bg.dart';
+import 'package:yourbreak/templates/base_visuals.dart';
 import 'package:yourbreak/templates/buttons/return_button.dart';
-import 'package:yourbreak/templates/base_visuals/page_header.dart';
 import 'package:yourbreak/constants/animation_constants.dart';
-import 'package:yourbreak/constants/color_constants.dart';
 
 
 class ConfigPage extends StatefulWidget {
@@ -63,7 +60,7 @@ class ConfigPageState extends State<ConfigPage> with SingleTickerProviderStateMi
     return Scaffold(
       body: Stack(
         children: [
-          UniBg(),
+          AppBg(),
           TopBar(),
           Center(
             child: Padding(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:yourbreak/constants/color_constants.dart';
 
-class UniBg extends StatelessWidget {
+class AppBg extends StatelessWidget {
   
-  const UniBg({super.key});
+  const AppBg({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:yourbreak/pages/home.dart';
-import 'templates/timer_structure.dart';
+import 'models/timer_structure.dart';
 
 void main() async {
 
