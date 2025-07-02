@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
 
+
 class ControlButton extends StatefulWidget {
 
   final String iconName;
@@ -19,7 +20,6 @@ class ControlButton extends StatefulWidget {
 
 }
 
-// REMEMBER TO ADD ON CLICK HIGHER OPACITY EFFECT !!!
 
 class ControlButtonState extends State<ControlButton> with SingleTickerProviderStateMixin {
 
@@ -27,23 +27,24 @@ class ControlButtonState extends State<ControlButton> with SingleTickerProviderS
   late final AnimationController _hoverController = 
   AnimationController(
     vsync: this,
-    duration: AnimationDurations.controlButonHover,
-    reverseDuration: AnimationDurations.controlButonHover
+    duration: AnimationDurations.controlButtonHover,
+    reverseDuration: AnimationDurations.controlButtonHover
   );
 
 
-  late final Animation<double> _opacityAnimation = 
+  late final Animation<double> _backgroundOpacityHoverAnimation = 
   Tween<double>(
     begin: 0.0,
-    end: maxOpacity
+    end: maxBackgroundOpacity
   ).animate(CurvedAnimation(
     parent: _hoverController,
-    curve: AnimationCurves.opacity,
-    reverseCurve: AnimationCurves.opacity,
+    curve: AnimationCurves.hover,
+    reverseCurve: AnimationCurves.hover,
   ));
 
 
-  late final double maxOpacity = (widget.iconName == "close" ? 1.0 : 0.2);
+
+  late final double maxBackgroundOpacity = (widget.iconName == "close" ? 1.0 : 0.2);
 
 
 
@@ -70,51 +71,57 @@ class ControlButtonState extends State<ControlButton> with SingleTickerProviderS
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => _hoverController.forward(),
-      onExit: (_) => _hoverController.reverse(),
-      child: AnimatedBuilder(
-        animation: _opacityAnimation,
-        builder: (context, child) {
-          return Material(
-            color: Colors.transparent,
-            child: InkWell(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              borderRadius: widget.iconName == "close"
-                  ? BorderRadius.zero
-                  : const BorderRadius.only(bottomLeft: Radius.circular(8)),
-              onTap: widget.onPressed,
-              child: Stack(
-                children: [
-                  Opacity(
-                    opacity: _opacityAnimation.value,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: widget.iconName == "close"
-                            ? ControlButtonColors.closeBackground
-                            : ControlButtonColors.minimizeBackground,
-                        borderRadius: widget.iconName == "close"
-                            ? BorderRadius.zero
-                            : const BorderRadius.only(bottomLeft: Radius.circular(5.9)),
+    return Expanded(
+      child: MouseRegion(
+        onEnter: (_) => _hoverController.forward(),
+        onExit: (_) => _hoverController.reverse(),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            borderRadius: widget.iconName == "close"
+                ? BorderRadius.zero
+                : const BorderRadius.only(bottomLeft: Radius.circular(8)),
+            onTap: widget.onPressed,
+            child: AnimatedBuilder(
+              animation: _hoverController,
+              builder: (context, child) { 
+                return Stack(
+                  children: [
+                    Opacity(
+                      opacity: _backgroundOpacityHoverAnimation.value,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: widget.iconName == "close"
+                              ? ControlButtonColors.closeBackground
+                              : ControlButtonColors.minimizeBackground,
+                          borderRadius: widget.iconName == "close"
+                              ? BorderRadius.zero
+                              : const BorderRadius.only(bottomLeft: Radius.circular(5.9)),
+                        ),
                       ),
                     ),
-                  ),
-                  Center(
-                    child: SizedBox(
-                      width: 10,
-                      height: 10,
-                      child: SvgPicture.asset(
-                        'assets/svg/${widget.iconName}.svg',
-                        fit: BoxFit.contain,
+                    Center(
+                      child: SizedBox(
+                        width: 11,
+                        height: 11,
+                        child: SvgPicture.asset( // For extra polish, add a higher opacity effect on hover.
+                          'assets/svg/${widget.iconName}.svg',
+                          fit: BoxFit.contain,
+                          colorFilter: widget.iconName == "minimize" ? ColorFilter.mode(
+                            Color(0xFFB7D2DE),
+                            BlendMode.src
+                          ) : null,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                );
+              }
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }
