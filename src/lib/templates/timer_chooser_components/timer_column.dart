@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:yourbreak/templates/buttons/square_button/square_button.dart';
+import 'package:yourbreak/templates/buttons/square_button.dart';
 import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
 
