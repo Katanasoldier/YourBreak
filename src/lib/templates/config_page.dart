@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yourbreak/templates/base_visuals.dart';
 import 'package:yourbreak/templates/buttons/return_button.dart';
 import 'package:yourbreak/constants/animation_constants.dart';
+import 'package:yourbreak/constants/font_size_constants.dart';
 
 
 class ConfigPage extends StatefulWidget {
@@ -71,7 +72,7 @@ class ConfigPageState extends State<ConfigPage> with SingleTickerProviderStateMi
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    PageHeader(text: widget.header, fontSize: 68, pageAnimationController: pageAnimationController),
+                    PageHeader(text: widget.header, fontSize: FontSizes.pageHeader, pageAnimationController: pageAnimationController),
                     SizedBox(
                       height: 183,
                       width: 430,

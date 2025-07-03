@@ -3,6 +3,7 @@ import 'package:yourbreak/pages/timer_creation_pages/timer_type.dart';
 import 'package:yourbreak/templates/buttons/square_button.dart';
 import 'package:yourbreak/templates/base_visuals.dart';
 import 'package:yourbreak/templates/stat_text.dart';
+import 'package:yourbreak/constants/font_size_constants.dart';
 
 class Home extends StatefulWidget {
 
@@ -62,7 +63,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    PageHeader(text: "YourBreak", pageAnimationController: pageAnimationController),
+                    PageHeader(text: "YourBreak", fontSize: FontSizes.appTitleHeader, pageAnimationController: pageAnimationController),
                     SizedBox(
                       height: 183,
                       width: 430,

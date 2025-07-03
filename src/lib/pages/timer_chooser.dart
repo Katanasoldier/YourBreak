@@ -4,6 +4,7 @@ import 'package:yourbreak/templates/buttons/return_button.dart';
 import 'package:yourbreak/templates/timer_chooser_components/timer_column.dart';
 import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
+import 'package:yourbreak/constants/font_size_constants.dart';
 
 
 class TimerChooser extends StatefulWidget {
@@ -59,24 +60,7 @@ class TimerChooserState extends State<TimerChooser> with SingleTickerProviderSta
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    IgnorePointer(
-                      child: SizedBox(
-                        height: 102, 
-                        width: 330,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            "Pick A Timer",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 68,
-                              color: PureColors.white,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          )
-                        ),
-                      ),
-                    ),
+                    PageHeader(text: "Pick A Timer", fontSize: FontSizes.pageHeader, pageAnimationController: pageAnimationController),
                     SizedBox(
                       height: 280,
                       width: 430,
