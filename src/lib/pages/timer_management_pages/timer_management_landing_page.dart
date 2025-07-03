@@ -1,40 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:yourbreak/templates/config_page.dart';
 import 'package:yourbreak/templates/buttons/square_button.dart';
-import 'package:yourbreak/pages/timer_creation_pages/starting_point.dart';
+import 'package:yourbreak/pages/timer_management_pages/timer_creation_pages/timer_type.dart';
 
-class TimerType extends StatelessWidget {
 
-  const TimerType({super.key});
+class TimerManagementLandingPage extends StatelessWidget {
+  
+  const TimerManagementLandingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ConfigPage(
-      header: "Timer Type",
+      header: "Management",
       buttonLeft: (pageAnimationController) => SquareButton(
-        mainText: "Simple",
-        iconName: "cog",
+        mainText: "Create",
+        supportText: "A Timer",
+        iconName: "plus",
         pageAnimationController: pageAnimationController,
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(
-            builder: (context) => StartingPoint()
+            builder: (context) => const TimerType()
           ));
         },
       ),
       buttonRight: (pageAnimationController) => SquareButton(
-        mainText: "Complex",
-        iconName: "multipleCogs",
-        imageFillScreen: true,
-        mainTextGradient: const [
-          Color(0xFFE2E6FF),
-          Color(0xFFCFE8FF)
-        ],
+        mainText: "Edit",
+        supportText: "Your Timers",
+        iconName: "squareedit",
         pageAnimationController: pageAnimationController,
-        onPressed: () {
-          
-        }
+        onPressed: () {} // Fill in later !!!
       )
     );
   }
-
 }
