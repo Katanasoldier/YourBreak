@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yourbreak/pages/timer_creation_pages/timer_type.dart';
+import 'package:yourbreak/pages/timer_management_pages/timer_management_landing_page.dart';
 import 'package:yourbreak/templates/buttons/square_button.dart';
 import 'package:yourbreak/templates/base_visuals.dart';
 import 'package:yourbreak/templates/stat_text.dart';
@@ -80,9 +80,9 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             },
                           ),
                           SquareButton(
-                            iconName: 'plus',
-                            mainText: 'Create',
-                            supportText: 'Timer',
+                            iconName: 'wrench',
+                            mainText: 'Manage',
+                            supportText: 'Your Timers',
                             pageAnimationController: pageAnimationController,
                             onPressed: () async {
                               
@@ -91,7 +91,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               if(!mounted) return;
 
                               Navigator.push(context, PageRouteBuilder(
-                                pageBuilder: (context,animation,secondaryAnimation) => TimerType(),
+                                pageBuilder: (context,animation,secondaryAnimation) => TimerManagementLandingPage(),
                                 //transitionsBuilder: (context, animation, secondaryAnimation, child) => ,
                               ));
 
