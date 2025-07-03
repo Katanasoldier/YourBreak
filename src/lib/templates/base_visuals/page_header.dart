@@ -5,13 +5,13 @@ import 'package:yourbreak/constants/color_constants.dart';
 class PageHeader extends StatefulWidget {
 
   final String text;
-  final double? fontSize;
+  final double fontSize;
   final AnimationController pageAnimationController;
 
   const PageHeader({
     super.key,
     required this.text,
-    this.fontSize,
+    required this.fontSize,
     required this.pageAnimationController
   });
 
@@ -54,12 +54,12 @@ class PageHeaderState extends State<PageHeader> with SingleTickerProviderStateMi
           height: 102,
           width: 330,
           child: FittedBox(
-            fit: BoxFit.contain,
+            fit: BoxFit.scaleDown,
             child: Text(
               widget.text,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: widget.fontSize ?? 74,
+                fontSize: widget.fontSize,
                 color: PageHeaderColors.headerText,
                 fontWeight: FontWeight.w700,
               ),
