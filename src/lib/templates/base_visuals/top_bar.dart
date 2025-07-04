@@ -46,27 +46,22 @@ class TopBar extends StatelessWidget {
                     ),
                   )
                 ),
-                child: Positioned(
-                  height: 30,
-                  width: 75,
-                  left: 2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      ControlButton(
-                        iconName: 'minimize',
-                        onPressed: () {
-                          windowManager.minimize();
-                        },
-                      ),
-                      ControlButton(
-                        iconName: 'close',
-                        onPressed: () {
-                          windowManager.close();
-                        },
-                      )
-                    ],
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ControlButton(
+                      iconName: 'minimize',
+                      onPressed: () {
+                        windowManager.minimize();
+                      },
+                    ),
+                    ControlButton(
+                      iconName: 'close',
+                      onPressed: () {
+                        windowManager.close();
+                      },
+                    )
+                  ],
                 ),
               ),
             ],
