@@ -1,0 +1,40 @@
+[
+    {
+        "name": "Pomodoro",
+        "complexity": "simple",
+        "pattern": [
+            {
+                "periodTime": 1500,
+                "periodType": "work"
+            },
+            {
+                "periodTime": 300,
+                "periodType": "shortBreak"
+            },
+            {
+                "periodTime": 1500,
+                "periodType": "work"
+            },
+            {
+                "periodTime": 300,
+                "periodType": "shortBreak"
+            },
+            {
+                "periodTime": 1500,
+                "periodType": "work"
+            },
+            {
+                "periodTime": 300,
+                "periodType": "shortBreak"
+            },
+            {
+                "periodTime": 1500,
+                "periodType": "work"
+            },
+            {
+                "periodTime": 900,
+                "periodType": "longBreak"
+            }
+        ]
+    }
+]
