@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yourbreak/pages/timer_management_pages/timer_management_landing_page.dart';
+import 'package:yourbreak/pages/timer_picker.dart';
 import 'package:yourbreak/templates/buttons/square_button.dart';
 import 'package:yourbreak/templates/base_visuals.dart';
 import 'package:yourbreak/templates/stat_text.dart';
@@ -75,8 +76,18 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             mainText: 'Run',
                             supportText: 'Timer',
                             pageAnimationController: pageAnimationController,
-                            onPressed: () {
+                            onPressed: () async {
+                              
+                              await pageAnimationController.forward();
 
+                              if(!mounted) return;
+
+                              Navigator.push(context, PageRouteBuilder(
+                                pageBuilder: (context,animation,secondaryAnimation) => TimerPicker(),
+                                //transitionsBuilder: (context, animation, secondaryAnimation, child) => ,
+                              ));
+
+                              pageAnimationController.reverse();
                             },
                           ),
                           SquareButton(

@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:yourbreak/templates/base_visuals.dart';
-import 'package:yourbreak/templates/buttons/return_button.dart';
-import 'package:yourbreak/templates/timer_chooser_components/timer_column.dart';
+
 import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
 
+import 'package:yourbreak/templates/base_visuals.dart';
+import 'package:yourbreak/templates/timer_picker_components/timer_column.dart';
 
-class TimerChooser extends StatefulWidget {
+import 'package:yourbreak/templates/buttons/return_button.dart';
 
-  const TimerChooser({super.key});
+
+class TimerPicker extends StatefulWidget {
+
+  final bool? editButtons;
+
+  const TimerPicker({
+    super.key,
+
+    this.editButtons
+  });
 
   @override
-  State<TimerChooser> createState() => TimerChooserState();
+  State<TimerPicker> createState() => TimerPickerState();
 
 }
 
-class TimerChooserState extends State<TimerChooser> with SingleTickerProviderStateMixin {
+class TimerPickerState extends State<TimerPicker> with SingleTickerProviderStateMixin {
   
 
   late final AnimationController pageAnimationController = AnimationController(
@@ -96,20 +105,20 @@ class TimerChooserState extends State<TimerChooser> with SingleTickerProviderSta
                                     SizedBox(
                                       width: 200,
                                       height: 280 - (2*frameBorderWidth),
-                                      child: TimerColumn(fontSize: columnHeaderFontSize, headerText: "Your", hasContent: false,)
+                                      child: TimerColumn(fontSize: columnHeaderFontSize, headerText: "Your", timerType: "user", editButtons: widget.editButtons)
                                     ),
                                     Container(
                                       width: 3,
                                       height: 205,
                                       decoration: BoxDecoration(
-                                        color: const Color(0x80EEEEEE),
+                                        color: PureColors.grey,
                                         borderRadius: BorderRadius.circular(frameBorderRadius)
                                       ),
                                     ),
                                     SizedBox(
                                       width: 200,
                                       height: 280 - (2*frameBorderWidth) * 1.5,
-                                      child: TimerColumn(fontSize: columnHeaderFontSize, headerText: "Preset")
+                                      child: TimerColumn(fontSize: columnHeaderFontSize, headerText: "Preset", timerType: "preset", editButtons: null) //null or else it doesnt remove the edit buttons (actionButtons)
                                     ),
                                   ],
                                 ),
