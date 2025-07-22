@@ -291,7 +291,7 @@ class SquareButtonState extends State<SquareButton> with TickerProviderStateMixi
                         Positioned(
                           bottom: -33,
                           child: Text(
-                            "You can always edit It\nto Your needs!",
+                            widget.description!,
                             style: TextStyle(
                               color: SquareButtonColors.description,
                               fontSize: maxButtonWidth * 0.077,

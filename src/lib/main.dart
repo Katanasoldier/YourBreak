@@ -26,6 +26,7 @@ void main() async {
   await Hive.openBox<TimerStructure>('user_timers');
   await Hive.openBox<TimerStructure>('preset_timers');
 
+  await (await SharedPreferences.getInstance()).setBool('hasRunBefore', false); // TEMPORARY! REMOVE BEFORE PRODUCTION
   await checkAndInsertPresets();
 
 
