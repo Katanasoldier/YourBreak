@@ -36,5 +36,29 @@
                 "periodType": "longBreak"
             }
         ]
+    },
+    {
+        "name": "20-20-20",
+        "complexity": "simple",
+        "pattern": [
+            {
+                "periodTime": 1200,
+                "periodType": "work"
+            },
+            {
+                "periodTime": 20,
+                "periodType": "shortBreak"
+            }
+        ]
+    },
+    {
+        "name": "test timer",
+        "complexity": "complex",
+        "pattern": [
+            {
+                "periodTime": 1200,
+                "periodType": "work"
+            }
+        ]
     }
 ]

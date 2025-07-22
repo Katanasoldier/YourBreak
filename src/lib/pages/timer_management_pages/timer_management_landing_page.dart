@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yourbreak/templates/config_page.dart';
 import 'package:yourbreak/templates/buttons/square_button.dart';
 import 'package:yourbreak/pages/timer_management_pages/timer_creation_pages/timer_type.dart';
+import 'package:yourbreak/pages/timer_picker.dart';
 
 
 class TimerManagementLandingPage extends StatelessWidget {
@@ -28,7 +29,11 @@ class TimerManagementLandingPage extends StatelessWidget {
         supportText: "Your Timers",
         iconName: "squareedit",
         pageAnimationController: pageAnimationController,
-        onPressed: () {} // Fill in later !!!
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => const TimerPicker(editButtons: true)
+          ));
+        } // Fill in later !!!
       )
     );
   }
