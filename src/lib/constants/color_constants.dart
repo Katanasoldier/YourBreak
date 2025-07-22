@@ -6,6 +6,9 @@ class PureColors {
   static const Color white = Color(0xFFEEEEEE);
   static const Color red = Color(0xFFEE5F5F);
   static const Color grey = Color(0x80EEEEEE);
+  static const Color blue = Color(0xFF7fa7ff);
+  static const Color green = Color(0xFFaff0aa);
+  static const Color orange = Color(0xFFffbb55);
 }
 
 

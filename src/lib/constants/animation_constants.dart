@@ -8,6 +8,7 @@ class AnimationDurations {
   static const Duration opacity = Duration(milliseconds: 500);
   static const Duration controlButtonHover = Duration(milliseconds: 100);
   static const Duration pageTransition = Duration(milliseconds: 500);
+  static const Duration scroll = Duration(milliseconds: 200);
 }
 
 class AnimationCurves {
@@ -16,4 +17,5 @@ class AnimationCurves {
   static const Curve pageTransition = Curves.easeOutCubic;
   static const Curve opacity = Curves.easeOutQuint;
   static const Curve slideInOutPage = Curves.easeInOutCubic;
+  static const Curve scroll = Curves.fastEaseInToSlowEaseOut;
 }
