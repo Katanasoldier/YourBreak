@@ -10,6 +10,27 @@ import 'package:yourbreak/templates/timer_picker_components/column_button.dart';
 
 
 
+List<Color> getTimerTitleGradient(String timerName) {
+  switch(timerName) {
+    case "Pomodoro":
+      return [
+        Color(0xFFFF3131),
+        Color(0xFFFF7441)
+      ];
+    case "20-20-20":
+      return [
+        Color(0xFF7091FF),
+        Color(0xFF6CE9FF)
+      ];
+    default:
+      return [
+        PureColors.white,
+        PureColors.white
+      ];
+  }
+}
+
+
 List<TimerStructure> getTimers(String timerType) {
 
   final timersBox = Hive.box<TimerStructure>('${timerType}_timers');
@@ -174,10 +195,7 @@ class TimerColumnState extends State<TimerColumn> with TickerProviderStateMixin 
                             for (final timer in timerList)
                             ColumnButton(
                               timer: timer,
-                              mainTextGradient: [
-                                Color(0xFFFF3131),
-                                Color(0xFFFF7441)
-                              ],
+                              mainTextGradient: getTimerTitleGradient(timer.name),
                               onPressed: () {},
                               listElementHeight: listElementHeight,
                               listElementWidth: listElementWidth,
