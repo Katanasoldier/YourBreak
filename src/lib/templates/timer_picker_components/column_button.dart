@@ -12,7 +12,7 @@ import 'package:yourbreak/templates/buttons/square_button/headers.dart';
 const double defaultWidgetMargin = 2.5;
 
 
-String replacePeriodName(String periodName){
+String formatPeriodName(String periodName){
   switch(periodName){
     case 'work':
       return 'Work';
@@ -20,13 +20,13 @@ String replacePeriodName(String periodName){
       return 'Break';
     case 'longBreak':
       return 'Rest';
-    case 'simple':
-      return 'Simple'; 
-    case 'complex':
-      return 'Complex';
     default:
       return periodName;
   }
+}
+
+String capitalize(String string){
+  return string[0].toUpperCase() + string.substring(1);
 }
 
 Color getPeriodColor(String periodName){
@@ -42,10 +42,27 @@ Color getPeriodColor(String periodName){
   }
 }
 
+String formatSeconds(int seconds) {
+
+  if (seconds >= 60) {
+
+    int minutes = seconds ~/ 60;
+    int remainingSeconds = seconds % 60;
+
+    return remainingSeconds == 0
+      ? '${minutes}m'
+      : '${minutes}m ${remainingSeconds}s';
+  }
+
+  return '${seconds}s';
+
+}
+
 
 
 class ColumnButton extends StatefulWidget {
   
+
   final TimerStructure timer;
 
   final List<Color>? mainTextGradient;
@@ -59,7 +76,6 @@ class ColumnButton extends StatefulWidget {
 
   final AnimationController pageAnimationController;
 
-  //final ButtonController controller = ButtonController();
 
   const ColumnButton({
 
@@ -79,6 +95,7 @@ class ColumnButton extends StatefulWidget {
     required this.pageAnimationController
   });
 
+
   @override
   ColumnButtonState createState() => ColumnButtonState();
 
@@ -89,6 +106,7 @@ class ColumnButtonState extends State<ColumnButton> with TickerProviderStateMixi
 
   late final double originalButtonWidth = widget.listElementWidth;
   late final double originalButtonHeight = widget.listElementHeight;
+
 
   final ScrollController scrollController = ScrollController();
 
@@ -107,7 +125,7 @@ class ColumnButtonState extends State<ColumnButton> with TickerProviderStateMixi
 
 
 
-  late AnimationController _hoverController = AnimationController(
+  late final AnimationController _hoverController = AnimationController(
     vsync: this,
     duration: AnimationDurations.hover,
     reverseDuration: AnimationDurations.hover
@@ -382,18 +400,18 @@ class ColumnButtonState extends State<ColumnButton> with TickerProviderStateMixi
                                                               child: Column(
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
-                                                                  for(final timerPeroid in widget.timer.pattern)
+                                                                  for(final timerPeriod in widget.timer.pattern)
                                                                   Padding(
                                                                     padding: !isPatternOverflowing
                                                                       ? EdgeInsets.only(top: 2, right: 6)
                                                                       : EdgeInsets.zero,
                                                                     child: Text(
-                                                                      '${(timerPeroid.periodTime / 60).toInt().toString()}min: ${replacePeriodName(timerPeroid.periodType.name.toString())}',
+                                                                      '${formatSeconds(timerPeriod.periodTime)}: ${formatPeriodName(timerPeriod.periodType.name.toString())}',
                                                                       style: TextStyle(
                                                                         fontSize: dataHeaderFontSize,
                                                                         fontWeight: FontWeight.w700,
                                                                         height: 0.92,
-                                                                        color: getPeriodColor(timerPeroid.periodType.name.toString())
+                                                                        color: getPeriodColor(timerPeriod.periodType.name.toString())
                                                                       ),
                                                                       textAlign: TextAlign.center,
                                                                     ),
@@ -428,7 +446,7 @@ class ColumnButtonState extends State<ColumnButton> with TickerProviderStateMixi
                                                               ),
                                                               Expanded(
                                                                 child: Text(
-                                                                  replacePeriodName(widget.timer.complexity.name.toString()),
+                                                                  capitalize(widget.timer.complexity.name.toString()),
                                                                   style: TextStyle(
                                                                     fontSize: dataFontSize,
                                                                     fontWeight: FontWeight.w700,
@@ -460,7 +478,7 @@ class ColumnButtonState extends State<ColumnButton> with TickerProviderStateMixi
                                                               ),
                                                               Expanded(
                                                                 child: Text(
-                                                                  '${(widget.timer.totalTime/60).toInt().toString()}min',
+                                                                  formatSeconds(widget.timer.totalTime),
                                                                   style: TextStyle(
                                                                     fontSize: dataFontSize,
                                                                     fontWeight: FontWeight.w700,
