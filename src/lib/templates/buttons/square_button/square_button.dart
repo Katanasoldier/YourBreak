@@ -1,39 +1,45 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:yourbreak/templates/buttons/square_button/headers.dart';
+
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/animation_constants.dart';
-//import 'package:auto_size_text/auto_size_text.dart';
+import 'package:yourbreak/templates/base_mixins/interactive_animations_mixin.dart';
+
+import 'package:yourbreak/templates/base_mixins/page_animations_mixin.dart';
+
+import 'package:yourbreak/templates/buttons/button_base.dart';
+import 'package:yourbreak/templates/buttons/square_button/headers.dart';
 
 
-
+/// The square button, used for picking main options in the application,
+/// and for navigating to other pages.
+/// 
+/// It contains a main text, an optional support text, an optional description and an optional image.
+/// The main text can contain an optional gradient, and the order of the main and support text can be inverted.
+/// The image can be an SVG, and has the option to fill the entire button or not.
+/// 
+/// Must provide a onPressed and be used with a page animation controller to ensure that
+/// the button animates in sync with other widgets on the page.
 class SquareButton extends StatefulWidget {
   
-  final String mainText;
-  final String? supportText;
-  final String? description;
+  // Text fields
+    final String mainText;
+    final String? supportText;
+    final String? description;
 
-  final double? fontMultiplier;
+  // Text setting fields
+    final List<Color>? mainTextGradient;
+    final bool? invertTextOrder;
 
-  final List<Color>? mainTextGradient;
+  // Image setting fields
+    final String? iconName;
+    final bool? iconFillButton;
 
-  final bool? invertTextOrder;
-
-  final String? iconName;
-  final bool? imageFillScreen;
-
+  // Callback and pageAnimationController
   final VoidCallback onPressed;
-
-  final double? borderWidthMultiplier;
-  final double? borderRadiusMultiplier;
-
-  final double? aspectRatio;
-
-  final double? hoverSize;
-
   final AnimationController pageAnimationController;
 
-  //final ButtonController controller = ButtonController();
 
   const SquareButton({
 
@@ -43,273 +49,169 @@ class SquareButton extends StatefulWidget {
     this.supportText,
     this.description,
 
-    this.fontMultiplier,
-
     this.mainTextGradient,
-
     this.invertTextOrder,
 
     this.iconName,
-    this.imageFillScreen,
+    this.iconFillButton,
+
 
     required this.onPressed,
-
-    this.borderWidthMultiplier,
-    this.borderRadiusMultiplier,
-
-    this.aspectRatio,
-
-    this.hoverSize,
-
     required this.pageAnimationController
   });
+
 
   @override
   SquareButtonState createState() => SquareButtonState();
 
 }
 
-class SquareButtonState extends State<SquareButton> with TickerProviderStateMixin {
 
-
-  bool lockHover = false;
-
-
-  late AnimationController _hoverController = AnimationController(
-    vsync: this,
-    duration: AnimationDurations.hover,
-    reverseDuration: AnimationDurations.hover
-  );
-
-  late final AnimationController _clickController = AnimationController(
-    vsync: this,
-    duration: AnimationDurations.click,
-    reverseDuration: AnimationDurations.click
-  );
-
-
+class SquareButtonState extends State<SquareButton> with TickerProviderStateMixin, InteractiveAnimationsMixin, FadeShrinkPageAnimationsMixin {
 
   late final Animation<Offset> _mainTextSlideAnimation = 
     Tween<Offset>(
-      begin: Offset(0, 0),//0.1),
-      end: widget.supportText != null ? (widget.invertTextOrder == true ? Offset(0, 0.323) : Offset(0, -0.323)) : Offset(0,0)//-0.3)
+      begin: Offset(0, 0),
+      end: widget.supportText != null ? (widget.invertTextOrder == true ? Offset(0, 0.323) : Offset(0, -0.323)) : Offset(0,0)
     ).animate(CurvedAnimation(
-      parent: _hoverController,
+      parent: hoverController,
       curve: AnimationCurves.hover
     )
   );
 
   late final Animation<Offset> _supportTextSlideAnimation = 
     Tween<Offset>(
-      begin: widget.invertTextOrder == true ? Offset(0, -4) : Offset(0, 4),//0.6),
-      end: widget.invertTextOrder == true ? Offset(0, -0.77) : Offset(0, 0.77)//0.1)
+      begin: widget.invertTextOrder == true ? Offset(0, -4) : Offset(0, 4),
+      end: widget.invertTextOrder == true ? Offset(0, -0.77) : Offset(0, 0.77)
     ).animate(CurvedAnimation(
-      parent: _hoverController,
-      curve: AnimationCurves.hover //Curves.easeOutCubic
-    )
-  );
-
-
-  late final Animation<double> _buttonHoverSizeAnimation =
-    Tween<double>(
-      begin: 1.0,
-      end: widget.hoverSize ?? 1.075
-    ).animate(CurvedAnimation(
-      parent: _hoverController,
+      parent: hoverController,
       curve: AnimationCurves.hover
     )
   );
 
-  late final Animation<double> _buttonClickSizeAnimation = 
-    Tween<double>(
-      begin: 1.0,
-      end: 0.8,
-    ).animate(CurvedAnimation(
-      parent: _clickController,
-      curve: AnimationCurves.click,
-    )
-  );
-
-  late final Animation<double> _pageButtonSizeAnimation =
-    Tween<double>(
-      begin: 1,
-      end: 0.5
-    ).animate(CurvedAnimation(
-      parent: widget.pageAnimationController,
-      curve: AnimationCurves.pageTransition
-    )
-  );
-
-  late final Animation<double> _pageButtonOpacityAnimation = 
-    Tween<double>(
-      begin: 1,
-      end: 0.0
-    ).animate(CurvedAnimation(
-      parent: widget.pageAnimationController,
-      curve: AnimationCurves.opacity
-    )
-  );
-
-
-
   @override
-  void initState() {
+  double get hoverSize => 1.075;
 
-    super.initState();
-
-    _hoverController.reverse();
-
-    _clickController.reverse();
-
-  }
-
+  // Override the pageAnimationController to use the active/correct one provided by the widget.
   @override
-  void dispose() {
-
-    _hoverController.dispose();
-
-    _clickController.dispose();
-
-    super.dispose();
-
-  }
+  AnimationController get pageAnimationController => widget.pageAnimationController;
 
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: Listenable.merge([_buttonHoverSizeAnimation, _buttonClickSizeAnimation, _pageButtonSizeAnimation]),
-      builder: (context, child) {
-        return Opacity(
-          opacity: _pageButtonOpacityAnimation.value,
-          child: Transform.scale(
-            scale: _buttonHoverSizeAnimation.value * _buttonClickSizeAnimation.value * _pageButtonSizeAnimation.value,
-            child: AspectRatio(
-              aspectRatio: widget.aspectRatio ?? 1.0,
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-              
-                  final double maxButtonWidth = constraints.maxWidth;
-                  final double maxButtonHeight = constraints.maxHeight;
-              
-              
-                  final double imageSize = (widget.imageFillScreen == true ? maxButtonWidth : maxButtonWidth * 0.85);
-              
-                  final double mainTextFontSize = maxButtonHeight * 0.22 * (widget.fontMultiplier ?? 1);
-                  final double supportTextFontSize = maxButtonHeight * 0.14 * (widget.fontMultiplier ?? 1);
-              
-              
-                  return MouseRegion(
-                    onEnter: (_) {
-                      if (!lockHover) _hoverController.forward();
-                    },
-                    onExit: (_) {
-                      if (!lockHover) _hoverController.reverse();
-                    },
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      alignment: Alignment.center,
-                      children: [
-                        GestureDetector(
-                          onTapDown: (_) => _clickController.forward(),
-                          onTapUp: (_) async {
+    return ButtonBase(
+      onPressed: widget.onPressed,
+      
+      rebuildListeners: [
+        hoverSizeAnimation,
+        clickSizeAnimation,
+        pageSizeAnimation,
+      ],
+      mouseRegionBasedControllers: [
+        hoverController,
+      ],
 
-                            setState(() {
-                              lockHover = true;
-                            });
-                            _hoverController.forward();
+      scaleAnimations: [
+        hoverSizeAnimation,
+        clickSizeAnimation,
+        pageSizeAnimation
+      ],
 
+      hoverController: hoverController,
+      clickController: clickController,
 
-                            await _clickController.forward();
-              
-                            if(mounted){
-                              widget.onPressed.call();
-                            }
-
-                            await Future.delayed(const Duration(milliseconds: 500));
-
-                            setState(() {
-                              lockHover = false;
-                            });
-                            _hoverController.reverse();
-
-                            _clickController.reverse();
-
-                          },
-                          onTapCancel: () => _clickController.reverse(),
-                          child: OutlinedButton(
-                            onPressed: null,
-                            clipBehavior: Clip.hardEdge,
-                            style: OutlinedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(maxButtonHeight * 0.12 * (widget.borderRadiusMultiplier ?? 1)),
-                              ),
-                              padding: EdgeInsets.all(0),
-                              side: BorderSide(
-                                color: SquareButtonColors.border,
-                                width: (maxButtonWidth * 0.025) * (widget.borderWidthMultiplier ?? 1),
-                                strokeAlign: BorderSide.strokeAlignInside,
-                              ),
-                              splashFactory: NoSplash.splashFactory,
-                              overlayColor: Colors.transparent,
-                            ),
-                            child: Stack(
-                              children: [
-                                Padding(
-                                  padding: widget.imageFillScreen == true ? const EdgeInsets.all(0.0) : const EdgeInsets.all(20.0),
-                                  child: Center(
-                                    child: SvgPicture.asset(
-                                      'assets/svg/${widget.iconName}.svg',
-                                      width: imageSize,
-                                      height: imageSize,
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Headers(
-                                    mainText: widget.mainText,
-                                    supportText: widget.supportText,
-                                    
-                                    mainTextFontSize: mainTextFontSize,
-                                    supportTextFontSize: supportTextFontSize,
-                                  
-                                    invertTextOrder: widget.invertTextOrder,
-                                  
-                                    mainTextGradient: widget.mainTextGradient,
-                                  
-                                    mainTextSlideAnimation: _mainTextSlideAnimation,
-                                    supportTextSlideAnimation: _supportTextSlideAnimation,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
+      child: AnimatedBuilder( // Rebuilds when opacityAnimation's value changes.
+        animation: pageOpacityAnimation,
+        builder: (context, child) => Opacity(
+          opacity: pageOpacityAnimation.value,
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+            
+                final double maxButtonWidth = constraints.maxWidth;
+                final double maxButtonHeight = constraints.maxHeight;
+            
+                // Makes the buttonWidth smaller if it isn't supposed to fill the whole button.
+                final double imageSize = (widget.iconFillButton == true ? maxButtonWidth : maxButtonWidth * 0.85);
+            
+                final double mainTextFontSize = maxButtonHeight * 0.22;
+                final double supportTextFontSize = maxButtonHeight * 0.14;
+            
+            
+                return Stack(
+                  clipBehavior: Clip.none, // To allow the description to be positioned lower than the button.
+                  alignment: Alignment.center,
+                  children: [
+                    OutlinedButton(
+                      onPressed: null, // Handled by ButtonBase
+                      clipBehavior: Clip.hardEdge,
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(maxButtonHeight * 0.12),
                         ),
-                        if(widget.description!=null)
-                        Positioned(
-                          bottom: -33,
-                          child: Text(
-                            widget.description!,
-                            style: TextStyle(
-                              color: SquareButtonColors.description,
-                              fontSize: maxButtonWidth * 0.077,
-                              fontWeight: FontWeight.w400,
-                              height: 1.07
+                        padding: EdgeInsets.all(0),
+                        side: BorderSide(
+                          color: SquareButtonColors.border,
+                          width: (maxButtonWidth * 0.025),
+                        ),
+                        splashFactory: NoSplash.splashFactory,
+                        overlayColor: Colors.transparent,
+                      ),
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: widget.iconFillButton == true
+                              ? const EdgeInsets.all(0) // No padding, allows the icon to fill the whole button.
+                              : const EdgeInsets.all(20),
+                            child: Center(
+                              child: SvgPicture.asset(
+                                'assets/svg/${widget.iconName}.svg',
+                                width: imageSize,
+                                height: imageSize,
+                              ),
                             ),
-                            textAlign: TextAlign.center,
                           ),
-                        )
-                      ],
+                          Center(
+                            child: Headers(
+                              mainText: widget.mainText,
+                              supportText: widget.supportText,
+                              
+                              mainTextFontSize: mainTextFontSize,
+                              supportTextFontSize: supportTextFontSize,
+                            
+                              invertTextOrder: widget.invertTextOrder,
+                            
+                              mainTextGradient: widget.mainTextGradient,
+                            
+                              mainTextSlideAnimation: _mainTextSlideAnimation,
+                              supportTextSlideAnimation: _supportTextSlideAnimation,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  );
-                },
-              ),
+                    if(widget.description!=null)
+                    Positioned(
+                      bottom: -33, // 33 down from the bottom of the button.
+                      child: Text(
+                        widget.description!,
+                        style: TextStyle(
+                          color: SquareButtonColors.description,
+                          fontSize: maxButtonWidth * 0.077,
+                          fontWeight: FontWeight.w400,
+                          height: 1.07
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  ],
+                );
+              },
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
