@@ -24,7 +24,7 @@ class TimerType extends StatelessWidget {
       buttonRight: (pageAnimationController) => SquareButton(
         mainText: "Complex",
         iconName: "multipleCogs",
-        imageFillScreen: true,
+        iconFillButton: true,
         mainTextGradient: const [
           Color(0xFFE2E6FF),
           Color(0xFFCFE8FF)

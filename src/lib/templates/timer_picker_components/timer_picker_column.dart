@@ -6,7 +6,7 @@ import 'package:yourbreak/constants/color_constants.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:yourbreak/models/timer_structure.dart';
 
-import 'package:yourbreak/templates/timer_picker_components/column_button.dart';
+import 'package:yourbreak/templates/buttons/timer_picker_column_buttons/timer_picker_column_button.dart';
 
 
 
@@ -76,14 +76,14 @@ class Header extends StatelessWidget {
 
 
 
-class TimerColumn extends StatefulWidget {
+class TimerPickerColumn extends StatefulWidget {
 
   final double fontSize; 
   final String headerText;
   final String timerType;
   final bool? editButtons;
 
-  const TimerColumn({
+  const TimerPickerColumn({
 
     super.key,
 
@@ -98,12 +98,12 @@ class TimerColumn extends StatefulWidget {
   });
 
   @override
-  TimerColumnState createState() => TimerColumnState();
+  TimerPickerColumnState createState() => TimerPickerColumnState();
 
 }
 
 
-class TimerColumnState extends State<TimerColumn> with TickerProviderStateMixin {
+class TimerPickerColumnState extends State<TimerPickerColumn> with TickerProviderStateMixin {
 
 
   int? hoveredIndex;
@@ -193,7 +193,7 @@ class TimerColumnState extends State<TimerColumn> with TickerProviderStateMixin 
                         child: Column(
                           children: [
                             for (final timer in timerList)
-                            ColumnButton(
+                            TimerPickerColumnButton(
                               timer: timer,
                               mainTextGradient: getTimerTitleGradient(timer.name),
                               onPressed: () {},

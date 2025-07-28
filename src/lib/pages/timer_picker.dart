@@ -5,7 +5,7 @@ import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
 
 import 'package:yourbreak/templates/base_visuals.dart';
-import 'package:yourbreak/templates/timer_picker_components/timer_column.dart';
+import 'package:yourbreak/templates/timer_picker_components/timer_picker_column.dart';
 
 import 'package:yourbreak/templates/buttons/return_button.dart';
 
@@ -105,7 +105,7 @@ class TimerPickerState extends State<TimerPicker> with SingleTickerProviderState
                                     SizedBox(
                                       width: 200,
                                       height: 280 - (2*frameBorderWidth),
-                                      child: TimerColumn(fontSize: columnHeaderFontSize, headerText: "Your", timerType: "user", editButtons: widget.editButtons)
+                                      child: TimerPickerColumn(fontSize: columnHeaderFontSize, headerText: "Your", timerType: "user", editButtons: widget.editButtons)
                                     ),
                                     Container(
                                       width: 3,
@@ -118,7 +118,7 @@ class TimerPickerState extends State<TimerPicker> with SingleTickerProviderState
                                     SizedBox(
                                       width: 200,
                                       height: 280 - (2*frameBorderWidth) * 1.5,
-                                      child: TimerColumn(fontSize: columnHeaderFontSize, headerText: "Preset", timerType: "preset", editButtons: null) //null or else it doesnt remove the edit buttons (actionButtons)
+                                      child: TimerPickerColumn(fontSize: columnHeaderFontSize, headerText: "Preset", timerType: "preset", editButtons: null) // Only null removes the edit buttons.
                                     ),
                                   ],
                                 ),
