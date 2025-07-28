@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yourbreak/constants/animation_constants.dart';
+
 import 'package:yourbreak/constants/color_constants.dart';
 
+import 'package:yourbreak/templates/base_mixins/opacity_animation_mixin.dart';
 
+import 'package:yourbreak/templates/buttons/button_base.dart';
+
+
+/// The control button widget used throughout the application.
+/// It contains predefined opacity, color and border settings for only 2 versions of the button:
+/// - Close
+/// - Minimize
+/// Not meant to be used for any other purpose than those listed above.
 class ControlButton extends StatefulWidget {
 
   final String iconName;
@@ -11,6 +22,7 @@ class ControlButton extends StatefulWidget {
 
   const ControlButton({
     super.key,
+
     required this.iconName,
     required this.onPressed,
   });
@@ -21,106 +33,81 @@ class ControlButton extends StatefulWidget {
 }
 
 
-class ControlButtonState extends State<ControlButton> with SingleTickerProviderStateMixin {
+class ControlButtonState extends State<ControlButton> with TickerProviderStateMixin, OpacityAnimationMixin {
 
+  /*
+    Close button opacity: 1.0
+    Minimize button opacity: 0.2
+  */
+  @override
+  double get endOpacity => (widget.iconName == "close" ? 1.0 : 0.2);
 
-  late final AnimationController _hoverController = 
-  AnimationController(
-    vsync: this,
-    duration: AnimationDurations.controlButtonHover,
-    reverseDuration: AnimationDurations.controlButtonHover
-  );
+  // Overriding the default opacity duration to be shorter for control buttons.
+  @override
+  Duration get opacityDuration => const Duration(milliseconds: 150);
 
-
-  late final Animation<double> _backgroundOpacityHoverAnimation = 
-  Tween<double>(
-    begin: 0.0,
-    end: maxBackgroundOpacity
+  // The default opacity animation begins from 1, but control buttons are meant
+  // to be transparent by default, so we override it to start from 0, and in the
+  // process the end value is also set to the endOpacity value.
+  @override
+  Animation<double> get opacityAnimation => Tween<double>(
+    begin: 0,
+    end: endOpacity
   ).animate(CurvedAnimation(
-    parent: _hoverController,
-    curve: AnimationCurves.hover,
-    reverseCurve: AnimationCurves.hover,
+    parent: opacityController,
+    curve: AnimationCurves.opacity
   ));
-
-
-
-  late final double maxBackgroundOpacity = (widget.iconName == "close" ? 1.0 : 0.2);
-
-
-
-  @override
-  void initState() {
-
-    super.initState();
-
-    _hoverController.reverse();
-
-  }
-
-
-  @override
-  void dispose() {
-
-    _hoverController.dispose();
-
-    super.dispose();
-
-  }
-
 
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: MouseRegion(
-        onEnter: (_) => _hoverController.forward(),
-        onExit: (_) => _hoverController.reverse(),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            borderRadius: widget.iconName == "close"
-                ? BorderRadius.zero
-                : const BorderRadius.only(bottomLeft: Radius.circular(8)),
-            onTap: widget.onPressed,
-            child: AnimatedBuilder(
-              animation: _hoverController,
-              builder: (context, child) { 
-                return Stack(
-                  children: [
-                    Opacity(
-                      opacity: _backgroundOpacityHoverAnimation.value,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: widget.iconName == "close"
-                              ? ControlButtonColors.closeBackground
-                              : ControlButtonColors.minimizeBackground,
-                          borderRadius: widget.iconName == "close"
-                              ? BorderRadius.zero
-                              : const BorderRadius.only(bottomLeft: Radius.circular(5.9)),
-                        ),
-                      ),
+      child: ButtonBase(
+            
+        onPressed: widget.onPressed,
+            
+        rebuildListeners: [opacityAnimation],
+        mouseRegionBasedControllers: [opacityController],
+            
+        child: AnimatedBuilder(
+          animation: opacityController,
+          builder: (context, child) { 
+            return Stack(
+              children: [
+                Opacity(
+                  opacity: opacityAnimation.value,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: widget.iconName == "close"
+                          ? ControlButtonColors.closeBackground
+                          : ControlButtonColors.minimizeBackground,
+
+                      // The minimize button has a rounded bottom left corner to not overflow
+                      // while inside top_bar.dart's controlButtonFrame.
+                      borderRadius: widget.iconName == "close"
+                          ? BorderRadius.zero
+                          : const BorderRadius.only(bottomLeft: Radius.circular(5.9)),
                     ),
-                    Center(
-                      child: SizedBox(
-                        width: 11,
-                        height: 11,
-                        child: SvgPicture.asset( // For extra polish, add a higher opacity effect on hover.
-                          'assets/svg/${widget.iconName}.svg',
-                          fit: BoxFit.contain,
-                          colorFilter: widget.iconName == "minimize" ? ColorFilter.mode(
-                            Color(0xFFB7D2DE),
-                            BlendMode.src
-                          ) : null,
-                        ),
-                      ),
+                  ),
+                ),  
+                Center(
+                  child: SizedBox(
+                    width: 11,
+                    height: 11,
+                    child: SvgPicture.asset(
+                      'assets/svg/${widget.iconName}.svg',
+
+                      // This prevents the svg from being too transparent when the application is opened.
+                      colorFilter: widget.iconName == "minimize" ? ColorFilter.mode(
+                        PureColors.white,
+                        BlendMode.src
+                      ) : null,
                     ),
-                  ],
-                );
-              }
-            ),
-          ),
+                  ),
+                ),
+              ],
+            );
+          }
         ),
       ),
     );
