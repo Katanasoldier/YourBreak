@@ -11,38 +11,30 @@ class ConfigPage extends StatefulWidget {
   final Widget Function(AnimationController) buttonLeft;
   final Widget Function(AnimationController) buttonRight;
 
-  const ConfigPage({
 
+  const ConfigPage({
     super.key,
 
     required this.header,
 
     required this.buttonLeft,
-
     required this.buttonRight
-
   });
   
+
   @override
   State<ConfigPage> createState() => ConfigPageState();
 
 }
+
 
 class ConfigPageState extends State<ConfigPage> with SingleTickerProviderStateMixin {
 
 
   late final AnimationController pageAnimationController = AnimationController(
     vsync: this,
-    duration: AnimationDurations.pageTransition,
-    reverseDuration: AnimationDurations.pageTransition
+    duration: AnimationDurations.pageTransition
   );
-
-
-  
-  @override
-  void initState() {
-    super.initState();
-  }
 
 
   @override
@@ -53,7 +45,6 @@ class ConfigPageState extends State<ConfigPage> with SingleTickerProviderStateMi
     pageAnimationController.dispose();
 
   }
-
 
 
   @override
