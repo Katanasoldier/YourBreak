@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yourbreak/pages/timer_management_pages/timer_creation_pages/timer_creator.dart';
 import 'package:yourbreak/templates/config_page.dart';
 import 'package:yourbreak/templates/buttons/square_button.dart';
 import 'package:yourbreak/pages/timer_picker.dart';
@@ -31,7 +32,9 @@ class StartingPoint extends StatelessWidget {
         invertTextOrder: true,
         pageAnimationController: pageAnimationController,
         onPressed: () {
-          
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => TimerCreator()
+          ));
         }
       )
     );

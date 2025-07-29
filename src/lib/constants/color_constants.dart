@@ -41,6 +41,14 @@ class ReturnButtonColors {
 
 }
 
+class SaveButtonColors {
+
+  static const Color mainText = PureColors.green;
+
+  static const Color border = PureColors.green;
+
+}
+
 class ControlButtonColors {
 
   static const Color closeBackground = Color(0xFFE81123);

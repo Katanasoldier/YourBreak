@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:yourbreak/pages/timer_management_pages/timer_creation_pages/starting_point.dart';
 import 'package:yourbreak/templates/config_page.dart';
 import 'package:yourbreak/templates/buttons/square_button.dart';
-import 'package:yourbreak/pages/timer_management_pages/timer_creation_pages/timer_type.dart';
 import 'package:yourbreak/pages/timer_picker.dart';
 
 
@@ -20,7 +20,7 @@ class TimerManagementLandingPage extends StatelessWidget {
         pageAnimationController: pageAnimationController,
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(
-            builder: (context) => const TimerType()
+            builder: (context) => const StartingPoint()
           ));
         },
       ),
