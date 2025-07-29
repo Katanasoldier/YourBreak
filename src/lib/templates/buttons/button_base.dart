@@ -36,9 +36,21 @@ class ButtonBase extends StatefulWidget {
 
   final AnimationController? hoverController;
   final AnimationController? clickController;
+  
+  /// Prevents the hoverController and other MouseRegion based controllers from
+  /// triggering on MouseRegion events after the button has been clicked.
+  bool lockHover = false;
+
+  /// Allows for the disabling of the click function, which when
+  /// true, doesn't lock the hover events, doesn't call onPressed
+  /// and doesn't reset the hover and click controllers.
+  /// 
+  /// The button will still try to call onPressed, if provided with it.
+  /// This is useful for buttons that don't need the predefined click hehavior.
+  bool disableClick = false;
 
 
-  const ButtonBase({
+  ButtonBase({
     super.key,
 
     required this.child,
@@ -51,6 +63,9 @@ class ButtonBase extends StatefulWidget {
 
     this.hoverController,
     this.clickController,
+
+    this.lockHover = false,
+    this.disableClick = false
   });
 
 
@@ -60,10 +75,41 @@ class ButtonBase extends StatefulWidget {
 
 
 class ButtonBaseState extends State<ButtonBase>{
-  
-  // Prevents the hoverController and other MouseRegion based controllers from
-  // triggering on MouseRegion events after the button has been clicked.
-  bool lockHover = false;
+
+  /// Provides the default click behavior for all buttons.
+  /// 
+  /// It cannot be added directly in [GestureDetector]'s onTapUp, because it expects
+  /// a synchronous function, and the click behavior is asynchronous.
+  /// So to solve the problem, we wrap this function in a synchronous function inside
+  /// [GestureDetector]'s onTapUp event.
+  void defaultClickBehavior() async {
+              
+    setState(() {
+      widget.lockHover = true;
+    });
+
+
+    if(mounted){
+      widget.onPressed?.call();
+    }
+
+    // await to prevent rapid button clicking.
+    await Future.delayed(AnimationDurations.pageTransition);
+
+    // Unlock the MouseRegion events.
+    setState(() {
+      widget.lockHover = false;
+    });
+
+    // Reset the hover and click controllers to their initial state.
+
+    widget.hoverController?.reverse();
+
+
+    widget.clickController?.reverse();
+        
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +122,7 @@ class ButtonBaseState extends State<ButtonBase>{
         child: MouseRegion(
         
           onEnter: (_) {
-            if (!lockHover) {
+            if (!widget.lockHover) {
               for (final AnimationController controller in widget.mouseRegionBasedControllers) {
                 controller.forward();
               }
@@ -84,7 +130,7 @@ class ButtonBaseState extends State<ButtonBase>{
           },
         
           onExit: (_) {
-            if (!lockHover) {
+            if (!widget.lockHover) {
               for (final AnimationController controller in widget.mouseRegionBasedControllers) {
                 controller.reverse();
               }
@@ -96,33 +142,13 @@ class ButtonBaseState extends State<ButtonBase>{
             onTapDown: (_) => widget.clickController?.forward(),
             onTapCancel: () => widget.clickController?.reverse(),
         
-            onTapUp: (_) async {
-              
-              setState(() {
-                lockHover = true;
-              });
-
-        
-              if(mounted){
-                widget.onPressed?.call();
+            onTapUp: !widget.disableClick
+              ? (_) {
+                defaultClickBehavior();
               }
-        
-              // await to prevent rapid button clicking.
-              await Future.delayed(AnimationDurations.pageTransition);
-
-              // Unlock the MouseRegion events.
-              setState(() {
-                lockHover = false;
-              });
-        
-              // Reset the hover and click controllers to their initial state.
-
-              widget.hoverController?.reverse();
-        
-        
-              widget.clickController?.reverse();
-        
-            },
+              : (_) {
+                widget.onPressed?.call();
+              },
         
             child: widget.child,
           ),
