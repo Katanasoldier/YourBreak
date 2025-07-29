@@ -10,29 +10,34 @@ import 'package:yourbreak/templates/base_mixins/page_animations_mixin.dart';
 import 'package:yourbreak/templates/buttons/button_base.dart';
 
 
-/// The standardized button for going back to the previous page, usually situated at the bottom of pages.
-/// It slides in from the bottom, and slides out also to the bottom.
-class ReturnButton extends StatefulWidget {
+/// Button for saving different configurations.
+/// 
+/// Provides an onPressed that allows for a customized logic
+/// to save anything this button is supposed to save.
+class SaveButton extends StatefulWidget {
 
   // Requires the page's animation controller so it can trigger exitPage animations
   // in other widgets that animate in the same page.
   final AnimationController pageAnimationController;
 
-  const ReturnButton({
+  final VoidCallback? onPressed;
+
+  const SaveButton({
 
     super.key,
 
     required this.pageAnimationController,
+    required this.onPressed
 
   });
 
   @override
-  State<StatefulWidget> createState() => ReturnButtonState();
+  SaveButtonState createState() => SaveButtonState();
 
 }
 
 
-class ReturnButtonState extends State<ReturnButton> with TickerProviderStateMixin, InteractiveAnimationsMixin, OpacityAnimationMixin, VerticalSlidePageAnimationsMixin {
+class SaveButtonState extends State<SaveButton> with TickerProviderStateMixin, InteractiveAnimationsMixin, OpacityAnimationMixin, VerticalSlidePageAnimationsMixin {
 
   // Controls the active slide animation (_activeSlideAnimation)
   bool _exiting = false;
@@ -101,10 +106,7 @@ class ReturnButtonState extends State<ReturnButton> with TickerProviderStateMixi
         // will return exitSlideAnimation, so the button slides out.
         setState(() => _exiting = true); 
         
-        // await until the controller finishes to not pop the page too early
-        await widget.pageAnimationController.forward();
-            
-        Navigator.of(context).pop();
+        widget.onPressed?.call();
       
       },
 
@@ -146,33 +148,24 @@ class ReturnButtonState extends State<ReturnButton> with TickerProviderStateMixi
             
                 return Opacity(
                   opacity: opacityAnimation.value,
-                  child: OutlinedButton(
+                  child: Container(
                     clipBehavior: Clip.hardEdge,
-                    onPressed: null, // Handled by ButtonBase.
-                    style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(maxSize * 0.07),
-                      ),
-                      padding: EdgeInsets.zero,
-                      side: BorderSide(
-                        color: ReturnButtonColors.border,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: SaveButtonColors.border,
                         width: maxSize * 0.015,
-                        strokeAlign: BorderSide.strokeAlignInside,
                       ),
-                      splashFactory: NoSplash.splashFactory,
-                      overlayColor: Colors.transparent,
+                      borderRadius: BorderRadius.circular(maxSize * 0.07),
                     ),
                     child: IgnorePointer(
                       child: Center(
                         child: Text(
-                          'Go Back',
+                          'Save',
                           style: TextStyle(
                             fontSize: maxSize * 0.125,
-                            color: ReturnButtonColors.mainText,
+                            color: SaveButtonColors.mainText,
                             fontWeight: FontWeight.w700,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                         ),
                       ),
