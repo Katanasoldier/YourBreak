@@ -53,7 +53,7 @@ class TimePeriodButtonState extends State<TimePeriodButton> with TickerProviderS
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 130,
+      width: 225,
       height: 35,
       child: ButtonBase(
         onPressed: null,
