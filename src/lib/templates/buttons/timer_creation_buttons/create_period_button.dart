@@ -17,8 +17,12 @@ import 'package:yourbreak/templates/buttons/button_base.dart';
 /// hover it animates the opacity to 1.0.
 class CreatePeriodButton extends StatefulWidget {
 
+  final Function? onPressed;
+
   const CreatePeriodButton({
-    super.key
+    super.key,
+
+    required this.onPressed
   });
 
   @override
@@ -44,7 +48,7 @@ class CreatePeriodButtonState extends State<CreatePeriodButton> with TickerProvi
   @override
   Widget build(BuildContext context) {
     return ButtonBase(
-      onPressed: null, 
+      onPressed: widget.onPressed, 
 
       rebuildListeners: [
         hoverSizeAnimation,
