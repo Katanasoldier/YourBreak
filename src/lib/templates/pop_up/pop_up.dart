@@ -59,10 +59,34 @@ class PopUpState extends State<PopUp> with TickerProviderStateMixin, OpacityAnim
       curve: AnimationCurves.popupOpacity
     ));
 
+  
+  final GlobalKey _contentKey = GlobalKey();
+
+  double? contentWidth;
+  double? contentHeight;
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final context = _contentKey.currentContext;
+      if(context != null) {
+        final size = context.size;
+        if(size != null) {
+          setState(() {
+            contentWidth = size.width;
+            contentHeight = size.height;
+          });
+        }
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
-
     return AnimatedBuilder(
       animation: Listenable.merge([
         screenBlurAnimation,
@@ -70,6 +94,9 @@ class PopUpState extends State<PopUp> with TickerProviderStateMixin, OpacityAnim
         opacityAnimation
       ]),
       builder: (context, child) {
+
+        if (contentWidth == null) SizedBox();
+
         return IgnorePointer(
           ignoring: widget.popUpController.value == 0,
           child: SizedBox.expand(
@@ -101,12 +128,9 @@ class PopUpState extends State<PopUp> with TickerProviderStateMixin, OpacityAnim
                           child: Opacity(
                             opacity: opacityAnimation.value,
                             child: Container(
+                              width: contentWidth,
+                              height: contentHeight,
                               color: Colors.transparent,
-                              child: IntrinsicWidth(
-                                child: IntrinsicHeight(
-                                  child: widget.popUpContent,
-                                ),
-                              ),
                             ),
                           ),
                         ),
@@ -115,6 +139,7 @@ class PopUpState extends State<PopUp> with TickerProviderStateMixin, OpacityAnim
                         Opacity(
                           opacity: opacityAnimation.value,
                           child: Container(
+                            key: _contentKey,
                             decoration: BoxDecoration(
                               color: PureColors.white.withValues(alpha: 0.1),
                               border: Border.all(
