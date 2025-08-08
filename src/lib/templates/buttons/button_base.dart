@@ -36,19 +36,6 @@ class ButtonBase extends StatefulWidget {
 
   final AnimationController? hoverController;
   final AnimationController? clickController;
-  
-  /// Prevents the hoverController and other MouseRegion based controllers from
-  /// triggering on MouseRegion events after the button has been clicked.
-  bool lockHover = false;
-
-  /// Allows for the disabling of the click function, which when
-  /// true, doesn't lock the hover events, doesn't call onPressed
-  /// and doesn't reset the hover and click controllers.
-  /// 
-  /// The button will still try to call onPressed, if provided with it.
-  /// This is useful for buttons that don't need the predefined click hehavior.
-  bool disableClick = false;
-
 
   ButtonBase({
     super.key,
@@ -63,9 +50,6 @@ class ButtonBase extends StatefulWidget {
 
     this.hoverController,
     this.clickController,
-
-    this.lockHover = false,
-    this.disableClick = false
   });
 
 
@@ -76,6 +60,20 @@ class ButtonBase extends StatefulWidget {
 
 class ButtonBaseState extends State<ButtonBase>{
 
+  /// Prevents the hoverController and other MouseRegion based controllers from
+  /// triggering on MouseRegion events after the button has been clicked.
+  bool lockHover = false;
+
+  /// Allows for the disabling of the click function, which when
+  /// true, doesn't lock the hover events, doesn't call onPressed
+  /// and doesn't reset the hover and click controllers.
+  /// 
+  /// The button will still try to call onPressed, if provided with it.
+  /// This is useful for buttons that don't need the predefined click hehavior.
+  bool disableClick = false;
+
+
+
   /// Provides the default click behavior for all buttons.
   /// 
   /// It cannot be added directly in [GestureDetector]'s onTapUp, because it expects
@@ -85,7 +83,7 @@ class ButtonBaseState extends State<ButtonBase>{
   void defaultClickBehavior() async {
               
     setState(() {
-      widget.lockHover = true;
+      lockHover = true;
     });
 
 
@@ -98,7 +96,7 @@ class ButtonBaseState extends State<ButtonBase>{
 
     // Unlock the MouseRegion events.
     setState(() {
-      widget.lockHover = false;
+      lockHover = false;
     });
 
     // Reset the hover and click controllers to their initial state.
@@ -122,7 +120,7 @@ class ButtonBaseState extends State<ButtonBase>{
         child: MouseRegion(
         
           onEnter: (_) {
-            if (!widget.lockHover) {
+            if (!lockHover) {
               for (final AnimationController controller in widget.mouseRegionBasedControllers) {
                 controller.forward();
               }
@@ -130,7 +128,7 @@ class ButtonBaseState extends State<ButtonBase>{
           },
         
           onExit: (_) {
-            if (!widget.lockHover) {
+            if (!lockHover) {
               for (final AnimationController controller in widget.mouseRegionBasedControllers) {
                 controller.reverse();
               }
@@ -142,7 +140,7 @@ class ButtonBaseState extends State<ButtonBase>{
             onTapDown: (_) => widget.clickController?.forward(),
             onTapCancel: () => widget.clickController?.reverse(),
         
-            onTapUp: !widget.disableClick
+            onTapUp: !disableClick
               ? (_) {
                 defaultClickBehavior();
               }

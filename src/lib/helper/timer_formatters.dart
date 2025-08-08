@@ -29,9 +29,9 @@ String capitalize(String string){
   return string[0].toUpperCase() + string.substring(1);
 }
 
-/// Returns the color associated with the passed period name.
-Color getPeriodColor(String periodName){
-  switch(periodName){
+/// Returns the color associated with the passed period type name.
+Color getPeriodColor(String periodTypeName){
+  switch(periodTypeName){
     case 'work':
       return PureColors.orange;
     case 'shortBreak':
@@ -45,20 +45,31 @@ Color getPeriodColor(String periodName){
 
 /// Formats time given in seconds into a easy to read format.
 /// Takes in an integer representing seconds and returns a string of the format:
-/// - "Xm Ys" if the time is more than 60 seconds, where X is the number of minutes and Y is the number of seconds.
-/// - "Xs" if the time is less than 60 seconds, where X is the number of seconds.
+/// xh ym zs where:
+/// x - Hours, y - Minutes, z - Seconds.
 String formatSeconds(int seconds) {
 
-  if (seconds >= 60) {
+  String formattedString = "";
 
-    int minutes = seconds ~/ 60;
-    int remainingSeconds = seconds % 60;
-
-    return remainingSeconds == 0
-      ? '${minutes}m'
-      : '${minutes}m ${remainingSeconds}s';
+  // Hours
+  if (seconds >= 3600) {
+    formattedString += '${seconds ~/ 3600}h ';
+    seconds %= 3600;
   }
 
-  return '${seconds}s';
+  // Minutes
+  if (seconds >= 60) {
+    formattedString += '${seconds ~/ 60}m ';
+    seconds %= 60;
+  }
+
+  // Seconds
+  if (seconds != 0) {
+    formattedString += '${seconds}s';
+  }
+
+  // Trimming prevents any whitespace from taking unnecessary space
+  // and causing the text to shrink or overflow.
+  return formattedString.trimRight();
 
 }
