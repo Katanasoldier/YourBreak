@@ -8,6 +8,14 @@ import 'package:yourbreak/templates/base_mixins/opacity_animation_mixin.dart';
 
 
 
+/// A widget that overlays over the current content.
+/// Blurs what's behind it with a stronger blur directly
+/// behind the popup's content, to make it easier to read.
+/// 
+/// Takes in a required popUpController (from the popUpController mixin)
+/// and popUpContent, which is the main content shown in the popup.
+/// 
+/// The popup will close if the user clicks anywhere outside the popup's content.
 class PopUp extends StatefulWidget {
 
   final AnimationController popUpController;
@@ -70,6 +78,9 @@ class PopUpState extends State<PopUp> with TickerProviderStateMixin, OpacityAnim
   void initState() {
     super.initState();
 
+    // Evaluates contentWidth and contentHeight based on the
+    // size of popupContent, so the stronger blur can be
+    // sized correctly behind the popupContent.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final context = _contentKey.currentContext;
       if(context != null) {

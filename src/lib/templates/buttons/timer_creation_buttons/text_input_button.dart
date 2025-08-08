@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
+
 import 'package:yourbreak/templates/base_mixins/interactive_animations_mixin.dart';
 import 'package:yourbreak/templates/base_mixins/opacity_animation_mixin.dart';
+
 import 'package:yourbreak/templates/buttons/button_base.dart';
 
 
@@ -31,6 +34,9 @@ class TextInputButton extends StatefulWidget {
 
 class TextInputButtonState extends State<TextInputButton> with TickerProviderStateMixin, InteractiveAnimationsMixin, OpacityAnimationMixin {
 
+  // Enables access to lockHover and disableClick properties.
+  final GlobalKey<ButtonBaseState> buttonBaseKey = GlobalKey<ButtonBaseState>();
+
   //-----------------------------------------------------------
   // Animation section.
 
@@ -50,17 +56,22 @@ class TextInputButtonState extends State<TextInputButton> with TickerProviderSta
 
   final TextEditingController _textEditingController = TextEditingController();
 
+
+  String currentText = "";
+
   bool isText = false;
 
   // To track if any text is in the field to keep the border color fully opaque when there is.
   void _textChanged() {
     setState(() {
       isText = _textEditingController.text.trim().isNotEmpty;
+      currentText = _textEditingController.text.trim();
     });
   }
 
   // Node subsection of text section.
   final FocusNode textFocusNode = FocusNode();
+
 
   bool isFocused = false;
 
@@ -70,6 +81,9 @@ class TextInputButtonState extends State<TextInputButton> with TickerProviderSta
       // If focus is lost, reverse the hoverController to shrink it down.
       // This is because it doesn't reverse on its own.
       if (!isFocused) {
+
+        buttonBaseKey.currentState?.lockHover = false;
+
         hoverController.reverse();
         if (!isText) opacityController.reverse(); // If there is no text, reverse the opacityController, too.
       } else {
@@ -77,6 +91,7 @@ class TextInputButtonState extends State<TextInputButton> with TickerProviderSta
         // it doesn't register the textfield, so when you click there, it counts as losing focus,
         // and when you click again on the textfield without leaving the button, it doesn't
         // scale up when it has focus.
+        buttonBaseKey.currentState?.lockHover = true;
         hoverController.forward();
       }
     });
@@ -88,6 +103,8 @@ class TextInputButtonState extends State<TextInputButton> with TickerProviderSta
   @override
   void initState() {
     super.initState();
+
+    buttonBaseKey.currentState?.disableClick = true; // To prevent any reversing of the hover controller.
 
     _textEditingController.addListener(_textChanged);
     textFocusNode.addListener(_focusChanged);
@@ -109,9 +126,8 @@ class TextInputButtonState extends State<TextInputButton> with TickerProviderSta
   @override
   Widget build(BuildContext context) {
     return ButtonBase(
+      key: buttonBaseKey,
       onPressed: null,
-      lockHover: isFocused,
-      disableClick: true, // To prevent any reversing of the hover controller.
 
       rebuildListeners: [
         hoverController,

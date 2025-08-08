@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
+
 import 'package:yourbreak/templates/base_mixins/interactive_animations_mixin.dart';
 import 'package:yourbreak/templates/base_mixins/opacity_animation_mixin.dart';
 
@@ -10,19 +11,26 @@ import 'package:yourbreak/templates/base_mixins/page_animations_mixin.dart';
 import 'package:yourbreak/templates/buttons/button_base.dart';
 
 
+
 /// The standardized button for going back to the previous page, usually situated at the bottom of pages.
 /// It slides in from the bottom, and slides out also to the bottom.
+/// Can take in an optional onPressed, that will be called instead of the default logic on button click.
 class ReturnButton extends StatefulWidget {
 
   // Requires the page's animation controller so it can trigger exitPage animations
   // in other widgets that animate in the same page.
   final AnimationController pageAnimationController;
 
+  // Optional, will override the default click logic.
+  final Function? onPressed;
+
   const ReturnButton({
 
     super.key,
 
     required this.pageAnimationController,
+
+    this.onPressed
 
   });
 
@@ -92,21 +100,25 @@ class ReturnButtonState extends State<ReturnButton> with TickerProviderStateMixi
 
   // ------------------------------------------------------
 
+  void defaultClickLogic() async {
+  
+    // Sets the exiting bool to true, so the activeSlideAnimation
+    // will return exitSlideAnimation, so the button slides out.
+    setState(() => _exiting = true); 
+    
+    // await until the controller finishes to not pop the page too early
+    await widget.pageAnimationController.forward();
+        
+    Navigator.of(context).pop();
+    
+  }
+
+  // ------------------------------------------------------
+
   @override
   Widget build(BuildContext context) {
     return ButtonBase(
-      onPressed: () async {
-        
-        // Sets the exiting bool to true, so the activeSlideAnimation
-        // will return exitSlideAnimation, so the button slides out.
-        setState(() => _exiting = true); 
-        
-        // await until the controller finishes to not pop the page too early
-        await widget.pageAnimationController.forward();
-            
-        Navigator.of(context).pop();
-      
-      },
+      onPressed: widget.onPressed ?? defaultClickLogic,
 
       rebuildListeners: [
         hoverSizeAnimation,

@@ -49,6 +49,7 @@ flutter:
   - assets/svg/squareedit.svg
   - assets/svg/increase.svg
   - assets/svg/decrease.svg
+  - assets/svg/x.svg
   - assets/presets.json
 
   uses-material-design: true
