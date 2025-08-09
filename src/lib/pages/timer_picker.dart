@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
+import 'package:yourbreak/templates/base_mixins/page_animation_controller_mixin.dart';
 
 import 'package:yourbreak/templates/base_visuals.dart';
 import 'package:yourbreak/templates/timer_picker_components/timer_picker_column.dart';
@@ -25,33 +25,7 @@ class TimerPicker extends StatefulWidget {
 
 }
 
-class TimerPickerState extends State<TimerPicker> with SingleTickerProviderStateMixin {
-  
-
-  late final AnimationController pageAnimationController = AnimationController(
-    vsync: this,
-    duration: AnimationDurations.pageTransition,
-    reverseDuration: AnimationDurations.pageTransition
-  );
-
-
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-
-  @override
-  void dispose() {
-
-    super.dispose();
-
-    pageAnimationController.dispose();
-
-  }
-  
-
+class TimerPickerState extends State<TimerPicker> with SingleTickerProviderStateMixin, PageAnimationControllerMixin {
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +43,7 @@ class TimerPickerState extends State<TimerPicker> with SingleTickerProviderState
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    PageHeader(text: "Pick A Timer", fontSize: FontSizes.pageHeader, pageAnimationController: pageAnimationController),
+                    PageHeader(text: "Pick A Timer", fontSize: FontSizes.pageHeader, pageAnimationController: functionalPageAnimationController),
                     SizedBox(
                       height: 280,
                       width: 430,
@@ -137,7 +111,7 @@ class TimerPickerState extends State<TimerPicker> with SingleTickerProviderState
                           width: 165,
                           height: 35,
                           child: ReturnButton(
-                            pageAnimationController: pageAnimationController,
+                            pageAnimationController: functionalPageAnimationController,
                           ),
                         )
                       ),

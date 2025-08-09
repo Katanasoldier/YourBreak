@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
 
 import 'package:yourbreak/templates/base_mixins/interactive_animations_mixin.dart';
 
 import 'package:yourbreak/helper/timer_formatters.dart';
+import 'package:yourbreak/templates/base_mixins/opacity_animation_mixin.dart';
 
 import 'package:yourbreak/templates/buttons/button_base.dart';
 
@@ -22,11 +25,17 @@ class TimePeriodButton extends StatefulWidget {
   /// Requires raw seconds!
   final int periodTime;
 
+  /// Function that will be called when the widget's
+  /// RemoveButton is clicked.
+  final Function onRemove;
+
   const TimePeriodButton({
     super.key,
 
     required this.periodName,
-    required this.periodTime
+    required this.periodTime,
+
+    required this.onRemove
   });
 
   @override
@@ -37,18 +46,8 @@ class TimePeriodButton extends StatefulWidget {
 
 class TimePeriodButtonState extends State<TimePeriodButton> with TickerProviderStateMixin, InteractiveAnimationsMixin {
 
-  late final String formattedPeriodName;
-  late final Color periodColor;
-
-
-  @override
-  void initState() {
-    super.initState();
-
-    formattedPeriodName = formatPeriodName(widget.periodName);
-    periodColor = getPeriodColor(widget.periodName);
-  }
-
+  late final String formattedPeriodName = formatPeriodName(widget.periodName);
+  late final Color periodColor = getPeriodColor(widget.periodName);
 
   @override
   Widget build(BuildContext context) {
@@ -62,72 +61,129 @@ class TimePeriodButtonState extends State<TimePeriodButton> with TickerProviderS
         mouseRegionBasedControllers: [hoverController],
         scaleAnimations: [hoverSizeAnimation],
       
-        child: OutlinedButton(
-          clipBehavior: Clip.hardEdge,
-          onPressed: null, // Handled by ButtonBase.
-          style: OutlinedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.5),
-            ),
-            padding: EdgeInsets.zero,
-            side: BorderSide(
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
               color: periodColor,
               width: 2.5,
               strokeAlign: BorderSide.strokeAlignInside,
             ),
-            backgroundColor: periodColor.withValues(alpha: 0.1),
-            splashFactory: NoSplash.splashFactory,
-            overlayColor: Colors.transparent,
+            borderRadius: BorderRadius.circular(12.5),
+            color: periodColor.withValues(alpha: 0.1)
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            spacing: 7.5,
-            children: [
-              // The style here is that the divider is perfectly in the middle,
-              // and the text can be shorter or longer, but the divider is perfectly centered.
-              //
-              // This allows the layout to remain consistent and easy on the eyes with the rest
-              // of the TimePeriodButtons. Without it, the lines would not align and it would
-              // look pretty bad.
-              //
-              // To achieve this, we have to wrap the text in expanded, and set the textAlign to
-              // either right or left. This makes both texts take up the same amount of space, and
-              // allows the divider to stay centered.
-              Expanded(
-                child: Text(
-                  formattedPeriodName,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: PureColors.white,
-                    fontWeight: FontWeight.w700
-                  ),
-                  textAlign: TextAlign.right,
+          child: Padding(
+            padding: EdgeInsets.only(left: 10, right: 4),
+            child: Stack(
+              alignment: Alignment.centerLeft,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 7.5,
+                  children: [
+                    Text(
+                        formattedPeriodName,
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: PureColors.white,
+                          fontWeight: FontWeight.w700
+                        ),
+                      ),
+                    Container( // Divider
+                      height: 20,
+                      width: 2,
+                      decoration: BoxDecoration(
+                        color: PureColors.white,
+                        borderRadius: BorderRadius.circular(20)
+                      ),
+                    ),
+                    Text(
+                      formatSeconds(widget.periodTime),
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: PureColors.white,
+                        fontWeight: FontWeight.w700
+                      ),
+                    )
+                  ],
                 ),
-              ),
-              Container( // Divider
-                height: 20,
-                width: 2,
-                decoration: BoxDecoration(
-                  color: PureColors.white,
-                  borderRadius: BorderRadius.circular(20)
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  formatSeconds(widget.periodTime),
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: PureColors.white,
-                    fontWeight: FontWeight.w700
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-            ],
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: RemoveButton(onPressed: widget.onRemove),
+                )
+              ],
+            ),
           )
         )
       ),
     );
   }
+}
+
+
+class RemoveButton extends StatefulWidget {
+
+  final Function onPressed;
+
+  const RemoveButton({
+    super.key,
+
+    required this.onPressed
+  });
+
+  @override
+  RemoveButtonState createState() => RemoveButtonState();
+
+}
+
+class RemoveButtonState extends State<RemoveButton> with TickerProviderStateMixin, InteractiveAnimationsMixin, OpacityAnimationMixin {
+
+  @override
+  Animation<double> get opacityAnimation => Tween<double>(
+    begin: 0.5,
+    end: 1
+  ).animate(CurvedAnimation(
+    parent: opacityController,
+    curve: AnimationCurves.opacity
+  ));
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 23.5,
+      height: 23.5,
+      child: ButtonBase(
+        onPressed: widget.onPressed,
+      
+        rebuildListeners: [hoverSizeAnimation, clickSizeAnimation, opacityAnimation],
+        mouseRegionBasedControllers: [hoverController, opacityController],
+      
+        scaleAnimations: [hoverSizeAnimation, clickSizeAnimation],
+      
+        child: AnimatedBuilder(
+          animation: opacityAnimation,
+          builder: (context, child) => Container(
+            decoration: BoxDecoration(
+                border: Border.all(
+                  color: PureColors.red.withValues(alpha: opacityAnimation.value),
+                  width: 2,
+                  strokeAlign: BorderSide.strokeAlignInside,
+                ),
+                borderRadius: BorderRadius.circular(7.5),
+                color: PureColors.red.withValues(alpha: 0.1)
+              ),
+            child: Padding(
+              padding: EdgeInsets.all(3),
+              child: Opacity(
+                opacity: opacityAnimation.value,
+                child: SvgPicture.asset(
+                  'assets/svg/x.svg',
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 }

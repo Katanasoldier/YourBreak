@@ -47,6 +47,7 @@ flutter:
   - assets/svg/multipleCogs.svg
   - assets/svg/wrench.svg
   - assets/svg/squareedit.svg
+  - assets/svg/x.svg
   - assets/presets.json
 
   uses-material-design: true
