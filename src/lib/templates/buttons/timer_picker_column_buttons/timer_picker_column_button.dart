@@ -42,7 +42,7 @@ class TimerPickerColumnButton extends StatefulWidget {
 
   final List<Color>? mainTextGradient;
 
-  final VoidCallback onPressed;
+  final Function onPressed;
   
   final double listElementHeight;
   final double listElementWidth;
@@ -77,6 +77,8 @@ class TimerPickerColumnButton extends StatefulWidget {
 }
 
 class TimerPickerColumnButtonState extends State<TimerPickerColumnButton> with TickerProviderStateMixin, InteractiveAnimationsMixin {
+
+  late final TimerStructure timer = widget.timer;
 
 
   late final double originalButtonWidth = widget.listElementWidth;
@@ -148,7 +150,7 @@ class TimerPickerColumnButtonState extends State<TimerPickerColumnButton> with T
   @override
   Widget build(BuildContext context) {
     return ButtonBase(
-      onPressed: null,
+      onPressed: widget.onPressed(this),
 
       rebuildListeners: [
         hoverController,

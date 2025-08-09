@@ -188,7 +188,7 @@ class TimerPickerColumnState extends State<TimerPickerColumn> with TickerProvide
                       controller: scrollController,
                       child: SingleChildScrollView(
                         controller: scrollController,
-                        physics: BouncingScrollPhysics(),
+                        physics: ClampingScrollPhysics(),
                         //clipBehavior: Clip.none,
                         child: Column(
                           children: [
