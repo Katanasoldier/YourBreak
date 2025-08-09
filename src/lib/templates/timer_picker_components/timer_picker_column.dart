@@ -31,15 +31,6 @@ List<Color> getTimerTitleGradient(String timerName) {
 }
 
 
-List<TimerStructure> getTimers(String timerType) {
-
-  final timersBox = Hive.box<TimerStructure>('${timerType}_timers');
-
-  return timersBox.values.toList();
-
-}
-
-
 class Header extends StatelessWidget {
 
   final double fontSize; 
@@ -109,25 +100,12 @@ class TimerPickerColumnState extends State<TimerPickerColumn> with TickerProvide
   int? hoveredIndex;
 
 
-  late final List<TimerStructure> timerList;
-
-
   late final AnimationController pageAnimationController =
   AnimationController(
     vsync: this,
     duration: AnimationDurations.pageTransition,
     reverseDuration: AnimationDurations.pageTransition
   );
-
-
-  @override
-  void initState() {
-
-    super.initState();
-
-    timerList = getTimers(widget.timerType);
-
-  }
 
 
   @override
@@ -143,7 +121,7 @@ class TimerPickerColumnState extends State<TimerPickerColumn> with TickerProvide
 
   @override
   Widget build(BuildContext context) {
-    return timerList.isEmpty
+    return Hive.box<TimerStructure>('${widget.timerType}_timers').values.isEmpty
     ? Stack(
       children: [
         Align(
@@ -190,19 +168,22 @@ class TimerPickerColumnState extends State<TimerPickerColumn> with TickerProvide
                         controller: scrollController,
                         physics: ClampingScrollPhysics(),
                         //clipBehavior: Clip.none,
-                        child: Column(
-                          children: [
-                            for (final timer in timerList)
-                            TimerPickerColumnButton(
-                              timer: timer,
-                              mainTextGradient: getTimerTitleGradient(timer.name),
-                              onPressed: () {},
-                              listElementHeight: listElementHeight,
-                              listElementWidth: listElementWidth,
-                              pageAnimationController: pageAnimationController,
-                              editButtons: widget.editButtons,
-                            )
-                          ],
+                        child: ValueListenableBuilder(
+                          valueListenable: Hive.box<TimerStructure>('${widget.timerType}_timers').listenable(),
+                          builder: (_, Box<TimerStructure> box, _) => Column(
+                            children: [
+                              for (final timer in box.values.toList())
+                              TimerPickerColumnButton(
+                                timer: timer,
+                                mainTextGradient: getTimerTitleGradient(timer.name),
+                                onPressed: () {},
+                                listElementHeight: listElementHeight,
+                                listElementWidth: listElementWidth,
+                                pageAnimationController: pageAnimationController,
+                                editButtons: widget.editButtons,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
