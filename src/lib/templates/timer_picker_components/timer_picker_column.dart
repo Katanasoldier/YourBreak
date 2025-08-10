@@ -121,79 +121,80 @@ class TimerPickerColumnState extends State<TimerPickerColumn> with TickerProvide
 
   @override
   Widget build(BuildContext context) {
-    return Hive.box<TimerStructure>('${widget.timerType}_timers').values.isEmpty
-    ? Stack(
-      children: [
-        Align(
-          alignment: Alignment.topCenter,
-          child: Header(fontSize: widget.fontSize, headerText: widget.headerText)
-        ),
-        Center(
-          child: Header(fontSize: widget.fontSize, headerText: "Empty", color: PureColors.grey.withValues(alpha: 0.2))
-        )
-      ],
-    )
-    : Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Header(fontSize: widget.fontSize, headerText: widget.headerText),
-        Expanded(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
+    return ValueListenableBuilder(
+      valueListenable: Hive.box<TimerStructure>('${widget.timerType}_timers').listenable(),
+      builder: (_, Box<TimerStructure> box, _) {
+        return box.values.isEmpty
+          ? Stack(
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Header(fontSize: widget.fontSize, headerText: widget.headerText)
+              ),
+              Center(
+                child: Header(fontSize: widget.fontSize, headerText: "Empty", color: PureColors.grey.withValues(alpha: 0.2))
+              )
+            ],
+          )
+          : Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Header(fontSize: widget.fontSize, headerText: widget.headerText),
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
 
-              final double maxListViewWidth = constraints.maxWidth;
-              final double maxListViewHeight = constraints.maxHeight;
+                    final double maxListViewWidth = constraints.maxWidth;
+                    final double maxListViewHeight = constraints.maxHeight;
 
-              final double listElementHeight = maxListViewHeight * 0.175;
-              final double listElementWidth = maxListViewWidth * 0.95;
-               
-              
-              final scrollController = ScrollController();
+                    final double listElementHeight = maxListViewHeight * 0.175;
+                    final double listElementWidth = maxListViewWidth * 0.95;
+                    
+                    
+                    final scrollController = ScrollController();
 
-              return Stack(
-                alignment: Alignment.center,
-                children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: RawScrollbar(
-                      thickness: 5,
-                      interactive: true,
-                      minOverscrollLength: 5,
-                      thumbColor: PureColors.white,
-                      radius: Radius.circular(4),
-                      thumbVisibility: true,
-                      controller: scrollController,
-                      child: SingleChildScrollView(
-                        controller: scrollController,
-                        physics: ClampingScrollPhysics(),
-                        //clipBehavior: Clip.none,
-                        child: ValueListenableBuilder(
-                          valueListenable: Hive.box<TimerStructure>('${widget.timerType}_timers').listenable(),
-                          builder: (_, Box<TimerStructure> box, _) => Column(
-                            children: [
-                              for (final timer in box.values.toList())
-                              TimerPickerColumnButton(
-                                timer: timer,
-                                mainTextGradient: getTimerTitleGradient(timer.name),
-                                onPressed: () {},
-                                listElementHeight: listElementHeight,
-                                listElementWidth: listElementWidth,
-                                pageAnimationController: pageAnimationController,
-                                editButtons: widget.editButtons,
-                              )
-                            ],
+                    return Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: RawScrollbar(
+                            thickness: 5,
+                            interactive: true,
+                            minOverscrollLength: 5,
+                            thumbColor: PureColors.white,
+                            radius: Radius.circular(4),
+                            thumbVisibility: true,
+                            controller: scrollController,
+                            child: SingleChildScrollView(
+                              controller: scrollController,
+                              physics: ClampingScrollPhysics(),
+                              child: Column(
+                                children: [
+                                  for (final timer in box.values.toList())
+                                  TimerPickerColumnButton(
+                                    timer: timer,
+                                    mainTextGradient: getTimerTitleGradient(timer.name),
+                                    onPressed: () {},
+                                    listElementHeight: listElementHeight,
+                                    listElementWidth: listElementWidth,
+                                    pageAnimationController: pageAnimationController,
+                                    editButtons: widget.editButtons,
+                                  )
+                                ],
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            }
-          )
-        )
-      ],
+                      ],
+                    );
+                  }
+                )
+              )
+            ],
+          );
+      }
     );
   } 
 }
