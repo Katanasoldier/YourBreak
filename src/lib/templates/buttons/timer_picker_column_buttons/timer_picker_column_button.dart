@@ -44,7 +44,7 @@ class TimerPickerColumnButton extends StatefulWidget {
 
   final List<Color>? mainTextGradient;
 
-  final Function(TimerPickerColumnButtonState buttonState) onPressed;
+  final Function onPressed;
   
   final double listElementHeight;
   final double listElementWidth;

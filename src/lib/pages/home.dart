@@ -83,7 +83,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               if(!mounted) return;
 
                               Navigator.push(context, PageRouteBuilder(
-                                pageBuilder: (context,animation,secondaryAnimation) => TimerPicker(),
+                                pageBuilder: (context,animation,secondaryAnimation) => TimerPicker(timerButtonOnPressed: () {}),
                                 //transitionsBuilder: (context, animation, secondaryAnimation, child) => ,
                               ));
 
