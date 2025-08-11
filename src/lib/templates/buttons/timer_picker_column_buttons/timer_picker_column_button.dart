@@ -30,6 +30,8 @@ const double defaultWidgetMargin = 2.5;
 /// It also has a header with the timer name at the very top, which is visible even without actively hovering over it,
 /// and a gradient for the main text.
 /// 
+/// It takes in a required onPressed with a buttonState passed as a parameter. The buttonState is just this button's state.
+/// 
 /// Optionally it can contain edit buttons, which can be used for specific actions:
 /// - Edit: Opens an editing page for the timer
 /// - Delete: Deletes the timer
@@ -42,7 +44,7 @@ class TimerPickerColumnButton extends StatefulWidget {
 
   final List<Color>? mainTextGradient;
 
-  final Function onPressed;
+  final Function(TimerPickerColumnButtonState buttonState) onPressed;
   
   final double listElementHeight;
   final double listElementWidth;
@@ -150,7 +152,7 @@ class TimerPickerColumnButtonState extends State<TimerPickerColumnButton> with T
   @override
   Widget build(BuildContext context) {
     return ButtonBase(
-      onPressed: widget.onPressed(this),
+      onPressed: () => widget.onPressed(this),
 
       rebuildListeners: [
         hoverController,
