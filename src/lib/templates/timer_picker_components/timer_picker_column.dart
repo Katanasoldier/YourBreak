@@ -31,15 +31,6 @@ List<Color> getTimerTitleGradient(String timerName) {
 }
 
 
-List<TimerStructure> getTimers(String timerType) {
-
-  final timersBox = Hive.box<TimerStructure>('${timerType}_timers');
-
-  return timersBox.values.toList();
-
-}
-
-
 class Header extends StatelessWidget {
 
   final double fontSize; 
@@ -109,25 +100,12 @@ class TimerPickerColumnState extends State<TimerPickerColumn> with TickerProvide
   int? hoveredIndex;
 
 
-  late final List<TimerStructure> timerList;
-
-
   late final AnimationController pageAnimationController =
   AnimationController(
     vsync: this,
     duration: AnimationDurations.pageTransition,
     reverseDuration: AnimationDurations.pageTransition
   );
-
-
-  @override
-  void initState() {
-
-    super.initState();
-
-    timerList = getTimers(widget.timerType);
-
-  }
 
 
   @override
@@ -143,76 +121,80 @@ class TimerPickerColumnState extends State<TimerPickerColumn> with TickerProvide
 
   @override
   Widget build(BuildContext context) {
-    return timerList.isEmpty
-    ? Stack(
-      children: [
-        Align(
-          alignment: Alignment.topCenter,
-          child: Header(fontSize: widget.fontSize, headerText: widget.headerText)
-        ),
-        Center(
-          child: Header(fontSize: widget.fontSize, headerText: "Empty", color: PureColors.grey.withValues(alpha: 0.2))
-        )
-      ],
-    )
-    : Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Header(fontSize: widget.fontSize, headerText: widget.headerText),
-        Expanded(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-
-              final double maxListViewWidth = constraints.maxWidth;
-              final double maxListViewHeight = constraints.maxHeight;
-
-              final double listElementHeight = maxListViewHeight * 0.175;
-              final double listElementWidth = maxListViewWidth * 0.95;
-               
-              
-              final scrollController = ScrollController();
-
-              return Stack(
-                alignment: Alignment.center,
-                children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: RawScrollbar(
-                      thickness: 5,
-                      interactive: true,
-                      minOverscrollLength: 5,
-                      thumbColor: PureColors.white,
-                      radius: Radius.circular(4),
-                      thumbVisibility: true,
-                      controller: scrollController,
-                      child: SingleChildScrollView(
-                        controller: scrollController,
-                        physics: ClampingScrollPhysics(),
-                        //clipBehavior: Clip.none,
-                        child: Column(
-                          children: [
-                            for (final timer in timerList)
-                            TimerPickerColumnButton(
-                              timer: timer,
-                              mainTextGradient: getTimerTitleGradient(timer.name),
-                              onPressed: () {},
-                              listElementHeight: listElementHeight,
-                              listElementWidth: listElementWidth,
-                              pageAnimationController: pageAnimationController,
-                              editButtons: widget.editButtons,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            }
+    return ValueListenableBuilder(
+      valueListenable: Hive.box<TimerStructure>('${widget.timerType}_timers').listenable(),
+      builder: (_, Box<TimerStructure> box, _) {
+        return box.values.isEmpty
+          ? Stack(
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Header(fontSize: widget.fontSize, headerText: widget.headerText)
+              ),
+              Center(
+                child: Header(fontSize: widget.fontSize, headerText: "Empty", color: PureColors.grey.withValues(alpha: 0.2))
+              )
+            ],
           )
-        )
-      ],
+          : Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Header(fontSize: widget.fontSize, headerText: widget.headerText),
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+
+                    final double maxListViewWidth = constraints.maxWidth;
+                    final double maxListViewHeight = constraints.maxHeight;
+
+                    final double listElementHeight = maxListViewHeight * 0.175;
+                    final double listElementWidth = maxListViewWidth * 0.95;
+                    
+                    
+                    final scrollController = ScrollController();
+
+                    return Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: RawScrollbar(
+                            thickness: 5,
+                            interactive: true,
+                            minOverscrollLength: 5,
+                            thumbColor: PureColors.white,
+                            radius: Radius.circular(4),
+                            thumbVisibility: true,
+                            controller: scrollController,
+                            child: SingleChildScrollView(
+                              controller: scrollController,
+                              physics: ClampingScrollPhysics(),
+                              child: Column(
+                                children: [
+                                  for (final timer in box.values.toList())
+                                  TimerPickerColumnButton(
+                                    timer: timer,
+                                    mainTextGradient: getTimerTitleGradient(timer.name),
+                                    onPressed: () {},
+                                    listElementHeight: listElementHeight,
+                                    listElementWidth: listElementWidth,
+                                    pageAnimationController: pageAnimationController,
+                                    editButtons: widget.editButtons,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                )
+              )
+            ],
+          );
+      }
     );
   } 
 }
