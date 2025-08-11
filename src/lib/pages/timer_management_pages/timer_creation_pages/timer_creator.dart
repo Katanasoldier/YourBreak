@@ -70,7 +70,7 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
 
 
     Navigator.push(context, PageRouteBuilder(
-      pageBuilder: (context,animation,secondaryAnimation) => TimerPicker(),
+      pageBuilder: (context,animation,secondaryAnimation) => TimerPicker(timerButtonOnPressed: () {}),
     ));
 
     /// Reverse back the creator to avoid future issues where if the user pops the later page,

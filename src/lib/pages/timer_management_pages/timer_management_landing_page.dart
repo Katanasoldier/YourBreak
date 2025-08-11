@@ -31,7 +31,8 @@ class TimerManagementLandingPage extends StatelessWidget {
         pageAnimationController: pageAnimationController,
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(
-            builder: (context) => const TimerPicker(editButtons: true)
+            // We leave the timerButtonOnPressed empty because all the logic is contained within the editButtons.
+            builder: (context) => TimerPicker(timerButtonOnPressed: () {}, editButtons: true)
           ));
         } // Fill in later !!!
       )
