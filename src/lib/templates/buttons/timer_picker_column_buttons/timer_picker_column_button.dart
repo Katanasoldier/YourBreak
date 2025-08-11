@@ -451,7 +451,7 @@ class TimerPickerColumnButtonState extends State<TimerPickerColumnButton> with T
                                                       fontSize: dataFontSize,
                                                       borderRadius: maxButtonHeight * 0.05,
                                                       borderWidth: borderWidth/2,
-                                                      onPressed: null,
+                                                      onPressed: () => timer.delete()
                                                     ),
                                                   ),
                                                 )
