@@ -72,6 +72,7 @@ class TimerPickerColumn extends StatefulWidget {
   final double fontSize; 
   final String headerText;
   final String timerType;
+  final Function timerButtonOnPressed;
   final bool? editButtons;
 
   const TimerPickerColumn({
@@ -83,6 +84,8 @@ class TimerPickerColumn extends StatefulWidget {
     required this.headerText,
 
     required this.timerType,
+
+    required this.timerButtonOnPressed,
 
     this.editButtons,
 
@@ -176,7 +179,7 @@ class TimerPickerColumnState extends State<TimerPickerColumn> with TickerProvide
                                   TimerPickerColumnButton(
                                     timer: timer,
                                     mainTextGradient: getTimerTitleGradient(timer.name),
-                                    onPressed: () {},
+                                    onPressed: widget.timerButtonOnPressed,
                                     listElementHeight: listElementHeight,
                                     listElementWidth: listElementWidth,
                                     pageAnimationController: pageAnimationController,
