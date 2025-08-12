@@ -12,6 +12,8 @@ import 'package:yourbreak/helper/timer_formatters.dart';
 import 'package:yourbreak/templates/buttons/button_base.dart';
 import 'package:yourbreak/templates/buttons/timer_picker_column_buttons/timer_action_button.dart';
 import 'package:yourbreak/templates/buttons/square_button/headers.dart';
+
+import 'package:yourbreak/pages/timer_management_pages/timer_creation_pages/timer_creator.dart';
 //import 'package:auto_size_text/auto_size_text.dart';
 
 const double defaultWidgetMargin = 2.5;
@@ -29,6 +31,8 @@ const double defaultWidgetMargin = 2.5;
 /// 
 /// It also has a header with the timer name at the very top, which is visible even without actively hovering over it,
 /// and a gradient for the main text.
+/// 
+/// It takes in a required onPressed with a buttonState passed as a parameter. The buttonState is just this button's state.
 /// 
 /// Optionally it can contain edit buttons, which can be used for specific actions:
 /// - Edit: Opens an editing page for the timer
@@ -150,7 +154,7 @@ class TimerPickerColumnButtonState extends State<TimerPickerColumnButton> with T
   @override
   Widget build(BuildContext context) {
     return ButtonBase(
-      onPressed: widget.onPressed,
+      onPressed: () => widget.onPressed(this),
 
       rebuildListeners: [
         hoverController,
@@ -431,7 +435,11 @@ class TimerPickerColumnButtonState extends State<TimerPickerColumnButton> with T
                                                       fontSize: dataFontSize,
                                                       borderRadius: maxButtonHeight * 0.05,
                                                       borderWidth: borderWidth/2,
-                                                      onPressed: null,
+                                                      onPressed: () {
+                                                        Navigator.push(context, MaterialPageRoute(
+                                                          builder: (context) => TimerCreator(preexistingTimer: timer,)
+                                                        ));
+                                                      },
                                                     ),
                                                   ),
                                                 ),
