@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
 import 'package:yourbreak/models/timer_structure.dart';
 import 'package:yourbreak/templates/base_mixins/page_animation_controller_mixin.dart';
 import 'package:yourbreak/templates/base_visuals.dart';
+import 'package:yourbreak/templates/buttons/return_button.dart';
 import 'package:yourbreak/templates/circular_timer.dart';
+import 'package:yourbreak/templates/timer_runner_components/timer_control_button.dart';
 
 
 
@@ -23,7 +26,7 @@ class TimerRunner extends StatefulWidget {
 }
 
 
-class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin, PageAnimationControllerMixin {
+class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin, PageAnimationControllerMixin, PageAnimationControllerMixin {
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +38,15 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 26.5, vertical: 2),
               child: Stack( // Main center column
+                alignment: Alignment.topCenter,
                 children: [
                   FittedBox(
                     child: PageHeader(
-                      fontSize: FontSizes.pageHeader,
+                      fontSize: FontSizes.pageHeader*0.6,
                       text: "Pomodoro : Placeholder",
                       pageAnimationController: functionalPageAnimationController,
-                      margin: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 20),
+                      margin: const EdgeInsets.only(top: 37.5, left: 20, right: 20),
+                      fontColor: PureColors.white.withValues(alpha: 0.85),
                     ),
                   ),
                   Align(
@@ -59,10 +64,23 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      margin: EdgeInsets.only(bottom: 12.5),
-                      height: 80,
+                      margin: EdgeInsets.only(bottom: 7.5),
+                      height: 87.5,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
+                          SizedBox(
+                            width: 150,
+                            height: 35,
+                            child: TimerControlButton(),
+                          ),
+                          SizedBox(
+                            width: 150,
+                            height: 35,
+                            child: ReturnButton(
+                              pageAnimationController: functionalPageAnimationController
+                            ),
+                          ),
                         ],
                       ),
                     ),
