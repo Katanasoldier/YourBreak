@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:yourbreak/pages/timer_management_pages/timer_management_landing_page.dart';
 import 'package:yourbreak/pages/timer_picker.dart';
+import 'package:yourbreak/pages/timer_runner.dart';
 import 'package:yourbreak/templates/buttons/square_button.dart';
 import 'package:yourbreak/templates/base_visuals.dart';
+import 'package:yourbreak/templates/buttons/timer_picker_column_buttons/timer_picker_column_button.dart';
 import 'package:yourbreak/templates/stat_text.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
 
@@ -83,7 +85,16 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               if(!mounted) return;
 
                               Navigator.push(context, PageRouteBuilder(
-                                pageBuilder: (context,animation,secondaryAnimation) => TimerPicker(timerButtonOnPressed: () {}),
+                                pageBuilder: (context,animation,secondaryAnimation) => 
+                                TimerPicker(
+                                  timerButtonOnPressed: (TimerPickerColumnButtonState button) {
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                      return TimerRunner(timer: button.timer);
+                                      }
+                                    ));
+                                  }
+                                ),
                                 //transitionsBuilder: (context, animation, secondaryAnimation, child) => ,
                               ));
 
