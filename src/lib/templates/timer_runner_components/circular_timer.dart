@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import 'package:audioplayers/audioplayers.dart';
+
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/helper/timer_formatters.dart';
 
@@ -119,12 +121,16 @@ class CircularTimerState extends State<CircularTimer> with TickerProviderStateMi
       })
       ..addStatusListener((status) async {
         if (status == AnimationStatus.completed) {
+          
+          AudioPlayer().play(DeviceFileSource('assets/audio/timer_up/timer_up_1.mp3'));
+
 
           currentPeriodIndex = _getNextPeriodIndex(index);
          
           timerAnimationController.dispose();
          
-          await Future.delayed(Duration(seconds: 5));
+          await Future.delayed(Duration(seconds: 1));
+
 
           _startPeriod(currentPeriodIndex);
 
