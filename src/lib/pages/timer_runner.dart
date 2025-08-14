@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
+
 import 'package:yourbreak/models/timer_structure.dart';
+
 import 'package:yourbreak/templates/base_mixins/page_animation_controller_mixin.dart';
+
 import 'package:yourbreak/templates/base_visuals.dart';
+
 import 'package:yourbreak/templates/buttons/return_button.dart';
 import 'package:yourbreak/templates/timer_runner_components/circular_timer.dart';
 import 'package:yourbreak/templates/timer_runner_components/timer_control_button.dart';
@@ -45,9 +50,9 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
                   FittedBox(
                     child: PageHeader(
                       fontSize: FontSizes.pageHeader*0.6,
-                      text: "Pomodoro : Placeholder",
+                      text: widget.timer.name,
                       pageAnimationController: functionalPageAnimationController,
-                      margin: const EdgeInsets.only(top: 37.5, left: 20, right: 20),
+                      margin: const EdgeInsets.only(top: 35, left: 20, right: 20),
                       fontColor: PureColors.white.withValues(alpha: 0.85),
                     ),
                   ),
