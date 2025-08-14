@@ -10,7 +10,7 @@ import 'package:yourbreak/templates/buttons/button_base.dart';
 
 /// Contains all the actions the button can
 /// perform including their functions.
-enum _TimerControlButtonActions {
+enum TimerControlButtonActions {
 
   start,
   resume,
@@ -20,7 +20,7 @@ enum _TimerControlButtonActions {
   void perform(AnimationController timerAnimationController) {
     
     // Start and Resume both have the same actions
-    if (this != _TimerControlButtonActions.pause) {
+    if (this != TimerControlButtonActions.pause) {
       timerAnimationController.forward();
       return;
     }
@@ -66,9 +66,16 @@ class TimerControlButtonState extends State<TimerControlButton> with TickerProvi
     curve: AnimationCurves.opacity
   ));
 
+  // -----------------------------------------------------
 
-  var currentAction = _TimerControlButtonActions.start;
+  var currentAction = TimerControlButtonActions.start;
+  
+  /// Sets currentAction to the passed newAction and rebuilds the widget to display the new currentAction.
+  void setAction(TimerControlButtonActions newAction) => setState(
+    () => currentAction = newAction
+  );
 
+  // -----------------------------------------------------
 
   @override
   Widget build(BuildContext context) {
@@ -79,13 +86,11 @@ class TimerControlButtonState extends State<TimerControlButton> with TickerProvi
 
         // Start and Resume both lead to pause,
         // and rebuild the button to display the correct action name.
-        setState(() {
-          if (currentAction != _TimerControlButtonActions.pause) {
-            currentAction = _TimerControlButtonActions.pause;
-          } else { // If it's pause
-            currentAction = _TimerControlButtonActions.resume;
-          }
-        });
+        if (currentAction != TimerControlButtonActions.pause) {
+          setAction(TimerControlButtonActions.pause);
+        } else { // If it's pause
+          setAction(TimerControlButtonActions.resume);
+        }
 
       },
 

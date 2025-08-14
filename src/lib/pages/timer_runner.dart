@@ -35,6 +35,10 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
 
   AnimationController? timerAnimationController;
 
+  final GlobalKey<TimerControlButtonState> _timerControlButtonKey = GlobalKey();
+
+  // ------------------------------------------------------------
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,9 +69,14 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
                       child: CircularTimer(
                         timer: widget.timer,
                         size: 275,
-                        onTimerControllerReady: (passedTimerAnimationController) => setState(() {
-                          timerAnimationController = passedTimerAnimationController;
-                        }),
+                        onTimerControllerReady: (passedTimerAnimationController) {
+                          setState(() {
+                            timerAnimationController = passedTimerAnimationController;
+                          });
+                          // To prevent an issue where the new period starts and the button's action is pause,
+                          // forcing the user to click pause before accessing resume.
+                          _timerControlButtonKey.currentState?.setAction(TimerControlButtonActions.resume);
+                        },
                       ),
                     ),
                   ),
@@ -84,6 +93,7 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
                             height: 35,
                             child: timerAnimationController != null
                               ? TimerControlButton(
+                                  key: _timerControlButtonKey,
                                   timerAnimationController: timerAnimationController!
                                 )
                               : null
