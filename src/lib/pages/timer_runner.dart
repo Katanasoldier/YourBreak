@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
+
 import 'package:yourbreak/models/timer_structure.dart';
+
 import 'package:yourbreak/templates/base_mixins/page_animation_controller_mixin.dart';
+
 import 'package:yourbreak/templates/base_visuals.dart';
+
 import 'package:yourbreak/templates/buttons/return_button.dart';
-import 'package:yourbreak/templates/circular_timer.dart';
+import 'package:yourbreak/templates/timer_runner_components/circular_timer.dart';
 import 'package:yourbreak/templates/timer_runner_components/timer_control_button.dart';
 
 
@@ -28,6 +33,12 @@ class TimerRunner extends StatefulWidget {
 
 class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin, PageAnimationControllerMixin, PageAnimationControllerMixin {
 
+  AnimationController? timerAnimationController;
+
+  final GlobalKey<TimerControlButtonState> _timerControlButtonKey = GlobalKey();
+
+  // ------------------------------------------------------------
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,9 +54,9 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
                   FittedBox(
                     child: PageHeader(
                       fontSize: FontSizes.pageHeader*0.6,
-                      text: "Pomodoro : Placeholder",
+                      text: widget.timer.name,
                       pageAnimationController: functionalPageAnimationController,
-                      margin: const EdgeInsets.only(top: 37.5, left: 20, right: 20),
+                      margin: const EdgeInsets.only(top: 35, left: 20, right: 20),
                       fontColor: PureColors.white.withValues(alpha: 0.85),
                     ),
                   ),
@@ -57,7 +68,15 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
                       margin: EdgeInsets.symmetric(vertical: 25),
                       child: CircularTimer(
                         timer: widget.timer,
-                        size: 275
+                        size: 275,
+                        onTimerControllerReady: (passedTimerAnimationController) {
+                          setState(() {
+                            timerAnimationController = passedTimerAnimationController;
+                          });
+                          // To prevent an issue where the new period starts and the button's action is pause,
+                          // forcing the user to click pause before accessing resume.
+                          _timerControlButtonKey.currentState?.setAction(TimerControlButtonActions.resume);
+                        },
                       ),
                     ),
                   ),
@@ -72,7 +91,12 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
                           SizedBox(
                             width: 150,
                             height: 35,
-                            child: TimerControlButton(),
+                            child: timerAnimationController != null
+                              ? TimerControlButton(
+                                  key: _timerControlButtonKey,
+                                  timerAnimationController: timerAnimationController!
+                                )
+                              : null
                           ),
                           SizedBox(
                             width: 150,
