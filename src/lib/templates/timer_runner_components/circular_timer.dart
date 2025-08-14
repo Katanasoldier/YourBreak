@@ -18,11 +18,15 @@ import 'package:yourbreak/models/timer_structure.dart';
 /// Takes in a required 'timer' and 'size', with timer being the timer that is
 /// supposed to be run (will run all the periods indefinitely) and size designating
 /// how big should the widget be.
+/// Also takes in a onTimerControllerReady callback, that will be called everytime
+/// the timerAnimationController is assigned, and will pass it as an argument.
 class CircularTimer extends StatefulWidget {
 
   final TimerStructure timer;
 
   final double size;
+
+  final Function(AnimationController) onTimerControllerReady;
 
 
   const CircularTimer({
@@ -30,7 +34,9 @@ class CircularTimer extends StatefulWidget {
 
     required this.timer,
 
-    required this.size
+    required this.size,
+
+    required this.onTimerControllerReady
   });
 
   @override
@@ -97,6 +103,10 @@ class CircularTimerState extends State<CircularTimer> with TickerProviderStateMi
       duration: Duration(seconds: widget.timer.pattern[index].periodTime)
     );
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onTimerControllerReady(timerAnimationController);
+    });
+
 
     timerAnimation = Tween<double>(
       begin: 1,
@@ -121,8 +131,6 @@ class CircularTimerState extends State<CircularTimer> with TickerProviderStateMi
         }
       });
 
-    // Starts the whole animation and countdown.
-    timerAnimationController.forward();
   }
 
   // ------------------------------------------------------------------------------------------
