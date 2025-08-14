@@ -28,6 +28,8 @@ class TimerRunner extends StatefulWidget {
 
 class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin, PageAnimationControllerMixin, PageAnimationControllerMixin {
 
+  AnimationController? timerAnimationController;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +59,10 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
                       margin: EdgeInsets.symmetric(vertical: 25),
                       child: CircularTimer(
                         timer: widget.timer,
-                        size: 275
+                        size: 275,
+                        onTimerControllerReady: (passedTimerAnimationController) => setState(() {
+                          timerAnimationController = passedTimerAnimationController;
+                        }),
                       ),
                     ),
                   ),
@@ -72,7 +77,11 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
                           SizedBox(
                             width: 150,
                             height: 35,
-                            child: TimerControlButton(),
+                            child: timerAnimationController != null
+                              ? TimerControlButton(
+                                  timerAnimationController: timerAnimationController!
+                                )
+                              : null
                           ),
                           SizedBox(
                             width: 150,
