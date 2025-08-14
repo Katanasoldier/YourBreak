@@ -17,6 +17,7 @@ dependencies:
   hive_flutter: ^1.1.0
   path_provider: ^2.1.2
   shared_preferences: ^2.5.3
+  audioplayers: ^6.5.0
 
 dev_dependencies:
   flutter_test:
@@ -49,5 +50,7 @@ flutter:
   - assets/svg/squareedit.svg
   - assets/svg/x.svg
   - assets/presets.json
+
+  - assets/audio/timer_up/timer_up_1.mp3
 
   uses-material-design: true
