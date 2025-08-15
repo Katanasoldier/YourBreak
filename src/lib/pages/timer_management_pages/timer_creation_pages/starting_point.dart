@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yourbreak/helper/page_navigation.dart';
 
 import 'package:yourbreak/templates/config_page.dart';
 
@@ -25,15 +26,13 @@ class StartingPoint extends StatelessWidget {
         description: "You can always edit It\nto Your needs!",
         invertTextOrder: true,
         pageAnimationController: pageAnimationController,
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) => TimerPicker(timerButtonOnPressed: (button) {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) => TimerCreator(preexistingTimer: (button as TimerPickerColumnButtonState).timer,)
-              ));
-            })
-          ));
-        },
+        onPressed: () => navigateTo(context, 
+          TimerPicker(timerButtonOnPressed: (button) {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => TimerCreator(preexistingTimer: (button as TimerPickerColumnButtonState).timer,)
+            ));
+          })
+        )
       ),
       buttonRight: (pageAnimationController) => SquareButton(
         mainText: "Scratch",
@@ -41,11 +40,7 @@ class StartingPoint extends StatelessWidget {
         iconName: "pencil",
         invertTextOrder: true,
         pageAnimationController: pageAnimationController,
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) => TimerCreator()
-          ));
-        }
+        onPressed: () => navigateTo(context, TimerCreator())
       )
     );
   }
