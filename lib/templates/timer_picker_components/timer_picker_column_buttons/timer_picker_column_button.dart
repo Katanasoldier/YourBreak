@@ -9,9 +9,9 @@ import 'package:yourbreak/templates/base_mixins/interactive_animations_mixin.dar
 
 import 'package:yourbreak/helper/timer_formatters.dart';
 
-import 'package:yourbreak/templates/buttons/button_base.dart';
-import 'package:yourbreak/templates/buttons/timer_picker_column_buttons/timer_action_button.dart';
-import 'package:yourbreak/templates/buttons/square_button/headers.dart';
+import 'package:yourbreak/templates/generic_buttons/button_base.dart';
+import 'package:yourbreak/templates/timer_picker_components/timer_picker_column_buttons/timer_action_button.dart';
+import 'package:yourbreak/templates/generic_buttons/square_button/headers.dart';
 
 import 'package:yourbreak/pages/timer_management_pages/timer_creation_pages/timer_creator.dart';
 //import 'package:auto_size_text/auto_size_text.dart';

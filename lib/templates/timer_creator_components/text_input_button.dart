@@ -7,7 +7,7 @@ import 'package:yourbreak/models/timer_structure.dart';
 import 'package:yourbreak/templates/base_mixins/interactive_animations_mixin.dart';
 import 'package:yourbreak/templates/base_mixins/opacity_animation_mixin.dart';
 
-import 'package:yourbreak/templates/buttons/button_base.dart';
+import 'package:yourbreak/templates/generic_buttons/button_base.dart';
 
 
 /// A button that allows the user to input text.

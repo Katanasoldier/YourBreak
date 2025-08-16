@@ -8,7 +8,7 @@ import 'package:yourbreak/templates/base_mixins/page_animation_controller_mixin.
 import 'package:yourbreak/templates/base_visuals.dart';
 import 'package:yourbreak/templates/timer_picker_components/timer_picker_column.dart';
 
-import 'package:yourbreak/templates/buttons/return_button.dart';
+import 'package:yourbreak/templates/generic_buttons/return_button.dart';
 
 
 /// Displays both types of timers in columns next to eachother.

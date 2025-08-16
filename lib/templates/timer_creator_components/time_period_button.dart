@@ -8,7 +8,7 @@ import 'package:yourbreak/templates/base_mixins/interactive_animations_mixin.dar
 import 'package:yourbreak/helper/timer_formatters.dart';
 import 'package:yourbreak/templates/base_mixins/opacity_animation_mixin.dart';
 
-import 'package:yourbreak/templates/buttons/button_base.dart';
+import 'package:yourbreak/templates/generic_buttons/button_base.dart';
 
 
 /// Button intended for visualising timer periods inside the TimerCreator

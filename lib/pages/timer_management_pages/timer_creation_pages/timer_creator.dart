@@ -12,15 +12,15 @@ import 'package:yourbreak/pages/timer_picker.dart';
 import 'package:yourbreak/templates/base_mixins/page_animation_controller_mixin.dart';
 
 import 'package:yourbreak/templates/base_visuals.dart';
-import 'package:yourbreak/templates/buttons/timer_creation_buttons/period_popup_buttons/period_time_chooser.dart';
-import 'package:yourbreak/templates/buttons/timer_creation_buttons/period_popup_buttons/period_type_chooser.dart';
+import 'package:yourbreak/templates/timer_creator_components/period_popup_buttons/period_time_chooser.dart';
+import 'package:yourbreak/templates/timer_creator_components/period_popup_buttons/period_type_chooser.dart';
 
-import 'package:yourbreak/templates/buttons/timer_creation_buttons/text_input_button.dart';
-import 'package:yourbreak/templates/buttons/timer_creation_buttons/time_period_button.dart';
-import 'package:yourbreak/templates/buttons/timer_creation_buttons/create_period_button.dart';
+import 'package:yourbreak/templates/timer_creator_components/text_input_button.dart';
+import 'package:yourbreak/templates/timer_creator_components/time_period_button.dart';
+import 'package:yourbreak/templates/timer_creator_components/create_period_button.dart';
 
-import 'package:yourbreak/templates/buttons/return_button.dart';
-import 'package:yourbreak/templates/buttons/save_button.dart';
+import 'package:yourbreak/templates/generic_buttons/return_button.dart';
+import 'package:yourbreak/templates/generic_buttons/save_button.dart';
 
 import 'package:yourbreak/templates/pop_up.dart';
 

@@ -4,7 +4,7 @@ import 'package:yourbreak/constants/color_constants.dart';
 
 import 'package:yourbreak/templates/base_mixins/interactive_animations_mixin.dart';
 
-import 'package:yourbreak/templates/buttons/button_base.dart';
+import 'package:yourbreak/templates/generic_buttons/button_base.dart';
 
 
 /// A button widget that is meant to be only used within the TimerPickerColumnButtons.

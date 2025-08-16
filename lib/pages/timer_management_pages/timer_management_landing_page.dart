@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yourbreak/helper/page_navigation.dart';
 import 'package:yourbreak/pages/timer_management_pages/timer_creation_pages/starting_point.dart';
 import 'package:yourbreak/templates/config_page.dart';
-import 'package:yourbreak/templates/buttons/square_button.dart';
+import 'package:yourbreak/templates/generic_buttons/square_button.dart';
 import 'package:yourbreak/pages/timer_picker.dart';
 
 

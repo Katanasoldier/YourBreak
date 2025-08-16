@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:yourbreak/templates/buttons/control_button.dart';
+import 'package:yourbreak/templates/generic_buttons/control_button.dart';
 
 /// This widget replaces the default windows (in the future also macOS) top bar.
 /// Doesn't remove the default top bar, main.dart handles that.

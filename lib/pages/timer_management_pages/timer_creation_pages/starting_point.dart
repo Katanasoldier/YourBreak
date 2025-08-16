@@ -3,8 +3,8 @@ import 'package:yourbreak/helper/page_navigation.dart';
 
 import 'package:yourbreak/templates/config_page.dart';
 
-import 'package:yourbreak/templates/buttons/square_button.dart';
-import 'package:yourbreak/templates/buttons/timer_picker_column_buttons/timer_picker_column_button.dart';
+import 'package:yourbreak/templates/generic_buttons/square_button.dart';
+import 'package:yourbreak/templates/timer_picker_components/timer_picker_column_buttons/timer_picker_column_button.dart';
 
 import 'package:yourbreak/pages/timer_picker.dart';
 import 'package:yourbreak/pages/timer_management_pages/timer_creation_pages/timer_creator.dart';
