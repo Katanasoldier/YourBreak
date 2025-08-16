@@ -67,34 +67,6 @@ class CircularTimerState extends State<CircularTimer> with TickerProviderStateMi
               : 0;
   }
 
-  /// Formats time given in seconds into a colon format.
-  /// Takes in an integer representing seconds and returns a string of the format:
-  /// x:y:zs where:
-  /// x - Hours, y - Minutes, z - Seconds.
-  /// Note: If x is 0, it won't show x as 0, but just skip to y and z.
-  String _formatTimeWithColon(int totalSeconds) {
-
-    final int hours = totalSeconds ~/ 3600;
-    final int minutes = (totalSeconds % 3600) ~/ 60;
-    final int seconds = totalSeconds % 60;
-
-    String formattedString;
-
-    
-    if (hours > 0) {
-      formattedString = '$hours:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
-    } else if (minutes > 0) {
-      formattedString = '$minutes:${seconds.toString().padLeft(2, '0')}';
-    } else {
-      formattedString = seconds.toString();
-    }
-
-    formattedString += 's';
-
-
-    return formattedString;
-  }
-
   /// Starts the animation for the period that matches with the passed index.
   /// Recursive, will run forever. At the end of each animation, it will call a new
   /// _startPeriod with the next index.
@@ -184,7 +156,7 @@ class CircularTimerState extends State<CircularTimer> with TickerProviderStateMi
           spacing: 5,
           children: [
             Text(
-              _formatTimeWithColon(remainingSeconds),
+              formatSeconds(remainingSeconds),
               style: TextStyle(
                 fontSize: 52.5,
                 color: getPeriodColor(widget.timer.pattern[currentPeriodIndex].periodType.name),
@@ -193,7 +165,7 @@ class CircularTimerState extends State<CircularTimer> with TickerProviderStateMi
               ),
             ),
             Text(
-              _formatTimeWithColon(widget.timer.pattern[_getNextPeriodIndex(currentPeriodIndex)].periodTime),
+              formatSeconds(widget.timer.pattern[_getNextPeriodIndex(currentPeriodIndex)].periodTime),
               style: TextStyle(
                 fontSize: 25,
                 color: getPeriodColor(widget.timer.pattern[_getNextPeriodIndex(currentPeriodIndex)].periodType.name),
