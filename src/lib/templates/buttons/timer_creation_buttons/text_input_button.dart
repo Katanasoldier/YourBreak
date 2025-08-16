@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
+import 'package:yourbreak/models/timer_structure.dart';
 
 import 'package:yourbreak/templates/base_mixins/interactive_animations_mixin.dart';
 import 'package:yourbreak/templates/base_mixins/opacity_animation_mixin.dart';
@@ -12,7 +13,8 @@ import 'package:yourbreak/templates/buttons/button_base.dart';
 /// A button that allows the user to input text.
 /// 
 /// Has a placeholderText property, that allows to change the hint text
-/// displayed when the text field is empty.
+/// displayed when the text field is empty, and a preexistingTimer property,
+/// that when passed, will extract the name of the timer and set it as the current value.
 /// 
 /// Automatically fades in and out based on mouse hover and text input.
 /// If there is text in the field, the border will remain opaque and not fade out.
@@ -20,10 +22,13 @@ class TextInputButton extends StatefulWidget {
 
   final String placeholderText;
 
+  final TimerStructure? preexistingTimer;
+
   const TextInputButton({
     super.key,
 
-    this.placeholderText = "placeholder text"
+    this.placeholderText = "placeholder text",
+    this.preexistingTimer
   });
 
   @override
@@ -54,12 +59,13 @@ class TextInputButtonState extends State<TextInputButton> with TickerProviderSta
   //-----------------------------------------------------------
   // Text section.
 
-  final TextEditingController _textEditingController = TextEditingController();
+  late final TextEditingController _textEditingController = TextEditingController()
+    ..text = widget.preexistingTimer?.name ?? "";
 
 
-  String currentText = "";
+  late String currentText = widget.preexistingTimer?.name ?? "";
 
-  bool isText = false;
+  late bool isText = currentText != "" ? true : false;
 
   // To track if any text is in the field to keep the border color fully opaque when there is.
   void _textChanged() {
