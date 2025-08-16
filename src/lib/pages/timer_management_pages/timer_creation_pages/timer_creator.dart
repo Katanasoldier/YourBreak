@@ -133,7 +133,8 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
                         height: 45,
                         child: TextInputButton(
                           key: timerNameInputKey,
-                          placeholderText: "Name Your Timer"
+                          placeholderText: "Name Your Timer",
+                          preexistingTimer: widget.preexistingTimer,
                         ),
                       ),
                       Container(
