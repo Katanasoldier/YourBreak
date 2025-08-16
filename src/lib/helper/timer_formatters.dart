@@ -43,33 +43,30 @@ Color getPeriodColor(String periodTypeName){
   }
 }
 
-/// Formats time given in seconds into a easy to read format.
+/// Formats time given in seconds into a colon format.
 /// Takes in an integer representing seconds and returns a string of the format:
-/// xh ym zs where:
+/// x:y:zs where:
 /// x - Hours, y - Minutes, z - Seconds.
-String formatSeconds(int seconds) {
+/// Note: If x is 0, it won't show x as 0, but just skip to y and z.
+String formatSeconds(int totalSeconds) {
 
-  String formattedString = "";
+  final int hours = totalSeconds ~/ 3600;
+  final int minutes = (totalSeconds % 3600) ~/ 60;
+  final int seconds = totalSeconds % 60;
 
-  // Hours
-  if (seconds >= 3600) {
-    formattedString += '${seconds ~/ 3600}h ';
-    seconds %= 3600;
+  String formattedString;
+
+  
+  if (hours > 0) {
+    formattedString = '$hours:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  } else if (minutes > 0) {
+    formattedString = '$minutes:${seconds.toString().padLeft(2, '0')}';
+  } else {
+    formattedString = seconds.toString();
   }
 
-  // Minutes
-  if (seconds >= 60) {
-    formattedString += '${seconds ~/ 60}m ';
-    seconds %= 60;
-  }
+  formattedString += 's';
 
-  // Seconds
-  if (seconds != 0) {
-    formattedString += '${seconds}s';
-  }
 
-  // Trimming prevents any whitespace from taking unnecessary space
-  // and causing the text to shrink or overflow.
-  return formattedString.trimRight();
-
+  return formattedString;
 }
