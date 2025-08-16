@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yourbreak/helper/page_navigation.dart';
 import 'package:yourbreak/pages/timer_management_pages/timer_management_landing_page.dart';
 import 'package:yourbreak/pages/timer_picker.dart';
 import 'package:yourbreak/pages/timer_runner.dart';
@@ -78,47 +79,19 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             mainText: 'Run',
                             supportText: 'Timer',
                             pageAnimationController: pageAnimationController,
-                            onPressed: () async {
-                              
-                              await pageAnimationController.forward();
-
-                              if(!mounted) return;
-
-                              Navigator.push(context, PageRouteBuilder(
-                                pageBuilder: (context,animation,secondaryAnimation) => 
-                                TimerPicker(
-                                  timerButtonOnPressed: (TimerPickerColumnButtonState button) {
-                                    Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) {
-                                      return TimerRunner(timer: button.timer);
-                                      }
-                                    ));
-                                  }
-                                ),
-                                //transitionsBuilder: (context, animation, secondaryAnimation, child) => ,
-                              ));
-
-                              pageAnimationController.reverse();
-                            },
+                            onPressed: () => navigateTo(
+                              context, 
+                              TimerPicker(
+                                timerButtonOnPressed: (TimerPickerColumnButtonState button) => navigateTo(context, TimerRunner(timer: button.timer))
+                              )
+                            )
                           ),
                           SquareButton(
                             iconName: 'wrench',
                             mainText: 'Manage',
                             supportText: 'Your Timers',
                             pageAnimationController: pageAnimationController,
-                            onPressed: () async {
-                              
-                              await pageAnimationController.forward();
-
-                              if(!mounted) return;
-
-                              Navigator.push(context, PageRouteBuilder(
-                                pageBuilder: (context,animation,secondaryAnimation) => TimerManagementLandingPage(),
-                                //transitionsBuilder: (context, animation, secondaryAnimation, child) => ,
-                              ));
-
-                              pageAnimationController.reverse();
-                            },
+                            onPressed: () => navigateTo(context, TimerManagementLandingPage())
                           ),
                         ],
                       ),

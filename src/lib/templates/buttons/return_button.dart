@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
+import 'package:yourbreak/helper/page_navigation.dart';
 
 import 'package:yourbreak/templates/base_mixins/interactive_animations_mixin.dart';
 import 'package:yourbreak/templates/base_mixins/opacity_animation_mixin.dart';
@@ -13,7 +14,7 @@ import 'package:yourbreak/templates/buttons/button_base.dart';
 
 
 /// The standardized button for going back to the previous page, usually situated at the bottom of pages.
-/// It slides in from the bottom, and slides out also to the bottom.
+/// It slides in from the bottom.
 /// Can take in an optional onPressed, that will be called instead of the default logic on button click.
 class ReturnButton extends StatefulWidget {
 
@@ -85,6 +86,7 @@ class ReturnButtonState extends State<ReturnButton> with TickerProviderStateMixi
     if (pageAnimationController.isForwardOrCompleted) setState(() => _exiting = true);
   }
 
+  // ------------------------------------------------------
 
   @override
   void initState() {
@@ -100,18 +102,7 @@ class ReturnButtonState extends State<ReturnButton> with TickerProviderStateMixi
 
   // ------------------------------------------------------
 
-  void defaultClickLogic() async {
-  
-    // Sets the exiting bool to true, so the activeSlideAnimation
-    // will return exitSlideAnimation, so the button slides out.
-    setState(() => _exiting = true); 
-    
-    // await until the controller finishes to not pop the page too early
-    await widget.pageAnimationController.forward();
-        
-    Navigator.of(context).pop();
-    
-  }
+  void defaultClickLogic() => popCurrentPage(context);
 
   // ------------------------------------------------------
 
