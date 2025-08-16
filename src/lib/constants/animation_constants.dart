@@ -15,7 +15,7 @@ class AnimationDurations {
 class AnimationCurves {
   static const Curve hover = Curves.easeOutQuad;
   static const Curve click = Curves.easeOutQuad;
-  static const Curve pageTransition = Curves.easeOutCubic;
+  static const Curve pageTransition = Curves.easeInOutQuad;
   static const Curve opacity = Curves.easeOutQuint;
   static const Curve slideInOutPage = Curves.easeInOutCubic;
   static const Curve scroll = Curves.fastEaseInToSlowEaseOut;

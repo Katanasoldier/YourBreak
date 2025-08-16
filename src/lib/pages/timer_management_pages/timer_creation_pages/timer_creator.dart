@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
+import 'package:yourbreak/helper/page_navigation.dart';
 
 import 'package:yourbreak/models/timer_structure.dart';
 import 'package:yourbreak/pages/timer_picker.dart';
@@ -62,20 +63,9 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
 
     await userBox.put(newTimer.name.toLowerCase(), newTimer);
 
-    /// Close the creator widget (hide it)
-    functionalPageAnimationController.forward();
-
-
     if(!mounted) return;
 
-
-    Navigator.push(context, PageRouteBuilder(
-      pageBuilder: (context,animation,secondaryAnimation) => TimerPicker(timerButtonOnPressed: () {}),
-    ));
-
-    /// Reverse back the creator to avoid future issues where if the user pops the later page,
-    /// the creator page is unusable because of the widgets having their 'hidden' states active.
-    functionalPageAnimationController.reverse();
+    navigateTo(context, TimerPicker(timerButtonOnPressed: () {}));
 
   }
 
