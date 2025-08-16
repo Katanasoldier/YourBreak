@@ -3,9 +3,9 @@ import 'package:yourbreak/helper/page_navigation.dart';
 import 'package:yourbreak/pages/timer_management_pages/timer_management_landing_page.dart';
 import 'package:yourbreak/pages/timer_picker.dart';
 import 'package:yourbreak/pages/timer_runner.dart';
-import 'package:yourbreak/templates/buttons/square_button.dart';
+import 'package:yourbreak/templates/generic_buttons/square_button.dart';
 import 'package:yourbreak/templates/base_visuals.dart';
-import 'package:yourbreak/templates/buttons/timer_picker_column_buttons/timer_picker_column_button.dart';
+import 'package:yourbreak/templates/timer_picker_components/timer_picker_column_buttons/timer_picker_column_button.dart';
 import 'package:yourbreak/templates/stat_text.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
 

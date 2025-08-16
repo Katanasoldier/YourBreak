@@ -8,8 +8,8 @@ import 'package:yourbreak/templates/base_mixins/interactive_animations_mixin.dar
 
 import 'package:yourbreak/templates/base_mixins/page_animations_mixin.dart';
 
-import 'package:yourbreak/templates/buttons/button_base.dart';
-import 'package:yourbreak/templates/buttons/square_button/headers.dart';
+import 'package:yourbreak/templates/generic_buttons/button_base.dart';
+import 'package:yourbreak/templates/generic_buttons/square_button/headers.dart';
 
 
 /// The square button, used for picking main options in the application,

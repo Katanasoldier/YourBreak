@@ -7,7 +7,7 @@ import 'package:yourbreak/constants/color_constants.dart';
 
 import 'package:yourbreak/templates/base_mixins/opacity_animation_mixin.dart';
 
-import 'package:yourbreak/templates/buttons/button_base.dart';
+import 'package:yourbreak/templates/generic_buttons/button_base.dart';
 
 
 /// The control button widget used throughout the application.

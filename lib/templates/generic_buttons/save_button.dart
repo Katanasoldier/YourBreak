@@ -7,7 +7,7 @@ import 'package:yourbreak/templates/base_mixins/opacity_animation_mixin.dart';
 
 import 'package:yourbreak/templates/base_mixins/page_animations_mixin.dart';
 
-import 'package:yourbreak/templates/buttons/button_base.dart';
+import 'package:yourbreak/templates/generic_buttons/button_base.dart';
 
 
 /// Button for saving different configurations.

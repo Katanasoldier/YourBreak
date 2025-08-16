@@ -9,7 +9,7 @@ import 'package:yourbreak/templates/base_mixins/page_animation_controller_mixin.
 
 import 'package:yourbreak/templates/base_visuals.dart';
 
-import 'package:yourbreak/templates/buttons/return_button.dart';
+import 'package:yourbreak/templates/generic_buttons/return_button.dart';
 import 'package:yourbreak/templates/timer_runner_components/circular_timer.dart';
 import 'package:yourbreak/templates/timer_runner_components/timer_control_button.dart';
 
