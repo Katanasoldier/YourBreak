@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// This file contains color constants used throughout the application.
-
+/// Contains standardized colors to be used throughout the app.
 class PureColors {
   static const Color white = Color(0xFFEEEEEE);
   static const Color red = Color(0xFFEE5F5F);
@@ -57,6 +56,7 @@ class ControlButtonColors {
 
 }
 
+/// Returns the gradient for the background of the whole app.
 List<Color> backgroundGradient() {
   return const [
     Color(0xFF0B0822),
