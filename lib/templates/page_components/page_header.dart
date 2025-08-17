@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:yourbreak/constants/color_constants.dart';
 
-import 'package:yourbreak/templates/base_mixins/page_animations_mixin.dart';
+import 'package:yourbreak/templates/mixins/page_animations_mixin.dart';
 
 
 

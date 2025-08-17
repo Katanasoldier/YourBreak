@@ -5,9 +5,9 @@ import 'package:yourbreak/constants/font_size_constants.dart';
 
 import 'package:yourbreak/models/timer_structure.dart';
 
-import 'package:yourbreak/templates/base_mixins/page_animation_controller_mixin.dart';
+import 'package:yourbreak/templates/mixins/page_animation_controller_mixin.dart';
 
-import 'package:yourbreak/templates/base_visuals.dart';
+import 'package:yourbreak/templates/page_components.dart';
 
 import 'package:yourbreak/templates/generic_buttons/return_button.dart';
 import 'package:yourbreak/templates/timer_runner_components/circular_timer.dart';

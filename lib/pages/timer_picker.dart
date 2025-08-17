@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
 
-import 'package:yourbreak/templates/base_mixins/page_animation_controller_mixin.dart';
+import 'package:yourbreak/templates/mixins/page_animation_controller_mixin.dart';
 
-import 'package:yourbreak/templates/base_visuals.dart';
+import 'package:yourbreak/templates/page_components.dart';
 import 'package:yourbreak/templates/timer_picker_components/timer_picker_column.dart';
 
 import 'package:yourbreak/templates/generic_buttons/return_button.dart';

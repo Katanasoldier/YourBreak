@@ -5,7 +5,7 @@ import 'package:yourbreak/constants/animation_constants.dart';
 
 import 'package:yourbreak/models/timer_structure.dart';
 
-import 'package:yourbreak/templates/base_mixins/interactive_animations_mixin.dart';
+import 'package:yourbreak/templates/mixins/interactive_animations_mixin.dart';
 
 import 'package:yourbreak/helper/timer_formatters.dart';
 

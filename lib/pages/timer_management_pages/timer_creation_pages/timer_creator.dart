@@ -9,9 +9,9 @@ import 'package:yourbreak/helper/page_navigation.dart';
 import 'package:yourbreak/models/timer_structure.dart';
 import 'package:yourbreak/pages/timer_picker.dart';
 
-import 'package:yourbreak/templates/base_mixins/page_animation_controller_mixin.dart';
+import 'package:yourbreak/templates/mixins/page_animation_controller_mixin.dart';
 
-import 'package:yourbreak/templates/base_visuals.dart';
+import 'package:yourbreak/templates/page_components.dart';
 import 'package:yourbreak/templates/timer_creator_components/period_popup_buttons/period_time_chooser.dart';
 import 'package:yourbreak/templates/timer_creator_components/period_popup_buttons/period_type_chooser.dart';
 
