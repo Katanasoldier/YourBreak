@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yourbreak/templates/base_visuals.dart';
+import 'package:yourbreak/templates/page_components.dart';
 import 'package:yourbreak/templates/generic_buttons/return_button.dart';
 import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';

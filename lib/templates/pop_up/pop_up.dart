@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
 
-import 'package:yourbreak/templates/base_mixins/opacity_animation_mixin.dart';
+import 'package:yourbreak/templates/mixins/opacity_animation_mixin.dart';
 
 
 

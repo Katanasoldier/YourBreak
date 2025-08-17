@@ -4,8 +4,8 @@ import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/models/timer_structure.dart';
 
-import 'package:yourbreak/templates/base_mixins/interactive_animations_mixin.dart';
-import 'package:yourbreak/templates/base_mixins/opacity_animation_mixin.dart';
+import 'package:yourbreak/templates/mixins/interactive_animations_mixin.dart';
+import 'package:yourbreak/templates/mixins/opacity_animation_mixin.dart';
 
 import 'package:yourbreak/templates/generic_buttons/button_base.dart';
 

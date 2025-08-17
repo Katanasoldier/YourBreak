@@ -4,9 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/animation_constants.dart';
-import 'package:yourbreak/templates/base_mixins/interactive_animations_mixin.dart';
+import 'package:yourbreak/templates/mixins/interactive_animations_mixin.dart';
 
-import 'package:yourbreak/templates/base_mixins/page_animations_mixin.dart';
+import 'package:yourbreak/templates/mixins/page_animations_mixin.dart';
 
 import 'package:yourbreak/templates/generic_buttons/button_base.dart';
 import 'package:yourbreak/templates/generic_buttons/square_button/headers.dart';

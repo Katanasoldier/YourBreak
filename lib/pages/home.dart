@@ -4,7 +4,7 @@ import 'package:yourbreak/pages/timer_management_pages/timer_management_landing_
 import 'package:yourbreak/pages/timer_picker.dart';
 import 'package:yourbreak/pages/timer_runner.dart';
 import 'package:yourbreak/templates/generic_buttons/square_button.dart';
-import 'package:yourbreak/templates/base_visuals.dart';
+import 'package:yourbreak/templates/page_components.dart';
 import 'package:yourbreak/templates/timer_picker_components/timer_picker_column_buttons/timer_picker_column_button.dart';
 import 'package:yourbreak/templates/stat_text.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
