@@ -82,6 +82,7 @@ class TimerPickerColumnButton extends StatefulWidget {
 
 class TimerPickerColumnButtonState extends State<TimerPickerColumnButton> with TickerProviderStateMixin, InteractiveAnimationsMixin {
 
+  // A copy for the state, so when the state is passed in a function, the function can still access the timer.
   late final TimerStructure timer = widget.timer;
 
 
@@ -117,6 +118,10 @@ class TimerPickerColumnButtonState extends State<TimerPickerColumnButton> with T
   final ScrollController scrollController = ScrollController();
 
   // Checks if the pattern data column is overflowing, and updates isPatternOverflowing accordingly.
+  // Meant to adjust whether the pattern column should have a padding, because:
+  // If there is no scrollbar, the text can take up the whole width of the column.
+  // If there is a scrollbar, the text cannot take up the whole width of the column
+  // or else it'll flow onto the scrollbar, ending up in a bad look.
   void _checkPatternOverflow() {
     if (!scrollController.hasClients) return;
     final overflow = scrollController.hasClients && scrollController.position.maxScrollExtent > 0.0;
@@ -154,6 +159,11 @@ class TimerPickerColumnButtonState extends State<TimerPickerColumnButton> with T
   @override
   Widget build(BuildContext context) {
     return ButtonBase(
+      // Pass itself (state) as an argument.
+      // This allows functions to use each button seperately and implement unique outcomes.
+      // For example, it can be used in a function where it is supposed to push a TimerCreator
+      // that opens with a preexistingTimer. With this, each button can change the outcome of a button
+      // with itself, allowing for example the editing of existing timers.
       onPressed: () => widget.onPressed(this),
 
       rebuildListeners: [
@@ -267,7 +277,7 @@ class TimerPickerColumnButtonState extends State<TimerPickerColumnButton> with T
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
-                                              Expanded(
+                                              Expanded( // Pattern column
                                                 child: Column(
                                                   children: [
                                                     Container(
@@ -326,7 +336,7 @@ class TimerPickerColumnButtonState extends State<TimerPickerColumnButton> with T
                                                   ],
                                                 ),
                                               ),
-                                              Expanded(
+                                              Expanded( // Side info, complexity, totalTime.
                                                 child: Column(
                                                   children: [
                                                     Expanded(
@@ -400,6 +410,7 @@ class TimerPickerColumnButtonState extends State<TimerPickerColumnButton> with T
                                           ),
                                         ),
                                       ),
+                                      // Action buttons. (edit, delete)
                                       if(widget.editButtons != null) ...[
                                         Container(
                                           width: originalButtonWidth * 0.75,
