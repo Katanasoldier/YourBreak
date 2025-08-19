@@ -285,7 +285,9 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
 
   //---------------------------------------------------------------------------------------------------------------------
   // Popup content functions section.
+  // These functions return the predefined popup contents.
 
+  /// Returns the popupContent with the ability to create new periods.
   Widget createPeriodPopupContent() {
     return SizedBox(
       width: 350,
@@ -372,6 +374,8 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
     );
   }
 
+  /// Returns an alert popupContent that signals to the player that they are about to
+  /// overwrite an existing timer, and if they wish to proceed, they have a single save button.
   Widget existingNamePopupContent() {
     return SizedBox(
       width: 370,
@@ -407,6 +411,8 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
     );
   }
 
+  /// An alert popup that shows up when the user tries to exit the TimerCreator.
+  /// To prevent any accidental exits and losing progress.
   Widget discardTimerPopupContent() {
     return SizedBox(
       width: 370,
