@@ -9,7 +9,12 @@ import 'package:yourbreak/models/timer_structure.dart';
 import 'package:yourbreak/templates/timer_picker_components/timer_picker_column_buttons/timer_picker_column_button.dart';
 
 
-
+/// Compares the passed timerName in a switch, 
+/// and returns the case.
+/// Contains text color gradients for differently named timers,
+/// to easily distuingish them.
+/// For example, Pomodoro has a orangey red gradient.
+/// If the name isn't in the switch, it will return by default PureColors.white
 List<Color> getTimerTitleGradient(String timerName) {
   switch(timerName) {
     case "Pomodoro":
@@ -30,7 +35,13 @@ List<Color> getTimerTitleGradient(String timerName) {
   }
 }
 
-
+/// A simple header to be used within TimerPickerColumn.
+/// Mainly made to reduce boilerplate within TimerPickerColumn, because for both
+/// the top header and the 'Empty' header the same widget is used.
+/// Takes in a:
+/// - fontSize : double
+/// - headerText : String
+/// - color : Color?
 class Header extends StatelessWidget {
 
   final double fontSize; 
@@ -62,11 +73,15 @@ class Header extends StatelessWidget {
   }
 }
 
-
-
-
-
-
+/// Displays all available timers inside the selected box (user, preset) inside a column.
+/// Takes in a:
+/// - fontSize : double
+/// - headerText : String
+/// - timerType : String, 'user' or 'preset', this is the aforementioned Box, and they're
+/// called a box because timers are stored within a Hive Box.
+/// - timerButtonOnPressed : Function, allows defining custom click behaviour for 
+/// each timer button (TimerPickerColumnButton)
+/// - editButtons : bool?, decides whether to allow the player to edit or delete each timer.
 class TimerPickerColumn extends StatefulWidget {
 
   final double fontSize; 
@@ -99,7 +114,7 @@ class TimerPickerColumn extends StatefulWidget {
 
 class TimerPickerColumnState extends State<TimerPickerColumn> with TickerProviderStateMixin {
 
-
+  // TODO: Unused, scrapped variable, to be deleted.
   int? hoveredIndex;
 
 
@@ -124,11 +139,14 @@ class TimerPickerColumnState extends State<TimerPickerColumn> with TickerProvide
 
   @override
   Widget build(BuildContext context) {
+    // The value listenable builder listens to any changes inside the selected Box (timerType HiveBox)
+    // This is so, that if a user deletes a timer, he'll see the changes immediately, and
+    // when the user deletes the last timer in the box, then the 'Empty' header will be visible again.
     return ValueListenableBuilder(
       valueListenable: Hive.box<TimerStructure>('${widget.timerType}_timers').listenable(),
       builder: (_, Box<TimerStructure> box, _) {
         return box.values.isEmpty
-          ? Stack(
+          ? Stack( // If no timers, show 'Empty' in the center.
             children: [
               Align(
                 alignment: Alignment.topCenter,
