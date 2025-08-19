@@ -14,7 +14,17 @@ import 'package:yourbreak/templates/timer_runner_components/circular_timer.dart'
 import 'package:yourbreak/templates/timer_runner_components/timer_control_button.dart';
 
 
-
+/// Allows to run and display timers.
+/// Takes in a required timer, which is the timer that will be run.
+/// Contains a header displaying the name of the timer,
+/// a circular countdown timer widget displaying the progress of the currently run period,
+/// a TimerControlButton allowing the user to start, resume or pause the countdown,
+/// and a ReturnButton
+/// Overall the timers are run in such a way.
+/// The periods of a timer (the pattern property), get run chronologically,
+/// how they're displayed in the pattern. The pattern repeats forever.
+/// The user has to click to start the timer, and then when the current period ends,
+/// a new one loads in and has to be resumed (again, clicked by the user)
 class TimerRunner extends StatefulWidget {
 
   final TimerStructure timer;
@@ -32,9 +42,13 @@ class TimerRunner extends StatefulWidget {
 
 
 class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin, PageAnimationControllerMixin, PageAnimationControllerMixin {
-
+  
+  /// Allows the current countdown widget's timerAnimationController to be used by TimerControlButton, therefore
+  /// allowing the user to control the countdown via the control button.
   AnimationController? timerAnimationController;
 
+  /// Allows the TimerControlButton's action to be set to resume when a new period starts.
+  /// This is so when a new period loads, the user doesn't have to first press pause, and then resume to actually start it.
   final GlobalKey<TimerControlButtonState> _timerControlButtonKey = GlobalKey();
 
   // ------------------------------------------------------------
