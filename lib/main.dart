@@ -26,7 +26,7 @@ void main() async {
   await Hive.openBox<TimerStructure>('user_timers');
   await Hive.openBox<TimerStructure>('preset_timers');
 
-  await (await SharedPreferences.getInstance()).setBool('hasRunBefore', false); // TEMPORARY! REMOVE BEFORE PRODUCTION
+  await (await SharedPreferences.getInstance()).setBool('hasRunBefore', false); // TODO: TEMPORARY! REMOVE BEFORE PRODUCTION
   await checkAndInsertPresets();
 
 
@@ -64,12 +64,14 @@ void main() async {
   );
 }
 
-
+// TODO: Migrate this and all the other hive based functions to an external helper function
 Future<void> checkAndInsertPresets() async {
 
   final prefs = await SharedPreferences.getInstance();
 
+  // Prevents inserted new presets each time the app is launched.
   final bool hasRunBefore = prefs.getBool('hasRunBefore') ?? false;
+
   if(!hasRunBefore){
 
     final presetsBox = Hive.box<TimerStructure>('preset_timers');
