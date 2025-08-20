@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:yourbreak/constants/color_constants.dart';
 
 
+/// Creates the main text inside a SquareButton.
+/// Takes in:
+/// - mainText : text to be displayed
+/// - mainTextFontSize : double
+/// - mainTextGradient : a list of colors, allows the text to have a gradient effect
 class MainTextWidget extends StatelessWidget {
 
   final String mainText;
@@ -48,7 +53,12 @@ class MainTextWidget extends StatelessWidget {
 }
 
 
-
+/// Creates the support text inside a SquareButton, usually below the MainText,
+/// but with the invertedText option set inside the SquareButton, the supportText will appear above the MainText.
+/// The support text does not have the ability to have it's text color a gradient, unlike MainText.
+/// Takes in:
+/// - supportText : text to be displayed
+/// - supportTextFontSize : double
 class SupportTextWidget extends StatelessWidget {
 
   final String? supportText;
@@ -86,6 +96,17 @@ class SupportTextWidget extends StatelessWidget {
 
 
 
+/// Creates the headers required to properly label a SquareButton.
+/// Creates 2 headers by usual, but can create only 1 by not passing a supportText value.
+/// Takes in:
+/// - mainText : String
+/// - supportText : optional, String
+/// - mainTextFontSize : double
+/// - supportTextFontSize : optional, double
+/// - invertTextOrder : optional, bool. When true, the support text will appear above the mainText.
+/// - mainTextGradient : optional, a list of colors
+/// - mainTextSlideAnimation : Offset Animation, animates the position of mainText and makes it slide in.
+/// - supportTextSlideAnimation : Offset Animation, animates the position of supportText and makes it slide in.
 class Headers extends StatelessWidget {
 
 
@@ -147,7 +168,7 @@ class Headers extends StatelessWidget {
       }
     }
 
-
+    // If invertTextOrder is true, first add the supportText, else mainText.
     if (invertTextOrder == true) {
       if (supportText != null) children.add(supportTextWidget);
       children.add(mainTextWidget);

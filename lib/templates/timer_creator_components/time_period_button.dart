@@ -14,9 +14,11 @@ import 'package:yourbreak/templates/generic_buttons/button_base.dart';
 /// Button intended for visualising timer periods inside the TimerCreator
 /// by showing them in a button.
 /// 
-/// Displays the period type and period time.
+/// Displays the period type and period time, alongside a remove button on the very right, that removes the current period.
 /// 
-/// Takes in a required periodName (raw, without formatting) and a periodTime (in seconds).
+/// Takes in a required periodName (raw, without formatting),
+/// a periodTime (in seconds), and a onRemove, that is meant to house
+/// logic for removing this period from whatever structure or pattern it has been insterted into.
 /// Only scales up on hover, no click or other animations.
 class TimePeriodButton extends StatefulWidget {
 
@@ -74,13 +76,13 @@ class TimePeriodButtonState extends State<TimePeriodButton> with TickerProviderS
           child: Padding(
             padding: EdgeInsets.only(left: 10, right: 4),
             child: Stack(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.centerLeft, // Meant to align the row with the info to the far left, away from the remove button on the far right.
               children: [
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   spacing: 7.5,
                   children: [
-                    Text(
+                    Text( // Displays the periodType name.
                         formattedPeriodName,
                         style: TextStyle(
                           fontSize: 15,
@@ -96,7 +98,7 @@ class TimePeriodButtonState extends State<TimePeriodButton> with TickerProviderS
                         borderRadius: BorderRadius.circular(20)
                       ),
                     ),
-                    Text(
+                    Text( // Displays the period's periodTime.
                       formatSeconds(widget.periodTime),
                       style: TextStyle(
                         fontSize: 15,
@@ -106,7 +108,7 @@ class TimePeriodButtonState extends State<TimePeriodButton> with TickerProviderS
                     )
                   ],
                 ),
-                Align(
+                Align( // Remove button, moved to the far right.
                   alignment: Alignment.centerRight,
                   child: RemoveButton(onPressed: widget.onRemove),
                 )
@@ -120,6 +122,10 @@ class TimePeriodButtonState extends State<TimePeriodButton> with TickerProviderS
 }
 
 
+/// Inner widget meant only to be used within TimePeriodButton.
+/// Provides the ability to delete the period it has been assigned to.
+/// Requires an onPressed that will exucute on the button being pressed.
+/// The button is s simple small square button with an X icon meant to symbolise removing/a destructive action.
 class RemoveButton extends StatefulWidget {
 
   final Function onPressed;

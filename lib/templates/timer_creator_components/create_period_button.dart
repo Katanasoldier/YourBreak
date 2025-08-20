@@ -10,8 +10,9 @@ import 'package:yourbreak/templates/generic_buttons/button_base.dart';
 
 
 
-/// A button for TimerCreator, when clicked it opens a pop up to specify the
-/// details of the new time period.
+/// A button for TimerCreator, that when clicked is supposed to bring up a pop up
+/// with the ability to add new periods to the currently edited/created timer.
+/// The required onPressed it provides is supposed to encompass the aforementioned popup enabling logic.
 /// 
 /// It animates like a standard button (hover, click) and starts out with half of the opacity, on
 /// hover it animates the opacity to 1.0.

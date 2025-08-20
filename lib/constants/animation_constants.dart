@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Contains standardized durations and curves for animations used across the application.
-
+/// Contains standardized animation controller durations for different animations.
 class AnimationDurations {
   static const Duration hover = Duration(milliseconds: 200);
   static const Duration click = Duration(milliseconds: 125);
@@ -12,6 +11,7 @@ class AnimationDurations {
   static const Duration blur = Duration(milliseconds: 200);
 }
 
+/// Contains standardized animation curves for different animations.
 class AnimationCurves {
   static const Curve hover = Curves.easeOutQuad;
   static const Curve click = Curves.easeOutQuad;

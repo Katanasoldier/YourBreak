@@ -6,6 +6,10 @@ import 'package:yourbreak/templates/generic_buttons/square_button.dart';
 import 'package:yourbreak/pages/timer_picker.dart';
 
 
+/// A redirection page that allows the user to manage whether they want to
+/// create a new timer or manage their existing ones.
+/// If create a new timer, it will push StartingPoint,
+/// if manage their existing ones, it will push a TimerPicker with editButtons enabled.
 class TimerManagementLandingPage extends StatelessWidget {
   
   const TimerManagementLandingPage({super.key});

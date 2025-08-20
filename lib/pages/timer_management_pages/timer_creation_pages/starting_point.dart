@@ -11,6 +11,11 @@ import 'package:yourbreak/pages/timer_management_pages/timer_creation_pages/time
 
 
 
+/// This page allows the user to pick between the options of creating a timer:
+/// - from presets
+/// - from scratch
+/// Presets will push a TimerPicker page with each timer button further pushing a TimerCreator,
+/// and from scratch will directly push an empty TimerCreator.
 class StartingPoint extends StatelessWidget {
 
   const StartingPoint({super.key});

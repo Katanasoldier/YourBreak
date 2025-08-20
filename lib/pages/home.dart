@@ -9,6 +9,10 @@ import 'package:yourbreak/templates/timer_picker_components/timer_picker_column_
 import 'package:yourbreak/templates/stat_text.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
 
+
+/// The default landing page when opening the app.
+/// Contains 2 square buttons that allow the user to choose between
+/// running a timer or managing timers.
 class Home extends StatefulWidget {
 
   const Home({super.key});

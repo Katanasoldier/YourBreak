@@ -5,7 +5,13 @@ import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/templates/mixins/page_animations_mixin.dart';
 
 
-
+/// Provides the default standardized page header.
+/// Takes in:
+/// - text : String
+/// - fontSize : double
+/// - pageAnimationController : AnimationController
+/// - margin : EdgeInsets, defaults to horizontal 15
+/// - fontColor : Color, defaults to PageHeaderColors.headerText
 class PageHeader extends StatefulWidget {
 
   final String text;
@@ -33,14 +39,17 @@ class PageHeader extends StatefulWidget {
 
 class PageHeaderState extends State<PageHeader> with SingleTickerProviderStateMixin, VerticalSlidePageAnimationsMixin {
 
+  /// If true, the slide animation will switch the the exit version, else to the enter.
 
-  bool _exiting = false;
+    bool _exiting = false;
 
-  Animation get _activeSlideAnimation => _exiting
-    ? exitSlideAnimation
-    : enterSlideAnimation;
+    Animation get _activeSlideAnimation => _exiting
+      ? exitSlideAnimation
+      : enterSlideAnimation;
 
 
+  /// Assigned to pageAnimationController as a listener,
+  /// assigns exiting based on the value of isForwardOrCompleted of the pageAnimationController.
   void _pageControllerListener() {
     setState(() {
       _exiting = widget.pageAnimationController.isForwardOrCompleted;
@@ -64,7 +73,7 @@ class PageHeaderState extends State<PageHeader> with SingleTickerProviderStateMi
   }
 
 
-
+  /// Allows SlideAnimationMixin to get the current pageAnimationController to parent it's animations to.
   @override
   AnimationController get pageAnimationController => widget.pageAnimationController;
 

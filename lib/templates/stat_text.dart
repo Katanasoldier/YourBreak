@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/animation_constants.dart';
 
+/// Inner widget, meant to be only used within the home page.
+/// Provides a column of 2 texts, where the 1st text scales bigger on hover.
+/// Takes in a required:
+/// - mainText : String, text of the 1st text that scales up.
+/// - supportText : String, 2nd text, stays static
+/// - mainTextGradient : Optional list of colors, ability to give mainText a gradient font color
 class StatText extends StatefulWidget {
 
   final String mainText;
