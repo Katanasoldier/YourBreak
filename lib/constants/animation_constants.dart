@@ -9,6 +9,8 @@ class AnimationDurations {
   static const Duration pageTransition = Duration(milliseconds: 500);
   static const Duration scroll = Duration(milliseconds: 200);
   static const Duration blur = Duration(milliseconds: 200);
+  static const Duration scale = Duration(milliseconds: 450);
+  static const Duration verticalSlide = Duration(milliseconds: 450);
 }
 
 /// Contains standardized animation curves for different animations.
@@ -21,4 +23,6 @@ class AnimationCurves {
   static const Curve scroll = Curves.fastEaseInToSlowEaseOut;
   static const Curve blur = Curves.fastOutSlowIn;
   static const Curve popupOpacity = Curves.fastOutSlowIn;
+  static const Curve scale = Curves.easeOutQuad;
+  static const Curve verticalSlide = Curves.easeOutQuad;
 }

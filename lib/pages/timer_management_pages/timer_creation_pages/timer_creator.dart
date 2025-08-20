@@ -9,8 +9,6 @@ import 'package:yourbreak/helper/page_navigation.dart';
 import 'package:yourbreak/models/timer_structure.dart';
 import 'package:yourbreak/pages/timer_picker.dart';
 
-import 'package:yourbreak/templates/mixins/page_animation_controller_mixin.dart';
-
 import 'package:yourbreak/templates/page_components.dart';
 import 'package:yourbreak/templates/timer_creator_components/period_popup_buttons/period_time_chooser.dart';
 import 'package:yourbreak/templates/timer_creator_components/period_popup_buttons/period_type_chooser.dart';
@@ -46,7 +44,7 @@ class TimerCreator extends StatefulWidget {
 }
 
 
-class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixin, PopUpControllerMixin, PageAnimationControllerMixin {
+class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixin, PopUpControllerMixin {
 
   //---------------------------------------------------------------------------------------------------------------------
   // Timer section.
@@ -120,7 +118,6 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
                     child: PageHeader(
                       fontSize: FontSizes.pageHeader,
                       text: "Create Your Timer",
-                      pageAnimationController: functionalPageAnimationController,
                       // Horizontal are intended to scale down the text.
                       // Vertical are to space it out from the top and divider below it.
                       margin: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 20),
@@ -219,7 +216,6 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
                         SizedBox(
                           width: 150,
                           child: ReturnButton(
-                            pageAnimationController: functionalPageAnimationController,
                             onPressed: 
                               currentTimePeriods.isNotEmpty
                                 ? () {
@@ -235,7 +231,6 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
                         SizedBox(
                           width: 150,
                           child: SaveButton(
-                            pageAnimationController: functionalPageAnimationController,
                             onPressed: () {
                               
                               /// If the timer doesn't have a name or a period, don't save.
@@ -297,7 +292,6 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
           PageHeader(
             text: "New Time Period",
             fontSize: 28,
-            pageAnimationController: functionalPageAnimationController,
             margin: const EdgeInsets.symmetric(vertical: 10)
           ),
           _Divider(
@@ -307,7 +301,6 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
           PageHeader(
             text: "Period Type",
             fontSize: 20,
-            pageAnimationController: functionalPageAnimationController,
             margin: const EdgeInsets.all(0),
             fontColor: PureColors.white.withValues(alpha: 0.8),
           ),
@@ -322,7 +315,6 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
           PageHeader(
             text: "Period Time",
             fontSize: 20,
-            pageAnimationController: functionalPageAnimationController,
             margin: const EdgeInsets.all(0),
             fontColor: PureColors.white.withValues(alpha: 0.8),
           ),
@@ -339,7 +331,6 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
             height: 30,
             margin: const EdgeInsets.symmetric(vertical: 10),
             child: SaveButton(
-              pageAnimationController: functionalPageAnimationController,
               onPressed: () async {
                 
                 final int periodTime = timerTimeChooserKey.currentState?.getTotalTime() as int;
@@ -388,7 +379,6 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
               child: PageHeader(
                 text: "There is already a timer with this name.\n Do you want to overwrite it?",
                 fontSize: 28,
-                pageAnimationController: functionalPageAnimationController,
                 margin: const EdgeInsets.symmetric(vertical: 10)
               ),
             ),
@@ -402,7 +392,6 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
             height: 30,
             margin: const EdgeInsets.symmetric(vertical: 10),
             child: SaveButton(
-              pageAnimationController: functionalPageAnimationController,
               onPressed: () => saveTimer()
             ),
           )
@@ -425,7 +414,6 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
               child: PageHeader(
                 text: "Are you sure you want to go back?\nThis timer will be discarded.",
                 fontSize: 28,
-                pageAnimationController: functionalPageAnimationController,
                 margin: const EdgeInsets.symmetric(vertical: 10)
               ),
             ),
@@ -438,7 +426,7 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
             width: 140,
             height: 30,
             margin: const EdgeInsets.symmetric(vertical: 10),
-            child: ReturnButton(pageAnimationController: functionalPageAnimationController),
+            child: ReturnButton(),
           )
         ],
       ),
