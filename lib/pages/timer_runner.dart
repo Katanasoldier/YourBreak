@@ -5,8 +5,6 @@ import 'package:yourbreak/constants/font_size_constants.dart';
 
 import 'package:yourbreak/models/timer_structure.dart';
 
-import 'package:yourbreak/templates/mixins/page_animation_controller_mixin.dart';
-
 import 'package:yourbreak/templates/page_components.dart';
 
 import 'package:yourbreak/templates/generic_buttons/return_button.dart';
@@ -41,7 +39,7 @@ class TimerRunner extends StatefulWidget {
 }
 
 
-class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin, PageAnimationControllerMixin, PageAnimationControllerMixin {
+class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin {
   
   /// Allows the current countdown widget's timerAnimationController to be used by TimerControlButton, therefore
   /// allowing the user to control the countdown via the control button.
@@ -69,7 +67,6 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
                     child: PageHeader(
                       fontSize: FontSizes.pageHeader*0.6,
                       text: widget.timer.name,
-                      pageAnimationController: functionalPageAnimationController,
                       margin: const EdgeInsets.only(top: 35, left: 20, right: 20),
                       fontColor: PureColors.white.withValues(alpha: 0.85),
                     ),
@@ -115,9 +112,7 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
                           SizedBox(
                             width: 150,
                             height: 35,
-                            child: ReturnButton(
-                              pageAnimationController: functionalPageAnimationController
-                            ),
+                            child: ReturnButton(),
                           ),
                         ],
                       ),

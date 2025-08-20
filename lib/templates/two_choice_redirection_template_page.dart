@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:yourbreak/templates/generic_buttons/square_button.dart';
 import 'package:yourbreak/templates/page_components.dart';
 import 'package:yourbreak/templates/generic_buttons/return_button.dart';
-import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
 
-
-/// TODO: Rename this more clearly, for example TwoChoiceRedirectionTemplatePage, then remember to update the comments.
-/// 
 /// A template page, designed to be gather more info from the user on where
 /// they want to go. Contains a page header at the top, 2 SquareButtons, each
 /// one redirecting to another page.
@@ -15,48 +12,19 @@ import 'package:yourbreak/constants/font_size_constants.dart';
 /// - header : String, the text displayed at the top
 /// - buttonLeft : Widget Function(AnimationController)
 /// - buttonRight : Widget Function(AnimationController)
-class ConfigPage extends StatefulWidget {
+class TwoChoiceRedirectionTemplatePage extends StatelessWidget {
 
-  // TODO: rename this to something better, like headerText, then remember to update the comments.
-  final String header;
-  final Widget Function(AnimationController) buttonLeft;
-  final Widget Function(AnimationController) buttonRight;
+  final String headerText;
+  final SquareButton leftButton;
+  final SquareButton rightButton;
 
-
-  const ConfigPage({
+  const TwoChoiceRedirectionTemplatePage({
     super.key,
 
-    required this.header,
-
-    required this.buttonLeft,
-    required this.buttonRight
+    required this.headerText,
+    required this.leftButton,
+    required this.rightButton
   });
-  
-
-  @override
-  State<ConfigPage> createState() => ConfigPageState();
-
-}
-
-
-class ConfigPageState extends State<ConfigPage> with SingleTickerProviderStateMixin {
-
-
-  late final AnimationController pageAnimationController = AnimationController(
-    vsync: this,
-    duration: AnimationDurations.pageTransition
-  );
-
-
-  @override
-  void dispose() {
-    
-    super.dispose();
-
-    pageAnimationController.dispose();
-
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,15 +42,15 @@ class ConfigPageState extends State<ConfigPage> with SingleTickerProviderStateMi
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    PageHeader(text: widget.header, fontSize: FontSizes.pageHeader, pageAnimationController: pageAnimationController),
+                    PageHeader(text: headerText, fontSize: FontSizes.pageHeader),
                     SizedBox(
                       height: 183,
                       width: 430,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          widget.buttonLeft(pageAnimationController),
-                          widget.buttonRight(pageAnimationController)
+                          leftButton,
+                          rightButton
                         ],
                       ),
                     ),
@@ -97,9 +65,7 @@ class ConfigPageState extends State<ConfigPage> with SingleTickerProviderStateMi
                               child: SizedBox(
                                 width: 165,
                                 height: 35,
-                                child: ReturnButton(
-                                  pageAnimationController: pageAnimationController
-                                )
+                                child: ReturnButton()
                               ),
                             ),
                           )
