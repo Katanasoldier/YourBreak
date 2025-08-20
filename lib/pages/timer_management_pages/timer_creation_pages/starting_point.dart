@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yourbreak/helper/page_navigation.dart';
 
-import 'package:yourbreak/templates/config_page.dart';
+import 'package:yourbreak/templates/two_choice_redirection_template_page.dart';
 
 import 'package:yourbreak/templates/generic_buttons/square_button.dart';
 import 'package:yourbreak/templates/timer_picker_components/timer_picker_column_buttons/timer_picker_column_button.dart';
@@ -22,15 +22,14 @@ class StartingPoint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConfigPage(
-      header: "Starting Point",
-      buttonLeft: (pageAnimationController) => SquareButton(
+    return TwoChoiceRedirectionTemplatePage(
+      headerText: "Starting Point",
+      leftButton: SquareButton(
         mainText: "Presets",
         supportText: "From",
         iconName: "folder",
         description: "You can always edit It\nto Your needs!",
         invertTextOrder: true,
-        pageAnimationController: pageAnimationController,
         onPressed: () => navigateTo(context, 
           TimerPicker(timerButtonOnPressed: (button) {
             Navigator.push(context, MaterialPageRoute(
@@ -39,12 +38,11 @@ class StartingPoint extends StatelessWidget {
           })
         )
       ),
-      buttonRight: (pageAnimationController) => SquareButton(
+      rightButton: SquareButton(
         mainText: "Scratch",
         supportText: "From",
         iconName: "pencil",
         invertTextOrder: true,
-        pageAnimationController: pageAnimationController,
         onPressed: () => navigateTo(context, TimerCreator())
       )
     );

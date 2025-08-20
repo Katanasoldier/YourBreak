@@ -13,47 +13,9 @@ import 'package:yourbreak/constants/font_size_constants.dart';
 /// The default landing page when opening the app.
 /// Contains 2 square buttons that allow the user to choose between
 /// running a timer or managing timers.
-class Home extends StatefulWidget {
+class Home extends StatelessWidget {
 
   const Home({super.key});
-
-  @override
-  State<StatefulWidget> createState() => HomeState();
-
-}
-
-class HomeState extends State<Home> with SingleTickerProviderStateMixin {
-
-
-  late final AnimationController pageAnimationController =
-  AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 500),
-    reverseDuration: const Duration(milliseconds: 500),
-  );
-
-
-
-  @override
-  void initState() {
-
-    super.initState();
-
-    pageAnimationController.reverse();
-
-  }
-
-
-  @override
-  void dispose() {
-
-    pageAnimationController.dispose();
-
-    super.dispose();
-
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +33,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    PageHeader(text: "YourBreak", fontSize: FontSizes.appTitleHeader, pageAnimationController: pageAnimationController),
+                    PageHeader(text: "YourBreak", fontSize: FontSizes.appTitleHeader),
                     SizedBox(
                       height: 183,
                       width: 430,
@@ -82,7 +44,6 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             iconName: 'stopwatch',
                             mainText: 'Run',
                             supportText: 'Timer',
-                            pageAnimationController: pageAnimationController,
                             onPressed: () => navigateTo(
                               context, 
                               TimerPicker(
@@ -94,7 +55,6 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             iconName: 'wrench',
                             mainText: 'Manage',
                             supportText: 'Your Timers',
-                            pageAnimationController: pageAnimationController,
                             onPressed: () => navigateTo(context, TimerManagementLandingPage())
                           ),
                         ],
