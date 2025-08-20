@@ -6,8 +6,7 @@ import 'package:yourbreak/helper/page_navigation.dart';
 
 import 'package:yourbreak/templates/mixins/interactive_animations_mixin.dart';
 import 'package:yourbreak/templates/mixins/opacity_animation_mixin.dart';
-
-import 'package:yourbreak/templates/mixins/page_animations_mixin.dart';
+import 'package:yourbreak/templates/mixins/slide_animations_mixin.dart';
 
 import 'package:yourbreak/templates/generic_buttons/button_base.dart';
 
@@ -18,18 +17,12 @@ import 'package:yourbreak/templates/generic_buttons/button_base.dart';
 /// Can take in an optional onPressed, that will be called instead of the default logic on button click.
 class ReturnButton extends StatefulWidget {
 
-  // Requires the page's animation controller so it can trigger exitPage animations
-  // in other widgets that animate in the same page.
-  final AnimationController pageAnimationController;
-
   // Optional, will override the default click logic.
   final Function? onPressed;
 
   const ReturnButton({
 
     super.key,
-
-    required this.pageAnimationController,
 
     this.onPressed
 
@@ -41,20 +34,10 @@ class ReturnButton extends StatefulWidget {
 }
 
 
-class ReturnButtonState extends State<ReturnButton> with TickerProviderStateMixin, InteractiveAnimationsMixin, OpacityAnimationMixin, VerticalSlidePageAnimationsMixin {
+class ReturnButtonState extends State<ReturnButton> with TickerProviderStateMixin, InteractiveAnimationsMixin, OpacityAnimationMixin, VerticalSlideAnimationsMixin {
 
-  // Controls the active slide animation (_activeSlideAnimation)
-  bool _exiting = false;
-
-  // Returns the slide animation based on whether the button is exiting or entering the page.
-
-  // This is required because Transform.translate can only take in a value from 1 animation at a time.
-  // By using a getter, we can dynamically provide the correct animation (enter or exit)
-  // every time the widget rebuilds.
-  Animation<Offset> get _activeSlideAnimation =>
-        _exiting ? exitSlideAnimation : enterSlideAnimation;
-
-  // ------------------------------------------------------
+  @override
+  double get startVerticalSlideAnimationValue => 1;
 
   @override
   Animation<double> get opacityAnimation => Tween<double>(
@@ -73,32 +56,6 @@ class ReturnButtonState extends State<ReturnButton> with TickerProviderStateMixi
     parent: hoverController,
     curve: AnimationCurves.hover,
   ));
-
-  // ------------------------------------------------------
-
-  // Override the pageAnimationController to use the active/correct one provided by the widget.
-  @override
-  AnimationController get pageAnimationController => widget.pageAnimationController;
-
-  // Will listen and update _exiting accordingly if pageAnimationController is forwarded.
-  // This is so that this button will also animate if another widget forwards pageAnimationController.
-  void externalPageAnimationControllerTriggerListener() {
-    if (pageAnimationController.isForwardOrCompleted) setState(() => _exiting = true);
-  }
-
-  // ------------------------------------------------------
-
-  @override
-  void initState() {
-    super.initState();
-    pageAnimationController.addListener(externalPageAnimationControllerTriggerListener);
-  }
-
-  @override
-  void dispose() {
-    pageAnimationController.removeListener(externalPageAnimationControllerTriggerListener);
-    super.dispose();
-  }
 
   // ------------------------------------------------------
 
@@ -132,15 +89,14 @@ class ReturnButtonState extends State<ReturnButton> with TickerProviderStateMixi
       child: AnimatedBuilder( // Rebuilds when opacity or slide animations run.
         animation: Listenable.merge([
           opacityAnimation,
-          enterSlideAnimation,
-          exitSlideAnimation
+          verticalSlideAnimation
         ]),
         builder: (context, child) {
           return Transform.translate( // Translates the button based on the offset of the active slide animation.
             offset: Offset(
               0,
               // Multiplies the y-offset by the screen height to ensure the button slides in and out of view correctly.
-              _activeSlideAnimation.value.dy * MediaQuery.of(context).size.height,
+              verticalSlideAnimation.value.dy * MediaQuery.of(context).size.height,
             ),
             child: LayoutBuilder(
               builder: (context, constraints) {

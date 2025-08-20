@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
 
-import 'package:yourbreak/templates/mixins/page_animation_controller_mixin.dart';
-
 import 'package:yourbreak/templates/page_components.dart';
 import 'package:yourbreak/templates/timer_picker_components/timer_picker_column.dart';
 
@@ -34,7 +32,7 @@ class TimerPicker extends StatefulWidget {
 
 }
 
-class TimerPickerState extends State<TimerPicker> with SingleTickerProviderStateMixin, PageAnimationControllerMixin {
+class TimerPickerState extends State<TimerPicker> {
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +50,7 @@ class TimerPickerState extends State<TimerPicker> with SingleTickerProviderState
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    PageHeader(text: "Pick A Timer", fontSize: FontSizes.pageHeader, pageAnimationController: functionalPageAnimationController),
+                    PageHeader(text: "Pick A Timer", fontSize: FontSizes.pageHeader),
                     SizedBox(
                       height: 280,
                       width: 430,
@@ -119,9 +117,7 @@ class TimerPickerState extends State<TimerPicker> with SingleTickerProviderState
                         child: SizedBox(
                           width: 165,
                           height: 35,
-                          child: ReturnButton(
-                            pageAnimationController: functionalPageAnimationController,
-                          ),
+                          child: ReturnButton(),
                         )
                       ),
                     )
