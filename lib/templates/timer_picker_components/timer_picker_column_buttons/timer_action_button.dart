@@ -9,6 +9,8 @@ import 'package:yourbreak/templates/generic_buttons/button_base.dart';
 
 /// A button widget that is meant to be only used within the TimerPickerColumnButtons.
 /// 
+/// Allows to create buttons which main purpose is to execute a predefined action upon a TimerPickerColumnButton.
+/// 
 /// It is a simple button contains an optional text and color.
 /// It requires a font size, border radius and border width to be set, because
 /// it is used in a TimerPickerColumnButton, in which there are preset settings for these properties.

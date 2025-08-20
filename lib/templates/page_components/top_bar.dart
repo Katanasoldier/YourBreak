@@ -3,13 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:yourbreak/templates/generic_buttons/control_button.dart';
 
-/// This widget replaces the default windows (in the future also macOS) top bar.
-/// Doesn't remove the default top bar, main.dart handles that.
 
-
+/// Holds the color of the frame holding the control buttons.
 const Color controlButtonFrameColor = Color(0xFF384151);
 
 
+/// Replaces the default app topbar with a custom one.
+/// Contains 2 control buttons:
+/// - minimize
+/// - close
+/// Also provides the ability to drag the top of the application to drag it around
 class TopBar extends StatelessWidget {
 
   const TopBar({super.key});
@@ -46,7 +49,7 @@ class TopBar extends StatelessWidget {
                     ),
                   )
                 ),
-                child: Row(
+                child: Row( // Buttons
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     ControlButton(

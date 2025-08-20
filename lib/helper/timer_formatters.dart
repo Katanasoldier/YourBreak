@@ -65,6 +65,7 @@ String formatSeconds(int totalSeconds) {
     formattedString = seconds.toString();
   }
 
+  // Add a 's' suffix to indicate that the time is shown in seconds.
   formattedString += 's';
 
 
