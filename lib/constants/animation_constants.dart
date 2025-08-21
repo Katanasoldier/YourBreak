@@ -11,14 +11,15 @@ class AnimationDurations {
   static const Duration blur = Duration(milliseconds: 200);
   static const Duration scale = Duration(milliseconds: 450);
   static const Duration verticalSlide = Duration(milliseconds: 450);
+  static const Duration buttonDebounce = Duration(milliseconds: 300);
 }
 
 /// Contains standardized animation curves for different animations.
 class AnimationCurves {
-  static const Curve hover = Curves.easeOutQuad;
-  static const Curve click = Curves.easeOutQuad;
+  static const Curve hover = Curves.easeInOutSine;
+  static const Curve click = Curves.easeInOutSine;
   static const Curve pageTransition = Curves.easeInOutQuad;
-  static const Curve opacity = Curves.easeOutQuint;
+  static const Curve opacity = Curves.easeInOutQuad;
   static const Curve slideInOutPage = Curves.easeInOutCubic;
   static const Curve scroll = Curves.fastEaseInToSlowEaseOut;
   static const Curve blur = Curves.fastOutSlowIn;
