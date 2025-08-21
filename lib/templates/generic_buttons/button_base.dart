@@ -95,7 +95,7 @@ class ButtonBaseState extends State<ButtonBase>{
     }
 
     // await to prevent rapid button clicking.
-    await Future.delayed(AnimationDurations.pageTransition);
+    await Future.delayed(AnimationDurations.buttonDebounce);
 
     // Unlock the MouseRegion events.
     setState(() {
