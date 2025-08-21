@@ -60,6 +60,9 @@ class ButtonBase extends StatefulWidget {
 
 class ButtonBaseState extends State<ButtonBase>{
 
+  // Tracks if the mouse is currently over the button.
+  bool isMouseOver = false;
+
   /// Prevents the hoverController and other MouseRegion based controllers from
   /// triggering on MouseRegion events after the button has been clicked.
   bool lockHover = false;
@@ -99,10 +102,13 @@ class ButtonBaseState extends State<ButtonBase>{
       lockHover = false;
     });
 
-    // Reset the hover and click controllers to their initial state.
-
-    widget.hoverController?.reverse();
-
+    for (final controller in widget.mouseRegionBasedControllers) {
+      if (isMouseOver) {
+        controller.forward();
+      } else {
+        controller.reverse();
+      }
+    }
 
     widget.clickController?.reverse();
         
@@ -120,6 +126,7 @@ class ButtonBaseState extends State<ButtonBase>{
         child: MouseRegion(
         
           onEnter: (_) {
+            isMouseOver = true;
             if (!lockHover) {
               for (final AnimationController controller in widget.mouseRegionBasedControllers) {
                 controller.forward();
@@ -128,6 +135,7 @@ class ButtonBaseState extends State<ButtonBase>{
           },
         
           onExit: (_) {
+            isMouseOver = false;
             if (!lockHover) {
               for (final AnimationController controller in widget.mouseRegionBasedControllers) {
                 controller.reverse();
