@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yourbreak/templates/generic_buttons/square_button.dart';
 import 'package:yourbreak/templates/page_components.dart';
 import 'package:yourbreak/templates/generic_buttons/return_button.dart';
-import 'package:yourbreak/constants/font_size_constants.dart';
+import 'package:yourbreak/constants/size_constants.dart';
 
 /// A template page, designed to be gather more info from the user on where
 /// they want to go. Contains a page header at the top, 2 SquareButtons, each
@@ -62,11 +62,7 @@ class TwoChoiceRedirectionTemplatePage extends StatelessWidget {
                             alignment: Alignment.topCenter,
                             child: Container(
                               margin: const EdgeInsets.only(top: 35),
-                              child: SizedBox(
-                                width: 165,
-                                height: 35,
-                                child: ReturnButton()
-                              ),
+                              child: ReturnButton(),
                             ),
                           )
                         ],

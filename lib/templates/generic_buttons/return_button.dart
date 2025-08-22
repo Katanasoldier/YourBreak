@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
+import 'package:yourbreak/constants/size_constants.dart';
 import 'package:yourbreak/helper/page_navigation.dart';
 
 import 'package:yourbreak/templates/mixins/interactive_animations_mixin.dart';
@@ -65,83 +66,87 @@ class ReturnButtonState extends State<ReturnButton> with TickerProviderStateMixi
 
   @override
   Widget build(BuildContext context) {
-    return ButtonBase(
-      onPressed: widget.onPressed ?? defaultClickLogic,
-
-      rebuildListeners: [
-        hoverSizeAnimation,
-        clickSizeAnimation,
-      ],
-
-      mouseRegionBasedControllers: [
-        hoverController,
-        opacityController
-      ],
-
-      scaleAnimations: [
-        hoverSizeAnimation,
-        clickSizeAnimation,
-      ],
-
-      hoverController: hoverController,
-      clickController: clickController,
-
-      child: AnimatedBuilder( // Rebuilds when opacity or slide animations run.
-        animation: Listenable.merge([
-          opacityAnimation,
-          verticalSlideAnimation
-        ]),
-        builder: (context, child) {
-          return Transform.translate( // Translates the button based on the offset of the active slide animation.
-            offset: Offset(
-              0,
-              // Multiplies the y-offset by the screen height to ensure the button slides in and out of view correctly.
-              verticalSlideAnimation.value.dy * MediaQuery.of(context).size.height,
-            ),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-            
-                final double maxSize = constraints.maxWidth;
-            
-                return Opacity(
-                  opacity: opacityAnimation.value,
-                  child: OutlinedButton(
-                    clipBehavior: Clip.hardEdge,
-                    onPressed: null, // Handled by ButtonBase.
-                    style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(maxSize * 0.07),
+    return SizedBox(
+      width: WidgetSizeConstants.genericRectangleButton.width,
+      height: WidgetSizeConstants.genericRectangleButton.height,
+      child: ButtonBase(
+        onPressed: widget.onPressed ?? defaultClickLogic,
+      
+        rebuildListeners: [
+          hoverSizeAnimation,
+          clickSizeAnimation,
+        ],
+      
+        mouseRegionBasedControllers: [
+          hoverController,
+          opacityController
+        ],
+      
+        scaleAnimations: [
+          hoverSizeAnimation,
+          clickSizeAnimation,
+        ],
+      
+        hoverController: hoverController,
+        clickController: clickController,
+      
+        child: AnimatedBuilder( // Rebuilds when opacity or slide animations run.
+          animation: Listenable.merge([
+            opacityAnimation,
+            verticalSlideAnimation
+          ]),
+          builder: (context, child) {
+            return Transform.translate( // Translates the button based on the offset of the active slide animation.
+              offset: Offset(
+                0,
+                // Multiplies the y-offset by the screen height to ensure the button slides in and out of view correctly.
+                verticalSlideAnimation.value.dy * MediaQuery.of(context).size.height,
+              ),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+              
+                  final double maxSize = constraints.maxWidth;
+              
+                  return Opacity(
+                    opacity: opacityAnimation.value,
+                    child: OutlinedButton(
+                      clipBehavior: Clip.hardEdge,
+                      onPressed: null, // Handled by ButtonBase.
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(maxSize * 0.07),
+                        ),
+                        padding: EdgeInsets.zero,
+                        side: BorderSide(
+                          color: ReturnButtonColors.border,
+                          width: maxSize * 0.015,
+                          strokeAlign: BorderSide.strokeAlignInside,
+                        ),
+                        splashFactory: NoSplash.splashFactory,
+                        overlayColor: Colors.transparent,
                       ),
-                      padding: EdgeInsets.zero,
-                      side: BorderSide(
-                        color: ReturnButtonColors.border,
-                        width: maxSize * 0.015,
-                        strokeAlign: BorderSide.strokeAlignInside,
-                      ),
-                      splashFactory: NoSplash.splashFactory,
-                      overlayColor: Colors.transparent,
-                    ),
-                    child: IgnorePointer(
-                      child: Center(
-                        child: Text(
-                          'Go Back',
-                          style: TextStyle(
-                            fontSize: maxSize * 0.125,
-                            color: ReturnButtonColors.mainText,
-                            fontWeight: FontWeight.w700,
+                      child: IgnorePointer(
+                        child: Center(
+                          child: Text(
+                            'Go Back',
+                            style: TextStyle(
+                              fontSize: maxSize * 0.125,
+                              color: ReturnButtonColors.mainText,
+                              fontWeight: FontWeight.w700,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
-                  ),
-                );
-              },
-            ),
-          );
-        },
+                  );
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }

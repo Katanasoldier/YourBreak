@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:yourbreak/constants/color_constants.dart';
-import 'package:yourbreak/constants/font_size_constants.dart';
+import 'package:yourbreak/constants/size_constants.dart';
 
 import 'package:yourbreak/models/timer_structure.dart';
 
@@ -109,11 +109,7 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin 
                                 )
                               : null
                           ),
-                          SizedBox(
-                            width: 150,
-                            height: 35,
-                            child: ReturnButton(),
-                          ),
+                          ReturnButton(),
                         ],
                       ),
                     ),

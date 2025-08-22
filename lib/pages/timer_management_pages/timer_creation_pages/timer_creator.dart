@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:yourbreak/constants/color_constants.dart';
-import 'package:yourbreak/constants/font_size_constants.dart';
+import 'package:yourbreak/constants/size_constants.dart';
 import 'package:yourbreak/helper/page_navigation.dart';
 
 import 'package:yourbreak/models/timer_structure.dart';
@@ -213,51 +213,45 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
                       mainAxisAlignment: MainAxisAlignment.center,
                       spacing: 15,
                       children: [
-                        SizedBox(
-                          width: 150,
-                          child: ReturnButton(
-                            onPressed: 
-                              currentTimePeriods.isNotEmpty
-                                ? () {
-                                  setState(() {
-                                    popupContent = discardTimerPopupContent();
-                                    rebuildPopup++;
-                                  });
-                                  popUpController.forward();
-                                }
-                                : null
-                          ),
-                        ),
-                        SizedBox(
-                          width: 150,
-                          child: SaveButton(
-                            onPressed: () {
-                              
-                              /// If the timer doesn't have a name or a period, don't save.
-                              if (timerNameInputKey.currentState!.isText == false || currentTimePeriods.isEmpty) return;
-
-                              setState(() {
-                                newTimer = TimerStructure(
-                                  name: timerNameInputKey.currentState!.currentText,
-                                  complexity: Complexity.simple,
-                                  pattern: currentTimePeriods
-                                );
-                              });
-
-                              /// If the user already has an existing timer with the same name as the new timer,
-                              /// prompt if he wants to overwrite the existing one.
-                              if (userBox.containsKey(newTimer.name.toLowerCase())) {
+                        ReturnButton(
+                          onPressed: 
+                            currentTimePeriods.isNotEmpty
+                              ? () {
                                 setState(() {
-                                  popupContent = existingNamePopupContent();
+                                  popupContent = discardTimerPopupContent();
                                   rebuildPopup++;
                                 });
                                 popUpController.forward();
-                              } else {
-                                saveTimer();
                               }
-
+                              : null
+                        ),
+                        SaveButton(
+                          onPressed: () {
+                            
+                            /// If the timer doesn't have a name or a period, don't save.
+                            if (timerNameInputKey.currentState!.isText == false || currentTimePeriods.isEmpty) return;
+                        
+                            setState(() {
+                              newTimer = TimerStructure(
+                                name: timerNameInputKey.currentState!.currentText,
+                                complexity: Complexity.simple,
+                                pattern: currentTimePeriods
+                              );
+                            });
+                        
+                            /// If the user already has an existing timer with the same name as the new timer,
+                            /// prompt if he wants to overwrite the existing one.
+                            if (userBox.containsKey(newTimer.name.toLowerCase())) {
+                              setState(() {
+                                popupContent = existingNamePopupContent();
+                                rebuildPopup++;
+                              });
+                              popUpController.forward();
+                            } else {
+                              saveTimer();
                             }
-                          ),
+                        
+                          }
                         )
                       ],
                     ),

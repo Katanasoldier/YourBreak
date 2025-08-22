@@ -7,7 +7,7 @@ import 'package:yourbreak/templates/generic_buttons/square_button.dart';
 import 'package:yourbreak/templates/page_components.dart';
 import 'package:yourbreak/templates/timer_picker_components/timer_picker_column_buttons/timer_picker_column_button.dart';
 import 'package:yourbreak/templates/stat_text.dart';
-import 'package:yourbreak/constants/font_size_constants.dart';
+import 'package:yourbreak/constants/size_constants.dart';
 
 
 /// The default landing page when opening the app.

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:yourbreak/constants/color_constants.dart';
-import 'package:yourbreak/constants/font_size_constants.dart';
+import 'package:yourbreak/constants/size_constants.dart';
 
 import 'package:yourbreak/templates/page_components.dart';
 import 'package:yourbreak/templates/timer_picker_components/timer_picker_column.dart';
@@ -114,11 +114,7 @@ class TimerPickerState extends State<TimerPicker> {
                       width: 430,
                       child: Align(
                         alignment: Alignment.center,
-                        child: SizedBox(
-                          width: 165,
-                          height: 35,
-                          child: ReturnButton(),
-                        )
+                        child: ReturnButton()
                       ),
                     )
                   ]

@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/animation_constants.dart';
+import 'package:yourbreak/constants/size_constants.dart';
 import 'package:yourbreak/templates/mixins/interactive_animations_mixin.dart';
 
 
@@ -108,29 +109,32 @@ class SquareButtonState extends State<SquareButton> with TickerProviderStateMixi
 
   @override
   Widget build(BuildContext context) {
-    return ButtonBase(
-      onPressed: widget.onPressed,
+    return SizedBox(
+
+      width: WidgetSizeConstants.squarebutton.width,
+      height: WidgetSizeConstants.squarebutton.height,
       
-      rebuildListeners: [
-        hoverSizeAnimation,
-        clickSizeAnimation,
-        scaleAnimationController,
-      ],
-      mouseRegionBasedControllers: [
-        hoverController,
-      ],
-
-      scaleAnimations: [
-        hoverSizeAnimation,
-        clickSizeAnimation,
-        scaleAnimation
-      ],
-
-      hoverController: hoverController,
-      clickController: clickController,
-
-      child: AspectRatio(
-        aspectRatio: 1,
+      child: ButtonBase(
+        onPressed: widget.onPressed,
+        
+        rebuildListeners: [
+          hoverSizeAnimation,
+          clickSizeAnimation,
+          scaleAnimationController,
+        ],
+        mouseRegionBasedControllers: [
+          hoverController,
+        ],
+      
+        scaleAnimations: [
+          hoverSizeAnimation,
+          clickSizeAnimation,
+          scaleAnimation
+        ],
+      
+        hoverController: hoverController,
+        clickController: clickController,
+      
         child: LayoutBuilder(
           builder: (context, constraints) {
         
