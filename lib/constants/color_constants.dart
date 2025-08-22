@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 /// Contains standardized colors to be used throughout the app.
 class PureColors {
   static const Color white = Color(0xFFEEEEEE);
-  static const Color red = Color(0xFFEE5F5F);
   static const Color grey = Color(0x80EEEEEE);
+  static const Color darkGrey = Color(0xFF444444);
+  static const Color red = Color(0xFFEE5F5F);
   static const Color blue = Color(0xFF7fa7ff);
   static const Color green = Color(0xFFaff0aa);
   static const Color orange = Color(0xFFffbb55);
@@ -50,9 +51,21 @@ class SaveButtonColors {
 
 class ControlButtonColors {
 
+  /// Color of the frame holding the control buttons.
+  static Color holdingFrame = PureColors.blue.withValues(alpha: 0.1);
+
   static const Color closeBackground = Color(0xFFE81123);
   
   static const Color minimizeBackground = PureColors.grey;
+
+}
+
+class PopUpColors {
+
+  static Color appWideBlur = PureColors.darkGrey.withValues(alpha: 0.05);
+
+  static Color background = PureColors.white.withValues(alpha: 0.1);
+  static Color frame = PureColors.white.withValues(alpha: 0.5);
 
 }
 

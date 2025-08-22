@@ -116,7 +116,7 @@ class PopUpState extends State<PopUp> with TickerProviderStateMixin, OpacityAnim
                 // Application wide milder blur
                 BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: screenBlurAnimation.value, sigmaY: screenBlurAnimation.value),
-                  child: Container(color: Color(0xFF444444).withValues(alpha: 0.05)),
+                  child: Container(color: PopUpColors.appWideBlur),
                 ),
           
                 GestureDetector(
@@ -152,9 +152,9 @@ class PopUpState extends State<PopUp> with TickerProviderStateMixin, OpacityAnim
                           child: Container(
                             key: _contentKey,
                             decoration: BoxDecoration(
-                              color: PureColors.white.withValues(alpha: 0.1),
+                              color: PopUpColors.background,
                               border: Border.all(
-                                color: PureColors.white.withValues(alpha: 0.5),
+                                color: PopUpColors.frame,
                                 width: 3
                               ),
                               borderRadius: BorderRadius.circular(25)

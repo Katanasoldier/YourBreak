@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/templates/generic_buttons/control_button.dart';
-
-
-/// Holds the color of the frame holding the control buttons.
-const Color controlButtonFrameColor = Color(0xFF384151);
-
 
 /// Replaces the default app topbar with a custom one.
 /// Contains 2 control buttons:
@@ -40,11 +36,11 @@ class TopBar extends StatelessWidget {
                   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8)),
                   border: Border(
                     left: BorderSide(
-                      color: controlButtonFrameColor,
+                      color: ControlButtonColors.holdingFrame,
                       width: 1.5,
                     ),
                     bottom: BorderSide(
-                      color: controlButtonFrameColor,
+                      color: ControlButtonColors.holdingFrame,
                       width: 1.5,
                     ),
                   )
