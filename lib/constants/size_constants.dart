@@ -9,6 +9,10 @@ class WidgetSizeConstants {
 
 /// Contains standardized font sizes used across the application.
 class FontSizes {
-  static const double appTitleHeader = 70.0;
-  static const double pageHeader = 55.0;
+  static const double appTitleHeader = 70;
+  static const double pageHeader = 55;
+  static const double genericRectangleButton = 20;
+  static const double squarebuttonMainText = 40;
+  static const double squarebuttonSupportText = 27.5;
+  static const double squarebuttonDescriptionText = 14.5;
 }

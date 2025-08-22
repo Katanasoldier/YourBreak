@@ -119,7 +119,7 @@ class SaveButtonState extends State<SaveButton> with TickerProviderStateMixin, I
                           child: Text(
                             'Save',
                             style: TextStyle(
-                              fontSize: maxSize * 0.125,
+                              fontSize: FontSizes.genericRectangleButton,
                               color: SaveButtonColors.mainText,
                               fontWeight: FontWeight.w700,
                             ),

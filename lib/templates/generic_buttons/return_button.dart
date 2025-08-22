@@ -130,7 +130,7 @@ class ReturnButtonState extends State<ReturnButton> with TickerProviderStateMixi
                           child: Text(
                             'Go Back',
                             style: TextStyle(
-                              fontSize: maxSize * 0.125,
+                              fontSize: FontSizes.genericRectangleButton,
                               color: ReturnButtonColors.mainText,
                               fontWeight: FontWeight.w700,
                             ),

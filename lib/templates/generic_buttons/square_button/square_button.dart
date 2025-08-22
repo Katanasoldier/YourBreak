@@ -113,7 +113,7 @@ class SquareButtonState extends State<SquareButton> with TickerProviderStateMixi
 
       width: WidgetSizeConstants.squarebutton.width,
       height: WidgetSizeConstants.squarebutton.height,
-      
+
       child: ButtonBase(
         onPressed: widget.onPressed,
         
@@ -186,8 +186,8 @@ class SquareButtonState extends State<SquareButton> with TickerProviderStateMixi
                           mainText: widget.mainText,
                           supportText: widget.supportText,
                           
-                          mainTextFontSize: mainTextFontSize,
-                          supportTextFontSize: supportTextFontSize,
+                          mainTextFontSize: FontSizes.squarebuttonMainText,
+                          supportTextFontSize: FontSizes.squarebuttonSupportText,
                         
                           invertTextOrder: widget.invertTextOrder,
                         
@@ -207,7 +207,7 @@ class SquareButtonState extends State<SquareButton> with TickerProviderStateMixi
                     widget.description!,
                     style: TextStyle(
                       color: SquareButtonColors.description,
-                      fontSize: maxButtonWidth * 0.077,
+                      fontSize: FontSizes.squarebuttonDescriptionText,
                       fontWeight: FontWeight.w400,
                       height: 1.07
                     ),
