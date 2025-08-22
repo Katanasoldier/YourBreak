@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
+import 'package:yourbreak/constants/size_constants.dart';
 import 'package:yourbreak/models/timer_structure.dart';
 
 import 'package:yourbreak/templates/mixins/interactive_animations_mixin.dart';
@@ -166,62 +167,52 @@ class TextInputButtonState extends State<TextInputButton> with TickerProviderSta
                 strokeAlign: BorderSide.strokeAlignInside,
               ),
               borderRadius: BorderRadius.circular(12.5),
-              color: Color(0xFF444444).withValues(alpha: 0.1),
+              color: PureColors.darkGrey.withValues(alpha: 0.1),
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: SizedBox(
                 height: 45,
                 child: Center(
-                  child: Theme(
-                    // Overrides the default TextFormField cursor and selection
-                    // colors to match the application's theme.
-                    data: Theme.of(context).copyWith(
-                      textSelectionTheme: TextSelectionThemeData(
-                        cursorColor: PureColors.white.withValues(alpha: 0.5),
-                        selectionColor: PureColors.blue.withValues(alpha: 0.5)
-                      ),
-                    ),
-                    child: TextFormField(
-                      controller: _textEditingController,
-
-                      // To track if the text field is focused, so when you select text,
-                      // the text field doesn't size down (via hoverSizeAnimation) when you exit the text field.
-                      focusNode: textFocusNode,
-
-                      decoration: InputDecoration(
-                    
-                        // Hint/placeholder text and style.
-                        hintText: widget.placeholderText,
-                        hintStyle: TextStyle(
-                          fontSize: 21,
-                          color: PureColors.white.withValues(alpha: 0.5),
-                          fontWeight: FontWeight.w700,
-                        ),
-
-                        // Removes the underline that appears under the text.
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent
-                          )
-                        ),
-                        // Removes the underline that appears when the text field is focused.
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent
-                          )
-                        ),
-                        // Removes the padding allowing the text to be centered vertically.
-                        contentPadding: EdgeInsets.all(0),
-                        isCollapsed: true
-                    
-                      ),
-                      // User text style.
-                      style: TextStyle(
-                        fontSize: 21,
-                        color: PureColors.white,
+                  child: TextFormField(
+                    controller: _textEditingController,
+                  
+                    // To track if the text field is focused, so when you select text,
+                    // the text field doesn't size down (via hoverSizeAnimation) when you exit the text field.
+                    focusNode: textFocusNode,
+                  
+                    decoration: InputDecoration(
+                  
+                      // Hint/placeholder text and style.
+                      hintText: widget.placeholderText,
+                      hintStyle: TextStyle(
+                        fontSize: FontSizes.mediumContent,
+                        color: PureColors.white.withValues(alpha: 0.5),
                         fontWeight: FontWeight.w700,
                       ),
+                  
+                      // Removes the underline that appears under the text.
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.transparent
+                        )
+                      ),
+                      // Removes the underline that appears when the text field is focused.
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.transparent
+                        )
+                      ),
+                      // Removes the padding allowing the text to be centered vertically.
+                      contentPadding: EdgeInsets.all(0),
+                      isCollapsed: true
+                  
+                    ),
+                    // User text style.
+                    style: TextStyle(
+                      fontSize: FontSizes.mediumContent,
+                      color: PureColors.white,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),

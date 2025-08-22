@@ -11,6 +11,7 @@ class PureColors {
   static const Color orange = Color(0xFFffbb55);
 }
 
+const Color dividerColor = PureColors.grey;
 
 class PageHeaderColors {
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
+import 'package:yourbreak/constants/size_constants.dart';
 
 import 'package:yourbreak/templates/mixins/interactive_animations_mixin.dart';
 import 'package:yourbreak/templates/mixins/opacity_animation_mixin.dart';
@@ -48,50 +49,59 @@ class CreatePeriodButtonState extends State<CreatePeriodButton> with TickerProvi
 
   @override
   Widget build(BuildContext context) {
-    return ButtonBase(
-      onPressed: widget.onPressed, 
-
-      rebuildListeners: [
-        hoverSizeAnimation,
-        clickSizeAnimation,
-      ],
-
-      mouseRegionBasedControllers: [
-        hoverController,
-        opacityController
-      ],
-
-      scaleAnimations: [
-        hoverSizeAnimation,
-        clickSizeAnimation
-      ],
-
-      clickController: clickController,
-
-      child: AnimatedBuilder(
-        animation: opacityAnimation,
-        builder: (context, child) => Container(
-          clipBehavior: Clip.hardEdge,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: PureColors.white.withValues(alpha: opacityAnimation.value),
-              width: 2.5,
-            ),
-            borderRadius: BorderRadius.circular(12.5),
-          ),
-          child: Center(
-            child: Text(
-              "New Time Period",
-              style: TextStyle(
-                fontSize: 14,
+    return SizedBox(
+      width: WidgetSizeConstants.genericRectangleButton.width,
+      height: WidgetSizeConstants.genericRectangleButton.height,
+      child: ButtonBase(
+        onPressed: widget.onPressed, 
+      
+        rebuildListeners: [
+          hoverSizeAnimation,
+          clickSizeAnimation,
+        ],
+      
+        mouseRegionBasedControllers: [
+          hoverController,
+          opacityController
+        ],
+      
+        scaleAnimations: [
+          hoverSizeAnimation,
+          clickSizeAnimation
+        ],
+      
+        clickController: clickController,
+      
+        child: AnimatedBuilder(
+          animation: opacityAnimation,
+          builder: (context, child) => Container(
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+              border: Border.all(
                 color: PureColors.white.withValues(alpha: opacityAnimation.value),
-                fontWeight: FontWeight.w700
+                width: 2.5,
               ),
-              textAlign: TextAlign.center,
+              borderRadius: BorderRadius.circular(12.5),
+            ),
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 7.5),
+                child: FittedBox(
+                  child: Text(
+                    "New Time Period",
+                    style: TextStyle(
+                      fontSize: FontSizes.genericRectangleButton,
+                      color: PureColors.white.withValues(alpha: opacityAnimation.value),
+                      fontWeight: FontWeight.w700
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
-      )
+        )
+      ),
     );
   }
 

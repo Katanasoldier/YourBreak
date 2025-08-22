@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:yourbreak/constants/color_constants.dart';
+import 'package:yourbreak/constants/size_constants.dart';
 
 import 'package:yourbreak/models/timer_structure.dart';
 
@@ -157,7 +158,7 @@ class TimerTimeChooserState extends State<TimerTimeChooser> with TickerProviderS
     return Container(
       width: 2,
       height: 25,
-      color: PureColors.white.withValues(alpha: 0.5),
+      color: dividerColor,
       margin: EdgeInsets.symmetric(horizontal: 5),
     );
   }
@@ -212,9 +213,12 @@ class TimeTextGroupState extends State<TimeTextGroup> with SingleTickerProviderS
 
     // Text style subsection.
 
+
+      //TODO: rename to commonTextStyle and privatize it.
+
       // To prevent boilerplate for both the textfield text and time unit text.
       final TextStyle commonStyle = TextStyle(
-        fontSize: 17,
+        fontSize: FontSizes.smallContent,
         color: PureColors.white,
         fontWeight: FontWeight.w700,
       );
@@ -385,40 +389,30 @@ class TimeTextGroupState extends State<TimeTextGroup> with SingleTickerProviderS
         children: [
           SizedBox(
             width: 24,
-            child: Theme(
-              // Overrides the default TextFormField cursor and selection
-              // colors to match the application's theme.
-              data: Theme.of(context).copyWith(
-                textSelectionTheme: TextSelectionThemeData(
-                  cursorColor: PureColors.white.withValues(alpha: 0.5),
-                  selectionColor: PureColors.blue.withValues(alpha: 0.5)
+            child: TextFormField(
+              controller: _textEditingController,
+              focusNode: textFocusNode,
+                        
+              decoration: InputDecoration(
+                // Removes the underline that appears under the text.
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.transparent
+                  )
                 ),
-              ),
-              child: TextFormField(
-                controller: _textEditingController,
-                focusNode: textFocusNode,
+                // Removes the underline that appears when the text field is focused.
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.transparent
+                  )
+                ),
+                // Removes the padding allowing the text to be centered vertically.
+                contentPadding: EdgeInsets.all(0),
+                isCollapsed: true
             
-                decoration: InputDecoration(
-                  // Removes the underline that appears under the text.
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.transparent
-                    )
-                  ),
-                  // Removes the underline that appears when the text field is focused.
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.transparent
-                    )
-                  ),
-                  // Removes the padding allowing the text to be centered vertically.
-                  contentPadding: EdgeInsets.all(0),
-                  isCollapsed: true
-              
-                ),
-                // User text style.
-                style: commonStyle
               ),
+              // User text style.
+              style: commonStyle
             ),
           ),
           Stack( // Required or else .translate won't work.

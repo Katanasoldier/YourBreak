@@ -188,20 +188,16 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
                           opacity: 0.25,
                         ),
                       ),
-                      SizedBox(
-                        width: 130,
-                        height: 35,
-                        child: CreatePeriodButton(
-                          /// Button that shows a pop up where the user can
-                          /// configure a new time period.
-                          onPressed: () {
-                            setState(() {
-                              popupContent = createPeriodPopupContent();
-                              rebuildPopup++;
-                            });
-                            popUpController.forward();
-                          },
-                        ),
+                      CreatePeriodButton(
+                        /// Button that shows a pop up where the user can
+                        /// configure a new time period.
+                        onPressed: () {
+                          setState(() {
+                            popupContent = createPeriodPopupContent();
+                            rebuildPopup++;
+                          });
+                          popUpController.forward();
+                        },
                       )
                     ],
                   ),

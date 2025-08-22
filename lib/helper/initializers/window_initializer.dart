@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/pages/home.dart';
 
 /// The size of the window the app was designed for.
@@ -41,7 +42,11 @@ Widget yourbreakApp() {
     splitScreenMode: true,
     builder: (context, child) => MaterialApp(
       theme: ThemeData(
-        fontFamily: 'Inria Sans'
+        fontFamily: 'Inria Sans',
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: PureColors.white.withValues(alpha: 0.5),
+          selectionColor: PureColors.blue.withValues(alpha: 0.5)
+        )
       ),
       home: Home(),
     ),

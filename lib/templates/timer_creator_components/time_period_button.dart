@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
+import 'package:yourbreak/constants/size_constants.dart';
 
 import 'package:yourbreak/templates/mixins/interactive_animations_mixin.dart';
 
@@ -54,8 +55,8 @@ class TimePeriodButtonState extends State<TimePeriodButton> with TickerProviderS
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 225,
-      height: 35,
+      width: WidgetSizeConstants.wideGenericRectangleButton.width,
+      height: WidgetSizeConstants.wideGenericRectangleButton.height,
       child: ButtonBase(
         onPressed: null,
       
@@ -85,7 +86,7 @@ class TimePeriodButtonState extends State<TimePeriodButton> with TickerProviderS
                     Text( // Displays the periodType name.
                         formattedPeriodName,
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: FontSizes.smallContent,
                           color: PureColors.white,
                           fontWeight: FontWeight.w700
                         ),
@@ -101,7 +102,7 @@ class TimePeriodButtonState extends State<TimePeriodButton> with TickerProviderS
                     Text( // Displays the period's periodTime.
                       formatSeconds(widget.periodTime),
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: FontSizes.smallContent,
                         color: PureColors.white,
                         fontWeight: FontWeight.w700
                       ),

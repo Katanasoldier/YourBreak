@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:yourbreak/constants/color_constants.dart';
+import 'package:yourbreak/constants/size_constants.dart';
 
 import 'package:yourbreak/helper/timer_formatters.dart';
 
@@ -302,7 +303,7 @@ class TypeTextState extends State<TypeText> {
       child: Text(
         formatPeriodName(widget.text),
         style: TextStyle(
-          fontSize: 16,
+          fontSize: FontSizes.smallContent,
           color: PureColors.white.withValues(alpha: 0.8),
           fontWeight: FontWeight.w700
         ),

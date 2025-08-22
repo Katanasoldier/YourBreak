@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class WidgetSizeConstants {
   static const Size genericRectangleButton = Size(140, 35);
   static const Size squarebutton = Size(185, 185);
+  static const Size wideGenericRectangleButton = Size(225, 35);
 }
 
 /// Contains standardized font sizes used across the application.
@@ -15,4 +16,6 @@ class FontSizes {
   static const double squarebuttonMainText = 40;
   static const double squarebuttonSupportText = 27.5;
   static const double squarebuttonDescriptionText = 14.5;
+  static const double mediumContent = 21;
+  static const double smallContent = 17;
 }
