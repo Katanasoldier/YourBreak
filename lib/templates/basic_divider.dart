@@ -5,7 +5,7 @@ import 'package:yourbreak/constants/color_constants.dart';
 /// Takes in a:
 /// - width : required, double
 /// - height : required, double
-/// - fontAlpha : optional, default 0.5. Decides the alpha of the font color.
+/// - colorAlpha : optional, default 0.5. Decides the alpha of the color.
 /// - color : optional, default PureColors.white
 /// and returns a container matching those parameters.
 class BasicDivider extends StatelessWidget {
@@ -13,7 +13,7 @@ class BasicDivider extends StatelessWidget {
   final double width;
   final double height;
 
-  final double fontAlpha;
+  final double colorAlpha;
   final Color color;
 
 
@@ -23,7 +23,7 @@ class BasicDivider extends StatelessWidget {
     required this.width,
     required this.height,
 
-    this.fontAlpha = 0.5,
+    this.colorAlpha = 0.5,
     this.color = PureColors.white
   });
 
@@ -34,7 +34,7 @@ class BasicDivider extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: color.withValues(alpha: fontAlpha),
+        color: color.withValues(alpha: colorAlpha),
         borderRadius: BorderRadius.circular(20)
       ),
     );
