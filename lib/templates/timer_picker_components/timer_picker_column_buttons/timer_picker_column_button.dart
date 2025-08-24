@@ -4,6 +4,7 @@ import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/animation_constants.dart';
 
 import 'package:yourbreak/models/timer_structure.dart';
+import 'package:yourbreak/templates/basic_divider.dart';
 
 import 'package:yourbreak/templates/mixins/interactive_animations_mixin.dart';
 
@@ -256,13 +257,10 @@ class TimerPickerColumnButtonState extends State<TimerPickerColumnButton> with T
                                 child: SingleChildScrollView( // To prevent overflow when hoverSizeAnimation is active.
                                   child: Column(
                                     children: [
-                                      Container(
+                                      BasicDivider(
                                         width: originalButtonWidth * 0.75,
                                         height: dividerHeight,
-                                        decoration: BoxDecoration(
-                                          color: PureColors.grey,
-                                          borderRadius: BorderRadius.circular(20)
-                                        ),
+                                        color: PureColors.grey,
                                       ),
                                       SizedBox(
                                         height: (originalButtonHeight * 3) - originalButtonHeight - (dividerHeight),
@@ -412,13 +410,10 @@ class TimerPickerColumnButtonState extends State<TimerPickerColumnButton> with T
                                       ),
                                       // Action buttons. (edit, delete)
                                       if(widget.editButtons != null) ...[
-                                        Container(
+                                        BasicDivider(
                                           width: originalButtonWidth * 0.75,
                                           height: dividerHeight,
-                                          decoration: BoxDecoration(
-                                            color: PureColors.grey,
-                                            borderRadius: BorderRadius.circular(20)
-                                          ),
+                                          color: PureColors.grey,
                                         ),
                                         Padding(
                                           padding: EdgeInsets.only(
