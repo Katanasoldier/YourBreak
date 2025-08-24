@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
+import 'package:yourbreak/templates/basic_divider.dart';
 
 import 'package:yourbreak/templates/page_components.dart';
 import 'package:yourbreak/templates/timer_picker_components/timer_picker_column.dart';
@@ -88,13 +89,10 @@ class TimerPickerState extends State<TimerPicker> {
                                       height: 280 - (2*frameBorderWidth),
                                       child: TimerPickerColumn(fontSize: columnHeaderFontSize, headerText: "Your", timerType: "user", timerButtonOnPressed: widget.timerButtonOnPressed, editButtons: widget.editButtons)
                                     ),
-                                    Container(
+                                    BasicDivider(
                                       width: 3,
                                       height: 205,
-                                      decoration: BoxDecoration(
-                                        color: PureColors.grey,
-                                        borderRadius: BorderRadius.circular(frameBorderRadius)
-                                      ),
+                                      color: PureColors.grey,
                                     ),
                                     SizedBox(
                                       width: 200,
