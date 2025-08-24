@@ -185,7 +185,7 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
                         child: BasicDivider(
                           width: 230,
                           height: 1.75,
-                          fontAlpha: 0.25
+                          colorAlpha: 0.25
                         ),
                       ),
                       SizedBox(
