@@ -64,7 +64,7 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
 
     if(!mounted) return;
 
-    navigateTo(context, TimerPicker(timerButtonOnPressed: () {}));
+    navigateTo(context, TimerPicker(timerButtonOnPressed: (buttonState) {}));
 
   }
 
