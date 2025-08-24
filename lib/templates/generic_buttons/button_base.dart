@@ -97,6 +97,9 @@ class ButtonBaseState extends State<ButtonBase>{
     // await to prevent rapid button clicking.
     await Future.delayed(AnimationDurations.buttonDebounce);
 
+    // Prevents memory leaks associated with accessing disposed elements.
+    if (!mounted) return;
+
     // Unlock the MouseRegion events.
     setState(() {
       lockHover = false;

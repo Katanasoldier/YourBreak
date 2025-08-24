@@ -29,7 +29,7 @@ class TimerManagementLandingPage extends StatelessWidget {
         supportText: "Your Timers",
         iconName: "squareedit",
         // We leave the timerButtonOnPressed empty because all the logic is contained within the editButtons.
-        onPressed: () => navigateTo(context, TimerPicker(timerButtonOnPressed: () {}, editButtons: true))
+        onPressed: () => navigateTo(context, TimerPicker(timerButtonOnPressed: (buttonState) {}, editButtons: true))
       )
     );
   }
