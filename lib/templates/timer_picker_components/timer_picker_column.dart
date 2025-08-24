@@ -117,7 +117,7 @@ class TimerPickerColumnState extends State<TimerPickerColumn> with TickerProvide
   // TODO: Unused, scrapped variable, to be deleted.
   int? hoveredIndex;
 
-
+  // TODO: Remove, causes exceptions, overall buggy and bad.
   late final AnimationController pageAnimationController =
   AnimationController(
     vsync: this,
@@ -193,8 +193,9 @@ class TimerPickerColumnState extends State<TimerPickerColumn> with TickerProvide
                               physics: ClampingScrollPhysics(),
                               child: Column(
                                 children: [
-                                  for (final timer in box.values.toList())
+                                  for (final timer in box.values)
                                   TimerPickerColumnButton(
+                                    key: ValueKey(timer.key),
                                     timer: timer,
                                     mainTextGradient: getTimerTitleGradient(timer.name),
                                     onPressed: widget.timerButtonOnPressed,
