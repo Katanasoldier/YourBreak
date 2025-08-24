@@ -8,6 +8,7 @@ import 'package:yourbreak/helper/page_navigation.dart';
 
 import 'package:yourbreak/models/timer_structure.dart';
 import 'package:yourbreak/pages/timer_picker.dart';
+import 'package:yourbreak/templates/basic_divider.dart';
 
 import 'package:yourbreak/templates/page_components.dart';
 import 'package:yourbreak/templates/timer_creator_components/period_popup_buttons/period_time_chooser.dart';
@@ -136,10 +137,9 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 20),
-                        child: _Divider(
+                        child: BasicDivider(
                           width: 325,
                           height: 3,
-                          opacity: 0.5,
                         ),
                       ),
                       SizedBox( // TimePeriodButtons parent
@@ -182,10 +182,10 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 2.5, bottom: 10),
-                        child: _Divider(
+                        child: BasicDivider(
                           width: 230,
                           height: 1.75,
-                          opacity: 0.25,
+                          fontAlpha: 0.25
                         ),
                       ),
                       SizedBox(
@@ -294,7 +294,7 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
             fontSize: 28,
             margin: const EdgeInsets.symmetric(vertical: 10)
           ),
-          _Divider(
+          BasicDivider(
             width: 250,
             height: 2.5,
           ),
@@ -308,7 +308,7 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
             margin: EdgeInsets.only(top: 2.5,bottom: 7.5),
             child: TimerTypeChooser(key: timerTypeChooserKey)
           ),
-          _Divider(
+          BasicDivider(
             width: 250,
             height: 1.5,
           ),
@@ -322,7 +322,7 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
             margin: const EdgeInsets.only(top: 2.5,bottom: 7.5),
             child: TimerTimeChooser(key: timerTimeChooserKey)
           ),
-          _Divider(
+          BasicDivider(
             width: 250,
             height: 2.5,
           ),
@@ -383,7 +383,7 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
               ),
             ),
           ),
-          _Divider(
+          BasicDivider(
             width: 250,
             height: 2.5,
           ),
@@ -418,7 +418,7 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
               ),
             ),
           ),
-          _Divider(
+          BasicDivider(
             width: 250,
             height: 2.5,
           ),
@@ -433,37 +433,4 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
     );
   }
 
-}
-
-/// Basic divider for the TimerCreator widget.
-/// Takes in a required width, height and optional opacity and color.
-class _Divider extends StatelessWidget {
-
-  final double width;
-  final double height;
-
-  final double opacity;
-  final Color color;
-
-  const _Divider({
-    super.key,
-
-    required this.width,
-    required this.height,
-
-    this.opacity = 0.5,
-    this.color = PureColors.white
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: opacity),
-        borderRadius: BorderRadius.circular(20)
-      )
-    );
-  }
 }
