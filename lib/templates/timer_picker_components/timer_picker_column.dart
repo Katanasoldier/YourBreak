@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:yourbreak/constants/animation_constants.dart';
 import 'package:yourbreak/constants/color_constants.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
@@ -82,7 +81,7 @@ class Header extends StatelessWidget {
 /// - timerButtonOnPressed : Function, allows defining custom click behaviour for 
 /// each timer button (TimerPickerColumnButton)
 /// - editButtons : bool?, decides whether to allow the player to edit or delete each timer.
-class TimerPickerColumn extends StatefulWidget {
+class TimerPickerColumn extends StatelessWidget {
 
   final double fontSize; 
   final String headerText;
@@ -107,53 +106,22 @@ class TimerPickerColumn extends StatefulWidget {
   });
 
   @override
-  TimerPickerColumnState createState() => TimerPickerColumnState();
-
-}
-
-
-class TimerPickerColumnState extends State<TimerPickerColumn> with TickerProviderStateMixin {
-
-  // TODO: Unused, scrapped variable, to be deleted.
-  int? hoveredIndex;
-
-  // TODO: Remove, causes exceptions, overall buggy and bad.
-  late final AnimationController pageAnimationController =
-  AnimationController(
-    vsync: this,
-    duration: AnimationDurations.pageTransition,
-    reverseDuration: AnimationDurations.pageTransition
-  );
-
-
-  @override
-  void dispose() {
-
-    pageAnimationController.dispose();
-
-    super.dispose();
-
-  }
-
-
-
-  @override
   Widget build(BuildContext context) {
     // The value listenable builder listens to any changes inside the selected Box (timerType HiveBox)
     // This is so, that if a user deletes a timer, he'll see the changes immediately, and
     // when the user deletes the last timer in the box, then the 'Empty' header will be visible again.
     return ValueListenableBuilder(
-      valueListenable: Hive.box<TimerStructure>('${widget.timerType}_timers').listenable(),
+      valueListenable: Hive.box<TimerStructure>('${timerType}_timers').listenable(),
       builder: (_, Box<TimerStructure> box, _) {
         return box.values.isEmpty
           ? Stack( // If no timers, show 'Empty' in the center.
             children: [
               Align(
                 alignment: Alignment.topCenter,
-                child: Header(fontSize: widget.fontSize, headerText: widget.headerText)
+                child: Header(fontSize: fontSize, headerText: headerText)
               ),
               Center(
-                child: Header(fontSize: widget.fontSize, headerText: "Empty", color: PureColors.grey.withValues(alpha: 0.2))
+                child: Header(fontSize: fontSize, headerText: "Empty", color: PureColors.grey.withValues(alpha: 0.2))
               )
             ],
           )
@@ -161,7 +129,7 @@ class TimerPickerColumnState extends State<TimerPickerColumn> with TickerProvide
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Header(fontSize: widget.fontSize, headerText: widget.headerText),
+              Header(fontSize: fontSize, headerText: headerText),
               Expanded(
                 child: LayoutBuilder(
                   builder: (context, constraints) {
@@ -198,11 +166,10 @@ class TimerPickerColumnState extends State<TimerPickerColumn> with TickerProvide
                                     key: ValueKey(timer.key),
                                     timer: timer,
                                     mainTextGradient: getTimerTitleGradient(timer.name),
-                                    onPressed: widget.timerButtonOnPressed,
+                                    onPressed: timerButtonOnPressed,
                                     listElementHeight: listElementHeight,
                                     listElementWidth: listElementWidth,
-                                    pageAnimationController: pageAnimationController,
-                                    editButtons: widget.editButtons,
+                                    editButtons: editButtons,
                                   )
                                 ],
                               ),

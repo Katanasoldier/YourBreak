@@ -54,8 +54,6 @@ class TimerPickerColumnButton extends StatefulWidget {
   
   final bool? editButtons;
 
-  final AnimationController pageAnimationController;
-
 
   const TimerPickerColumnButton({
 
@@ -71,8 +69,7 @@ class TimerPickerColumnButton extends StatefulWidget {
     required this.listElementWidth,
 
     this.editButtons,
-
-    required this.pageAnimationController
+    
   });
 
 
