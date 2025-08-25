@@ -12,10 +12,7 @@ mixin OpacityAnimationMixin<T extends StatefulWidget> on State<T> {
   Duration get opacityDuration => AnimationDurations.opacity;
 
 
-  late final AnimationController opacityController = AnimationController(
-    vsync: this as TickerProvider,
-    duration: opacityDuration,
-  );
+  late final AnimationController opacityController;
 
   // Default opacity animation, can be overidden to include a different begin value.
   Animation<double> get opacityAnimation => Tween<double>(
@@ -26,6 +23,17 @@ mixin OpacityAnimationMixin<T extends StatefulWidget> on State<T> {
     curve: AnimationCurves.opacity
   ));
   
+  @override
+  void initState() {
+
+    super.initState();
+
+    opacityController = AnimationController(
+      vsync: this as TickerProvider,
+      duration: opacityDuration,
+    );
+
+  }
 
   @override
   void dispose() {
