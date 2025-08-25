@@ -11,12 +11,12 @@ import 'package:yourbreak/pages/timer_picker.dart';
 import 'package:yourbreak/templates/basic_divider.dart';
 
 import 'package:yourbreak/templates/page_components.dart';
-import 'package:yourbreak/templates/timer_creator_components/period_popup_buttons/period_time_chooser.dart';
-import 'package:yourbreak/templates/timer_creator_components/period_popup_buttons/period_type_chooser.dart';
+import 'package:yourbreak/templates/timer_creator_components/buttons/period_popup_buttons/period_time_chooser.dart';
+import 'package:yourbreak/templates/timer_creator_components/buttons/period_popup_buttons/period_type_chooser.dart';
 
-import 'package:yourbreak/templates/timer_creator_components/text_input_button.dart';
-import 'package:yourbreak/templates/timer_creator_components/time_period_button.dart';
-import 'package:yourbreak/templates/timer_creator_components/create_period_button.dart';
+import 'package:yourbreak/templates/timer_creator_components/buttons/text_input_button.dart';
+import 'package:yourbreak/templates/timer_creator_components/buttons/time_period_button.dart';
+import 'package:yourbreak/templates/timer_creator_components/buttons/create_period_button.dart';
 
 import 'package:yourbreak/templates/generic_buttons/return_button.dart';
 import 'package:yourbreak/templates/generic_buttons/save_button.dart';
