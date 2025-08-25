@@ -15,15 +15,9 @@ mixin InteractiveAnimationsMixin<T extends StatefulWidget> on State<T> {
 
   // AnimationControllers.
 
-    late final AnimationController hoverController = AnimationController(
-      vsync: this as TickerProvider,
-      duration: AnimationDurations.hover,
-    );
+    late final AnimationController hoverController;
 
-    late final AnimationController clickController = AnimationController(
-      vsync: this as TickerProvider,
-      duration: AnimationDurations.click,
-    );
+    late final AnimationController clickController;
 
 
   /* 
@@ -49,12 +43,31 @@ mixin InteractiveAnimationsMixin<T extends StatefulWidget> on State<T> {
       curve: AnimationCurves.click
     ));
 
+
+  @override
+  void initState() {
+
+    super.initState();
+
+    hoverController = AnimationController(
+      vsync: this as TickerProvider,
+      duration: AnimationDurations.hover,
+    );
+
+    clickController = AnimationController(
+      vsync: this as TickerProvider,
+      duration: AnimationDurations.click,
+    );
+
+  }
   
   @override
   void dispose() {
+
     hoverController.dispose();
     clickController.dispose();
 
     super.dispose();
+
   }
 }

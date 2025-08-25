@@ -9,10 +9,7 @@ import 'package:yourbreak/constants/animation_constants.dart';
 /// changed by setting forwardScaleOnInitState to true.
 mixin ScaleAnimationsMixin<T extends StatefulWidget> on State<T> {
   
-  late final AnimationController scaleAnimationController = AnimationController(
-    vsync: this as TickerProvider,
-    duration: AnimationDurations.scale,
-  );
+  late final AnimationController scaleAnimationController;
 
   /// Decides whether to forward the controller in initState.
   bool get forwardScaleOnInitState => false;
@@ -34,6 +31,11 @@ mixin ScaleAnimationsMixin<T extends StatefulWidget> on State<T> {
   void initState() {
 
     super.initState();
+
+    scaleAnimationController = AnimationController(
+      vsync: this as TickerProvider,
+      duration: AnimationDurations.scale,
+    );
 
     if (forwardScaleOnInitState) scaleAnimationController.forward();
 

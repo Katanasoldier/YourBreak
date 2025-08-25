@@ -10,10 +10,7 @@ import 'package:yourbreak/constants/animation_constants.dart';
 /// stopped by setting forwardVerticalSlideOnInitState to false.
 mixin VerticalSlideAnimationsMixin<T extends StatefulWidget> on State<T> {
 
-  late final AnimationController verticalSlideAnimationController = AnimationController(
-    vsync: this as TickerProvider,
-    duration: AnimationDurations.verticalSlide,
-  );
+  late final AnimationController verticalSlideAnimationController;
 
   /// Decides whether to forward the controller in initState.
   bool get forwardVerticalSlideOnInitState => true;
@@ -38,6 +35,11 @@ mixin VerticalSlideAnimationsMixin<T extends StatefulWidget> on State<T> {
   void initState() {
 
     super.initState();
+
+    verticalSlideAnimationController = AnimationController(
+      vsync: this as TickerProvider,
+      duration: AnimationDurations.verticalSlide,
+    );
 
     if (forwardVerticalSlideOnInitState) verticalSlideAnimationController.forward();
 
