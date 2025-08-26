@@ -93,9 +93,21 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
   /// Sizedbox acts as a placeholder.
   Widget popupContent = SizedBox();
 
-  /// Used to control when the popup rebuilds, to always show fresh widgets.
-  /// On incrementation or change in value it will cause the popup to rebuild.
-  int rebuildPopup = 0;
+  /// Pushes a popup with the newContent as it's content.
+  /// Sets the popupContent to 'newContent', then calls
+  /// setState() to rebuild the widget with the new content
+  /// and finally forwards the popUpController so the popup is visible.
+  void pushPopupContent(Widget newContent) {
+
+    popupContent = newContent;
+
+    // When the popUpController forwards,
+    // it displays the new content as opposed to the previous.
+    setState(() {});
+
+    popUpController.forward();
+
+  }
 
   // Allows to reset the customized state of editable fields inside the TimerPeriod popup.
   final GlobalKey<TimerTypeChooserState> timerTypeChooserKey = GlobalKey();
@@ -194,13 +206,7 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
                         child: CreatePeriodButton(
                           /// Button that shows a pop up where the user can
                           /// configure a new time period.
-                          onPressed: () {
-                            setState(() {
-                              popupContent = createPeriodPopupContent();
-                              rebuildPopup++;
-                            });
-                            popUpController.forward();
-                          },
+                          onPressed: () => pushPopupContent(createPeriodPopupContent()),
                         ),
                       )
                     ],
@@ -218,13 +224,7 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
                           child: ReturnButton(
                             onPressed: 
                               currentTimePeriods.isNotEmpty
-                                ? () {
-                                  setState(() {
-                                    popupContent = discardTimerPopupContent();
-                                    rebuildPopup++;
-                                  });
-                                  popUpController.forward();
-                                }
+                                ? () => pushPopupContent(discardTimerPopupContent())
                                 : null
                           ),
                         ),
@@ -247,11 +247,7 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
                               /// If the user already has an existing timer with the same name as the new timer,
                               /// prompt if he wants to overwrite the existing one.
                               if (userBox.containsKey(newTimer.name.toLowerCase())) {
-                                setState(() {
-                                  popupContent = existingNamePopupContent();
-                                  rebuildPopup++;
-                                });
-                                popUpController.forward();
+                                pushPopupContent(existingNamePopupContent());
                               } else {
                                 saveTimer();
                               }
@@ -267,7 +263,6 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
             ),
           ),
           PopUp(
-            key: ValueKey(rebuildPopup),
             popUpController: popUpController,
             popUpContent: popupContent
           ),
@@ -344,10 +339,7 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
                 ));
 
 
-                setState(() {
-                  rebuildPeriodList++;
-                  rebuildPopup++;
-                });              
+                setState(() {});              
 
                 // Wait until the popup has been hidden until adjusting customized fields
                 // to prevent visibile changes on the user's eyes.
