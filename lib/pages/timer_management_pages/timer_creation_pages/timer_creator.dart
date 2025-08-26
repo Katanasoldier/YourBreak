@@ -21,6 +21,8 @@ import 'package:yourbreak/templates/generic_buttons/save_button.dart';
 
 import 'package:yourbreak/templates/pop_up.dart';
 import 'package:yourbreak/templates/timer_creator_components/popups/create_period_popup.dart';
+import 'package:yourbreak/templates/timer_creator_components/popups/discard_timer_popup.dart';
+import 'package:yourbreak/templates/timer_creator_components/popups/timer_exists_popup.dart';
 
 
 /// Allows the user to manage the pattern structure of an existing or new timer.
@@ -220,7 +222,7 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
                             child: ReturnButton(
                               onPressed: 
                                 currentTimerPeriods.isNotEmpty
-                                  ? () => pushPopupContent(discardTimerPopupContent())
+                                  ? () => pushPopupContent(DiscardTimerPopup(popUpController: popUpController))
                                   : null
                             ),
                           ),
@@ -243,7 +245,7 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
                                 /// If the user already has an existing timer with the same name as the new timer,
                                 /// prompt if he wants to overwrite the existing one.
                                 if (userBox.containsKey(newTimer.name.toLowerCase())) {
-                                  pushPopupContent(existingNamePopupContent());
+                                  pushPopupContent(TimerExistsPopup(onSaveButtonPressed: saveTimer));
                                 } else {
                                   saveTimer();
                                 }
@@ -265,83 +267,6 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
           ),
           /// TopBar is above the popup so the user can still access control buttons whilst in popup.
           TopBar()
-        ],
-      ),
-    );
-  }
-
-  //---------------------------------------------------------------------------------------------------------------------
-  // Popup content functions section.
-  // These functions return the predefined popup contents.
-
-  /// Returns an alert popupContent that signals to the player that they are about to
-  /// overwrite an existing timer, and if they wish to proceed, they have a single save button.
-  Widget existingNamePopupContent() {
-    return SizedBox(
-      width: 370,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: FittedBox(
-              child: PageHeader(
-                text: "There is already a timer with this name.\n Do you want to overwrite it?",
-                fontSize: 28,
-                margin: const EdgeInsets.symmetric(vertical: 10)
-              ),
-            ),
-          ),
-          BasicDivider(
-            width: 250,
-            height: 2.5,
-          ),
-          Container( // Save button
-            width: 140,
-            height: 30,
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            child: SaveButton(
-              onPressed: () => saveTimer()
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  /// An alert popup that shows up when the user tries to exit the TimerCreator.
-  /// To prevent any accidental exits and losing progress.
-  Widget discardTimerPopupContent() {
-    return SizedBox(
-      width: 370,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: FittedBox(
-              child: PageHeader(
-                text: "Are you sure you want to go back?\nThis timer will be discarded.",
-                fontSize: 28,
-                margin: const EdgeInsets.symmetric(vertical: 10)
-              ),
-            ),
-          ),
-          BasicDivider(
-            width: 250,
-            height: 2.5,
-          ),
-          Container( // Save button
-            width: 140,
-            height: 30,
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            child: ReturnButton(
-              onPressed: () {
-                popCurrentPage(context);
-                popUpController.reverse();
-              },
-            ),
-          )
         ],
       ),
     );
