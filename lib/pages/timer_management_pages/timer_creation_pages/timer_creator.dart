@@ -11,17 +11,18 @@ import 'package:yourbreak/pages/timer_picker.dart';
 import 'package:yourbreak/templates/basic_divider.dart';
 
 import 'package:yourbreak/templates/page_components.dart';
-import 'package:yourbreak/templates/timer_creator_components/period_popup_buttons/period_time_chooser.dart';
-import 'package:yourbreak/templates/timer_creator_components/period_popup_buttons/period_type_chooser.dart';
 
-import 'package:yourbreak/templates/timer_creator_components/text_input_button.dart';
-import 'package:yourbreak/templates/timer_creator_components/time_period_button.dart';
-import 'package:yourbreak/templates/timer_creator_components/create_period_button.dart';
+import 'package:yourbreak/templates/timer_creator_components/buttons/text_input_button.dart';
+import 'package:yourbreak/templates/timer_creator_components/buttons/time_period_button.dart';
+import 'package:yourbreak/templates/timer_creator_components/buttons/create_period_button.dart';
 
 import 'package:yourbreak/templates/generic_buttons/return_button.dart';
 import 'package:yourbreak/templates/generic_buttons/save_button.dart';
 
 import 'package:yourbreak/templates/pop_up.dart';
+import 'package:yourbreak/templates/timer_creator_components/popups/create_period_popup.dart';
+import 'package:yourbreak/templates/timer_creator_components/popups/discard_timer_popup.dart';
+import 'package:yourbreak/templates/timer_creator_components/popups/timer_exists_popup.dart';
 
 
 /// Allows the user to manage the pattern structure of an existing or new timer.
@@ -74,14 +75,12 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
 
   // TimePeriods subsection
 
-    /// Holds all of the time periods in this timer.
-    late List<TimerPeriod> currentTimePeriods = widget.preexistingTimer?.pattern ?? [];
-
-    /// Used to control when the column that holds the currentTimePeriods rebuilds,
-    /// to show an accurate version.
-    /// On incrementation or change in value it will cause the column to rebuild
-    /// according to currentTimePeriods.
-    int rebuildPeriodList = 0;
+    /// Backing ValueNotifier that holds the list of active TimerPeriods.
+    /// 
+    /// !!! Do not confuse this with currentTimerPeriods, which refers to the
+    /// current value exposed inside a ValueListenableBuilder builder callback. !!!
+    late final ValueNotifier<List<TimerPeriod>> _currentTimerPeriods =
+      ValueNotifier(widget.preexistingTimer?.pattern ?? []);
 
     /// For the period list.
     final ScrollController scrollController = ScrollController();
@@ -93,13 +92,21 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
   /// Sizedbox acts as a placeholder.
   Widget popupContent = SizedBox();
 
-  /// Used to control when the popup rebuilds, to always show fresh widgets.
-  /// On incrementation or change in value it will cause the popup to rebuild.
-  int rebuildPopup = 0;
+  /// Pushes a popup with the newContent as it's content.
+  /// Sets the popupContent to 'newContent', then calls
+  /// setState() to rebuild the widget with the new content
+  /// and finally forwards the popUpController so the popup is visible.
+  void pushPopupContent(Widget newContent) {
 
-  // Allows to reset the customized state of editable fields inside the TimerPeriod popup.
-  final GlobalKey<TimerTypeChooserState> timerTypeChooserKey = GlobalKey();
-  final GlobalKey<TimerTimeChooserState> timerTimeChooserKey = GlobalKey();
+    popupContent = newContent;
+
+    // When the popUpController forwards,
+    // it displays the new content as opposed to the previous.
+    setState(() {});
+
+    popUpController.forward();
+
+  }
 
   //---------------------------------------------------------------------------------------------------------------------
 
@@ -112,322 +119,154 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
           Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 26.5, vertical: 2),
-              child: Column( // Main center column
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FittedBox(
-                    child: PageHeader(
-                      fontSize: FontSizes.pageHeader,
-                      text: "Create Your Timer",
-                      // Horizontal are intended to scale down the text.
-                      // Vertical are to space it out from the top and divider below it.
-                      margin: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 20),
+              child: ValueListenableBuilder(
+                valueListenable: _currentTimerPeriods,
+                builder: (_, currentTimerPeriods, _) => 
+                Column( // Main center column
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FittedBox(
+                      child: PageHeader(
+                        fontSize: FontSizes.pageHeader,
+                        text: "Create Your Timer",
+                        // Horizontal are intended to scale down the text.
+                        // Vertical are to space it out from the top and divider below it.
+                        margin: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 20),
+                      ),
                     ),
-                  ),
-                  Column( // Creator column (Name your timer, Time period in a column, create new time period)
-                    children: [
-                      SizedBox(
-                        width: 300,
-                        height: 45,
-                        child: TextInputButton(
-                          key: timerNameInputKey,
-                          placeholderText: "Name Your Timer",
-                          preexistingTimer: widget.preexistingTimer,
+                    Column( // Creator column (Name your timer, Time period in a column, create new time period)
+                      children: [
+                        SizedBox(
+                          width: 300,
+                          height: 45,
+                          child: TextInputButton(
+                            key: timerNameInputKey,
+                            placeholderText: "Name Your Timer",
+                            preexistingTimer: widget.preexistingTimer,
+                          ),
                         ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 20),
-                        child: BasicDivider(
-                          width: 325,
-                          height: 3,
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 20),
+                          child: BasicDivider(
+                            width: 325,
+                            height: 3,
+                          ),
                         ),
-                      ),
-                      SizedBox( // TimePeriodButtons parent
-                        width: 300,
-                        height: 175,
-                        child: RawScrollbar(
-                          thickness: 4,
-                          interactive: true,
-                          minOverscrollLength: 5,
-                          thumbColor: PureColors.white,
-                          trackColor: Colors.transparent,
-                          trackBorderColor: Colors.transparent,
-                          trackVisibility: false,
-                          radius: const Radius.circular(4),
-                          thumbVisibility: true,
-                          controller: scrollController,
-                          child: SingleChildScrollView(
-                            physics: BouncingScrollPhysics(),
+                        SizedBox( // TimePeriodButtons parent
+                          width: 300,
+                          height: 175,
+                          child: RawScrollbar(
+                            thickness: 4,
+                            interactive: true,
+                            minOverscrollLength: 5,
+                            thumbColor: PureColors.white,
+                            trackColor: Colors.transparent,
+                            trackBorderColor: Colors.transparent,
+                            trackVisibility: false,
+                            radius: const Radius.circular(4),
+                            thumbVisibility: true,
                             controller: scrollController,
-                            child: Column(
-                              key: ValueKey(rebuildPeriodList),
-                              spacing: 10,
-                              children: [
-                                // TimePeriodButtons
-                                for (int i = 0; i < currentTimePeriods.length; i++) 
-                                TimePeriodButton(
-                                  periodName: currentTimePeriods[i].periodType.name.toString(),
-                                  periodTime: currentTimePeriods[i].periodTime.toInt(),
-                                  onRemove: () {
-                                    setState(() {
-                                      currentTimePeriods.removeAt(i);
-                                      rebuildPeriodList++;
-                                    });
-                                  }
-                                )
-                              ],
+                            child: SingleChildScrollView(
+                              physics: BouncingScrollPhysics(),
+                              controller: scrollController,
+                              child: Column(
+                                spacing: 10,
+                                children: [
+                                  // TimePeriodButtons
+                                  for (int i = 0; i < currentTimerPeriods.length; i++) 
+                                  TimePeriodButton(
+                                    periodName: currentTimerPeriods[i].periodType.name.toString(),
+                                    periodTime: currentTimerPeriods[i].periodTime.toInt(),
+                                    onRemove: () => currentTimerPeriods = List.from(currentTimerPeriods)..removeAt(i)
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 2.5, bottom: 10),
-                        child: BasicDivider(
-                          width: 230,
-                          height: 1.75,
-                          colorAlpha: 0.25
-                        ),
-                      ),
-                      SizedBox(
-                        width: 130,
-                        height: 35,
-                        child: CreatePeriodButton(
-                          /// Button that shows a pop up where the user can
-                          /// configure a new time period.
-                          onPressed: () {
-                            setState(() {
-                              popupContent = createPeriodPopupContent();
-                              rebuildPopup++;
-                            });
-                            popUpController.forward();
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                  Container(
-                    width: 330,
-                    height: 35,
-                    margin: const EdgeInsets.symmetric(vertical: 15),
-                    child: Row( // Return and Save buttons
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      spacing: 15,
-                      children: [
-                        SizedBox(
-                          width: 150,
-                          child: ReturnButton(
-                            onPressed: 
-                              currentTimePeriods.isNotEmpty
-                                ? () {
-                                  setState(() {
-                                    popupContent = discardTimerPopupContent();
-                                    rebuildPopup++;
-                                  });
-                                  popUpController.forward();
-                                }
-                                : null
+                        Container(
+                          margin: EdgeInsets.only(top: 2.5, bottom: 10),
+                          child: BasicDivider(
+                            width: 230,
+                            height: 1.75,
+                            colorAlpha: 0.25
                           ),
                         ),
                         SizedBox(
-                          width: 150,
-                          child: SaveButton(
-                            onPressed: () {
-                              
-                              /// If the timer doesn't have a name or a period, don't save.
-                              if (timerNameInputKey.currentState!.isText == false || currentTimePeriods.isEmpty) return;
-
-                              setState(() {
-                                newTimer = TimerStructure(
-                                  name: timerNameInputKey.currentState!.currentText,
-                                  complexity: Complexity.simple,
-                                  pattern: currentTimePeriods
-                                );
-                              });
-
-                              /// If the user already has an existing timer with the same name as the new timer,
-                              /// prompt if he wants to overwrite the existing one.
-                              if (userBox.containsKey(newTimer.name.toLowerCase())) {
-                                setState(() {
-                                  popupContent = existingNamePopupContent();
-                                  rebuildPopup++;
-                                });
-                                popUpController.forward();
-                              } else {
-                                saveTimer();
-                              }
-
-                            }
+                          width: 130,
+                          height: 35,
+                          child: CreatePeriodButton(
+                            /// Button that shows a pop up where the user can
+                            /// configure a new time period.
+                            onPressed: () => 
+                            pushPopupContent(
+                              CreatePeriodPopup(
+                                currentTimerPeriodsNotifier: _currentTimerPeriods,
+                                popUpController: popUpController,
+                              )
+                            ),
                           ),
                         )
                       ],
                     ),
-                  )
-                ],
+                    Container(
+                      width: 330,
+                      height: 35,
+                      margin: const EdgeInsets.symmetric(vertical: 15),
+                      child: Row( // Return and Save buttons
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 15,
+                        children: [
+                          SizedBox(
+                            width: 150,
+                            child: ReturnButton(
+                              onPressed: 
+                                currentTimerPeriods.isNotEmpty
+                                  ? () => pushPopupContent(DiscardTimerPopup(popUpController: popUpController))
+                                  : null
+                            ),
+                          ),
+                          SizedBox(
+                            width: 150,
+                            child: SaveButton(
+                              onPressed: () {
+                                
+                                /// If the timer doesn't have a name or a period, don't save.
+                                if (timerNameInputKey.currentState!.isText == false || currentTimerPeriods.isEmpty) return;
+                
+                                setState(() {
+                                  newTimer = TimerStructure(
+                                    name: timerNameInputKey.currentState!.currentText,
+                                    complexity: Complexity.simple,
+                                    pattern: currentTimerPeriods
+                                  );
+                                });
+                
+                                /// If the user already has an existing timer with the same name as the new timer,
+                                /// prompt if he wants to overwrite the existing one.
+                                if (userBox.containsKey(newTimer.name.toLowerCase())) {
+                                  pushPopupContent(TimerExistsPopup(onSaveButtonPressed: saveTimer));
+                                } else {
+                                  saveTimer();
+                                }
+                
+                              }
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
           PopUp(
-            key: ValueKey(rebuildPopup),
             popUpController: popUpController,
             popUpContent: popupContent
           ),
           /// TopBar is above the popup so the user can still access control buttons whilst in popup.
           TopBar()
-        ],
-      ),
-    );
-  }
-
-  //---------------------------------------------------------------------------------------------------------------------
-  // Popup content functions section.
-  // These functions return the predefined popup contents.
-
-  /// Returns the popupContent with the ability to create new periods.
-  Widget createPeriodPopupContent() {
-    return SizedBox(
-      width: 350,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          PageHeader(
-            text: "New Time Period",
-            fontSize: 28,
-            margin: const EdgeInsets.symmetric(vertical: 10)
-          ),
-          BasicDivider(
-            width: 250,
-            height: 2.5,
-          ),
-          PageHeader(
-            text: "Period Type",
-            fontSize: 20,
-            margin: const EdgeInsets.all(0),
-            fontColor: PureColors.white.withValues(alpha: 0.8),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 2.5,bottom: 7.5),
-            child: TimerTypeChooser(key: timerTypeChooserKey)
-          ),
-          BasicDivider(
-            width: 250,
-            height: 1.5,
-          ),
-          PageHeader(
-            text: "Period Time",
-            fontSize: 20,
-            margin: const EdgeInsets.all(0),
-            fontColor: PureColors.white.withValues(alpha: 0.8),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 2.5,bottom: 7.5),
-            child: TimerTimeChooser(key: timerTimeChooserKey)
-          ),
-          BasicDivider(
-            width: 250,
-            height: 2.5,
-          ),
-          Container( // Save button
-            width: 140,
-            height: 30,
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            child: SaveButton(
-              onPressed: () async {
-                
-                final int periodTime = timerTimeChooserKey.currentState?.getTotalTime() as int;
-                
-                // If the period has no time, don't create one.
-                if (periodTime == 0) return;
-
-                currentTimePeriods.add(TimerPeriod(
-                  periodType: PeriodType.values.byName(timerTypeChooserKey.currentState!.currentType.currentState!.typeName),
-                  periodTime: timerTimeChooserKey.currentState?.getTotalTime() as int
-                ));
-
-
-                setState(() {
-                  rebuildPeriodList++;
-                  rebuildPopup++;
-                });              
-
-                // Wait until the popup has been hidden until adjusting customized fields
-                // to prevent visibile changes on the user's eyes.
-                await popUpController.reverse();
-
-                // Reset the customized parts of each field so the next time
-                // the popup is called, it doesn't show the previous settings.
-                timerTypeChooserKey.currentState?.reset();
-                timerTimeChooserKey.currentState?.reset();
-              }
-            ),
-          )
-        ],
-      )
-    );
-  }
-
-  /// Returns an alert popupContent that signals to the player that they are about to
-  /// overwrite an existing timer, and if they wish to proceed, they have a single save button.
-  Widget existingNamePopupContent() {
-    return SizedBox(
-      width: 370,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: FittedBox(
-              child: PageHeader(
-                text: "There is already a timer with this name.\n Do you want to overwrite it?",
-                fontSize: 28,
-                margin: const EdgeInsets.symmetric(vertical: 10)
-              ),
-            ),
-          ),
-          BasicDivider(
-            width: 250,
-            height: 2.5,
-          ),
-          Container( // Save button
-            width: 140,
-            height: 30,
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            child: SaveButton(
-              onPressed: () => saveTimer()
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  /// An alert popup that shows up when the user tries to exit the TimerCreator.
-  /// To prevent any accidental exits and losing progress.
-  Widget discardTimerPopupContent() {
-    return SizedBox(
-      width: 370,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: FittedBox(
-              child: PageHeader(
-                text: "Are you sure you want to go back?\nThis timer will be discarded.",
-                fontSize: 28,
-                margin: const EdgeInsets.symmetric(vertical: 10)
-              ),
-            ),
-          ),
-          BasicDivider(
-            width: 250,
-            height: 2.5,
-          ),
-          Container( // Save button
-            width: 140,
-            height: 30,
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            child: ReturnButton(),
-          )
         ],
       ),
     );
