@@ -68,6 +68,8 @@ class TimerPickerState extends State<TimerPicker> {
 
                             final double columnHeaderFontSize = maxSize * 0.0775;
 
+                            final double columnHeight = 280 - (2*frameBorderWidth) * 1.5;
+
                             return Container(
                               clipBehavior: Clip.hardEdge,
                               decoration: BoxDecoration(
@@ -86,7 +88,7 @@ class TimerPickerState extends State<TimerPicker> {
                                   children: [
                                     SizedBox(
                                       width: 200,
-                                      height: 280 - (2*frameBorderWidth),
+                                      height: columnHeight,
                                       child: TimerPickerColumn(fontSize: columnHeaderFontSize, headerText: "Your", timerType: "user", timerButtonOnPressed: widget.timerButtonOnPressed, editButtons: widget.editButtons)
                                     ),
                                     BasicDivider(
@@ -96,7 +98,7 @@ class TimerPickerState extends State<TimerPicker> {
                                     ),
                                     SizedBox(
                                       width: 200,
-                                      height: 280 - (2*frameBorderWidth) * 1.5,
+                                      height: columnHeight,
                                       child: TimerPickerColumn(fontSize: columnHeaderFontSize, headerText: "Preset", timerType: "preset", timerButtonOnPressed: widget.timerButtonOnPressed, editButtons: null) // Only null removes the edit buttons.
                                     ),
                                   ],
