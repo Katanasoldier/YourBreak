@@ -8,8 +8,10 @@ import 'package:yourbreak/models/timer_structure.dart';
 import 'package:yourbreak/templates/page_components.dart';
 
 import 'package:yourbreak/templates/generic_buttons/return_button.dart';
+import 'package:yourbreak/templates/pop_up.dart';
+import 'package:yourbreak/templates/pop_up/pop_up.dart';
 import 'package:yourbreak/templates/timer_runner_components/circular_timer.dart';
-import 'package:yourbreak/templates/timer_runner_components/timer_control_button.dart';
+import 'package:yourbreak/templates/timer_runner_components/buttons/timer_control_button.dart';
 
 
 /// Allows to run and display timers.
@@ -39,7 +41,7 @@ class TimerRunner extends StatefulWidget {
 }
 
 
-class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin {
+class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin, PopUpControllerMixin {
   
   /// Allows the current countdown widget's timerAnimationController to be used by TimerControlButton, therefore
   /// allowing the user to control the countdown via the control button.
@@ -121,6 +123,10 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin 
                 ],
               ),
             ),
+          ),
+          PopUp(
+            popUpController: popUpController,
+            popUpContent: SizedBox() //TODO: Temporary filler, remove in the future
           ),
           TopBar()
         ]
