@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
+import 'package:yourbreak/helper/page_navigation.dart';
 
 import 'package:yourbreak/models/timer_structure.dart';
 
@@ -12,6 +13,7 @@ import 'package:yourbreak/templates/pop_up.dart';
 import 'package:yourbreak/templates/pop_up/pop_up.dart';
 import 'package:yourbreak/templates/timer_runner_components/circular_timer.dart';
 import 'package:yourbreak/templates/timer_runner_components/buttons/timer_control_button.dart';
+import 'package:yourbreak/templates/timer_runner_components/popups/leave_timer_runner_popup.dart';
 
 
 /// Allows to run and display timers.
@@ -50,6 +52,31 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
   /// Allows the TimerControlButton's action to be set to resume when a new period starts.
   /// This is so when a new period loads, the user doesn't have to first press pause, and then resume to actually start it.
   final GlobalKey<TimerControlButtonState> _timerControlButtonKey = GlobalKey();
+
+  /// Sizedbox acts as a placeholder.
+  Widget popUpContent = SizedBox();
+
+
+  // TODO: Eliminate redundancy by exporting this function to the popup class or something. !!!
+  // This is because this page and TimerCreator have the same exact function, word for word,
+  // and this can be a function of the popup class, or the popupcontroller mixin, just so
+  // there aren't 2 identical functions in 2 seperate files. 1 FUNCTION FOR ALL !!!
+  
+  /// Pushes a popup with the newContent as it's content.
+  /// Sets the popupContent to 'newContent', then calls
+  /// setState() to rebuild the widget with the new content
+  /// and finally forwards the popUpController so the popup is visible.
+  void pushPopupContent(Widget newContent) {
+
+    popUpContent = newContent;
+
+    // When the popUpController forwards,
+    // it displays the new content as opposed to the previous.
+    setState(() {});
+
+    popUpController.forward();
+
+  }
 
   // ------------------------------------------------------------
 
@@ -114,7 +141,22 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
                           SizedBox(
                             width: 150,
                             height: 35,
-                            child: ReturnButton(),
+                            child: ReturnButton(
+                              onPressed: () {
+
+                                // So later it can get the latest version of `currentAction`.
+                                setState(() {});
+
+                                // Only push once the user actually started the timer,
+                                // to prevent situations where they click the wrong timer by accident
+                                // and they're slowed down by a popup.
+                                if (_timerControlButtonKey.currentState?.currentAction != TimerControlButtonActions.start) {
+                                  pushPopupContent(LeaveTimerRunnerPopup(popUpController: popUpController));
+                                } else {
+                                  popCurrentPage(context);
+                                }
+                              },
+                            ),
                           ),
                         ],
                       ),
@@ -126,7 +168,7 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
           ),
           PopUp(
             popUpController: popUpController,
-            popUpContent: SizedBox() //TODO: Temporary filler, remove in the future
+            popUpContent: popUpContent
           ),
           TopBar()
         ]
