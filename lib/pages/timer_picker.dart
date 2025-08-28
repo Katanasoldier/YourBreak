@@ -41,7 +41,6 @@ class TimerPickerState extends State<TimerPicker> {
       body: Stack(
         children: [
           AppBg(),
-          TopBar(),
           Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 26.5, vertical: 2),

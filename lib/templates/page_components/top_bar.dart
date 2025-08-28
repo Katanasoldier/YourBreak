@@ -7,7 +7,7 @@ import 'package:yourbreak/templates/generic_buttons/control_button.dart';
 /// Holds the color of the frame holding the control buttons.
 const Color controlButtonFrameColor = Color(0xFF384151);
 
-
+/// TO BE USED ONLY WITHIN `window_initializer` !!!
 /// Replaces the default app topbar with a custom one.
 /// Contains 2 control buttons:
 /// - minimize
