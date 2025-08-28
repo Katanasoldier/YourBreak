@@ -4,7 +4,7 @@ import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/font_size_constants.dart';
 import 'package:yourbreak/helper/page_navigation.dart';
 
-import 'package:yourbreak/models/timer_structure.dart';
+import 'package:yourbreak/models/timer_structure/timer_structure.dart';
 
 import 'package:yourbreak/templates/page_components.dart';
 

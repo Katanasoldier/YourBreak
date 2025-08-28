@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/constants/animation_constants.dart';
 
-import 'package:yourbreak/models/timer_structure.dart';
+import 'package:yourbreak/models/timer_structure/timer_structure.dart';
 import 'package:yourbreak/templates/basic_divider.dart';
 
 import 'package:yourbreak/templates/mixins/interactive_animations_mixin.dart';
@@ -69,7 +69,7 @@ class TimerPickerColumnButton extends StatefulWidget {
     required this.listElementWidth,
 
     this.editButtons,
-    
+
   });
 
 

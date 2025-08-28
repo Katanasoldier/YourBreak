@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:yourbreak/models/timer_structure.dart';
+import 'package:yourbreak/models/timer_structure/timer_structure.dart';
 
 import 'package:yourbreak/templates/timer_creator_components/buttons/period_popup_buttons/period_time_chooser.dart';
 import 'package:yourbreak/templates/timer_creator_components/buttons/period_popup_buttons/period_type_chooser.dart';
