@@ -265,8 +265,6 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
             popUpController: popUpController,
             popUpContent: popupContent
           ),
-          /// TopBar is above the popup so the user can still access control buttons whilst in popup.
-          TopBar()
         ],
       ),
     );
