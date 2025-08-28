@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:yourbreak/constants/color_constants.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:yourbreak/models/timer_structure.dart';
+import 'package:yourbreak/models/timer_structure/timer_structure.dart';
 
 import 'package:yourbreak/templates/timer_picker_components/timer_picker_column_buttons/timer_picker_column_button.dart';
 
