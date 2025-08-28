@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:yourbreak/pages/home.dart';
+import 'package:yourbreak/templates/page_components.dart';
 
 /// The size of the window the app was designed for.
 const designSize = Size(500, 500);
@@ -39,7 +40,19 @@ Widget yourbreakApp() {
     designSize: designSize,
     minTextAdapt: true,
     splitScreenMode: true,
-    builder: (context, child) => MaterialApp(
+    builder: (context, child) => 
+    MaterialApp(
+      builder: (context, child) {
+        return Overlay(
+          initialEntries: [
+            OverlayEntry(builder: (_) => child!), // App itself
+            OverlayEntry( // App's topbar entry 
+              builder: (_) =>
+              TopBar()
+            )
+          ],
+        );
+      },
       theme: ThemeData(
         fontFamily: 'Inria Sans'
       ),
