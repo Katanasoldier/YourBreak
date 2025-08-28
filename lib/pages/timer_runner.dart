@@ -10,7 +10,6 @@ import 'package:yourbreak/templates/page_components.dart';
 
 import 'package:yourbreak/templates/generic_buttons/return_button.dart';
 import 'package:yourbreak/templates/pop_up.dart';
-import 'package:yourbreak/templates/pop_up/pop_up.dart';
 import 'package:yourbreak/templates/timer_runner_components/circular_timer.dart';
 import 'package:yourbreak/templates/timer_runner_components/buttons/timer_control_button.dart';
 import 'package:yourbreak/templates/timer_runner_components/popups/leave_timer_runner_popup.dart';
@@ -170,7 +169,6 @@ class TimerRunnerState extends State<TimerRunner> with TickerProviderStateMixin,
             popUpController: popUpController,
             popUpContent: popUpContent
           ),
-          TopBar()
         ]
       )
     );
