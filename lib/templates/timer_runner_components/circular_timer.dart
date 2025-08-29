@@ -4,11 +4,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:hive_flutter/adapters.dart';
 
 import 'package:yourbreak/constants/color_constants.dart';
 import 'package:yourbreak/helper/timer_formatters.dart';
 
 import 'package:yourbreak/models/timer_structure/timer_structure.dart';
+import 'package:yourbreak/models/user_stats_structure/user_stats_structure.dart';
 
 
 
@@ -54,6 +56,42 @@ class CircularTimerState extends State<CircularTimer> with TickerProviderStateMi
 
   int currentPeriodIndex = 0; // Start from the beginning of the timer
 
+  // -----------------------------------------------------------------------------------------------
+  // User stats section
+
+  late final Box<UserStatsStructure> userStatsBox = Hive.box<UserStatsStructure>("user_stats");
+  late final UserStatsStructure defaultUser = userStatsBox.get("default_user")!;
+
+
+  /// The moment a Timer Period which has a type of `work` is completed, it adds it's `periodTime` to this.
+  int totalSessionProductiveTime = 0;
+
+  /// Tracks how many Timer Periods of type `work` have been completed this session.
+  int workPeriodStreak = 0;
+
+
+  /// Increase the local `workPeriodStreak`
+  /// value by 1, and then if the local `workPeriodStreak` is bigger than `default_user`'s `workPeriodStreak`
+  /// then overwrite `default_user` with it's original values except for `workPeriodStreak` - set it to
+  /// the local `workPeriodStreak` value.
+  Future<void> extendWorkPeriodStreak() async {
+
+    workPeriodStreak++;
+
+    if (workPeriodStreak > defaultUser.workPeriodStreak) {
+      await userStatsBox.put(
+        "default_user",
+        UserStatsStructure(
+          loginStreak: defaultUser.loginStreak,
+          lastStreakDate: defaultUser.lastStreakDate, 
+          workPeriodStreak: workPeriodStreak,
+          totalProductiveTime: defaultUser.totalProductiveTime,
+        )
+      );
+    }
+
+  }
+
   // ------------------------------------------------------------------------------------------
 
   /// Finds the next period index in the timer's pattern.
@@ -96,6 +134,13 @@ class CircularTimerState extends State<CircularTimer> with TickerProviderStateMi
           
           AudioPlayer().play(DeviceFileSource('assets/audio/timer_up/timer_up_1.mp3'));
 
+          if (widget.timer.pattern[currentPeriodIndex].periodType == PeriodType.work) {
+
+            await extendWorkPeriodStreak();
+
+            totalSessionProductiveTime += widget.timer.pattern[currentPeriodIndex].periodTime;
+
+          }
 
           currentPeriodIndex = _getNextPeriodIndex(index);
          
@@ -134,6 +179,18 @@ class CircularTimerState extends State<CircularTimer> with TickerProviderStateMi
 
   @override
   void dispose() {
+
+    /// Saves this session's data to `default_user`.
+    Hive.box<UserStatsStructure>("user_stats").put(
+      "default_user",
+      UserStatsStructure(
+        loginStreak: defaultUser.loginStreak,
+        lastStreakDate: defaultUser.lastStreakDate,
+        workPeriodStreak: defaultUser.workPeriodStreak,
+        totalProductiveTime: defaultUser.totalProductiveTime + totalSessionProductiveTime + widget.timer.pattern[currentPeriodIndex].periodTime - remainingSeconds
+      )
+    );
+
     timerAnimationController.dispose();
 
     super.dispose();
