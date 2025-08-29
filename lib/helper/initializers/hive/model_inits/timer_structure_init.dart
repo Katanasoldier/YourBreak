@@ -18,7 +18,7 @@ class TimerStructureInit implements ModelInit {
 
     _registerAdapters();
 
-    _openBoxes();
+    await _openBoxes();
 
     // Insert presets only on the first launch of the application.
     // If already hasRunBefore, then return, because functions after this are
@@ -28,7 +28,7 @@ class TimerStructureInit implements ModelInit {
     //----------------------------
     // First launch only functions.
 
-    _insertPresetTimers();
+    await _insertPresetTimers();
 
   }
 
@@ -43,7 +43,7 @@ class TimerStructureInit implements ModelInit {
   }
 
   /// Opens all timer boxes to allow other files to access their contents.
-  void _openBoxes() async {
+  Future<void> _openBoxes() async {
     await Hive.openBox<TimerStructure>('user_timers');
     await Hive.openBox<TimerStructure>('preset_timers');
   }

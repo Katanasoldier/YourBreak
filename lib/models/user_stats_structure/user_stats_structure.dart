@@ -5,15 +5,16 @@ part 'user_stats_structure.g.dart';
 
 /// Structure of basic user stats.
 /// Stores:
-/// - loginStreak : double
-/// - workPeriodStreak : double
-/// - totalProductiveTime : double
-@HiveType(typeId: 0)
+/// - loginStreak : int
+/// - lastStreakDate : DateTime
+/// - workPeriodStreak : int
+/// - totalProductiveTime : int
+@HiveType(typeId: 4)
 class UserStatsStructure extends HiveObject {
 
   /// Counts how many days in a row the user logged in.
   @HiveField(0)
-  double loginStreak;
+  int loginStreak;
 
   /// Holds the DateTime when the streak was last extended.
   @HiveField(1)
@@ -22,7 +23,7 @@ class UserStatsStructure extends HiveObject {
   /// How many times in a row the user completed a full work period,
   /// in 1 continuous running timer 
   @HiveField(2)
-  double workPeriodStreak;
+  int workPeriodStreak;
 
   /// Total time spent in work periods.
   /// This means that if a user runs a timer
