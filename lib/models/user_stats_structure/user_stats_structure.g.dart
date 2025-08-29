@@ -18,20 +18,23 @@ class UserStatsStructureAdapter extends TypeAdapter<UserStatsStructure> {
     };
     return UserStatsStructure(
       loginStreak: fields[0] as double,
-      workPeriodStreak: fields[1] as double,
-      totalProductiveTime: fields[2] as int,
+      lastStreakDate: fields[1] as DateTime,
+      workPeriodStreak: fields[2] as double,
+      totalProductiveTime: fields[3] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserStatsStructure obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.loginStreak)
       ..writeByte(1)
-      ..write(obj.workPeriodStreak)
+      ..write(obj.lastStreakDate)
       ..writeByte(2)
+      ..write(obj.workPeriodStreak)
+      ..writeByte(3)
       ..write(obj.totalProductiveTime);
   }
 
