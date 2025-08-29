@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:yourbreak/helper/page_navigation.dart';
+import 'package:yourbreak/helper/timer_formatters.dart';
+import 'package:yourbreak/models/user_stats_structure/user_stats_structure.dart';
 import 'package:yourbreak/pages/timer_management_pages/timer_management_landing_page.dart';
 import 'package:yourbreak/pages/timer_picker.dart';
 import 'package:yourbreak/pages/timer_runner.dart';
@@ -68,34 +71,43 @@ class Home extends StatelessWidget {
                         children: [
                           FittedBox(
                             fit: BoxFit.contain,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                StatText(
-                                  mainText: "241 Days",
-                                  supportText: "Login Streak",
-                                  mainTextGradient: const [
-                                    Color(0xFF16EFFF),
-                                    Color(0xFFB8EFFF),
+                            child: ValueListenableBuilder(
+                              valueListenable: Hive.box<UserStatsStructure>("user_stats").listenable(),
+                              builder: (_, userStatsBox, _) {
+
+                                late final UserStatsStructure defaultUser = userStatsBox.get("default_user")!;
+
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    StatText(
+                                      mainText: '${defaultUser.loginStreak} Days',
+                                      supportText: "Login Streak",
+                                      mainTextGradient: const [
+                                        Color(0xFF16EFFF),
+                                        Color(0xFFB8EFFF),
+                                      ],
+                                    ),
+                                    StatText(
+                                      mainText: "${defaultUser.workPeriodStreak} Cycles",
+                                      supportText: "Most In a Row",
+                                      mainTextGradient: const [
+                                        Color(0xFFFF820E),
+                                        Color(0xFFFFCC00),
+                                      ],
+                                    ),
+                                    StatText(
+                                      mainText: formatSeconds(defaultUser.totalProductiveTime),
+                                      supportText: "Spent Being Productive",
+                                      mainTextGradient: const [
+                                        Color(0xFFFF579D),
+                                        Color(0xFFD64DFF),
+                                      ],
+                                    ),
                                   ],
-                                ),
-                                StatText(
-                                  mainText: "14 Cycles",
-                                  supportText: "Most In a Row",
-                                  mainTextGradient: const [
-                                    Color(0xFFFF820E),
-                                    Color(0xFFFFCC00),
-                                  ],
-                                ),
-                                StatText(
-                                  mainText: "32.8 Days",
-                                  supportText: "Spent Being Productive",
-                                  mainTextGradient: const [
-                                    Color(0xFFFF579D),
-                                    Color(0xFFD64DFF),
-                                  ],
-                                ),
-                              ],
+                                );
+
+                              }
                             ),
                           ),
                         ],
