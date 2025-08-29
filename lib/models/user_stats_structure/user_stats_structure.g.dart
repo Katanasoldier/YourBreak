@@ -8,7 +8,7 @@ part of 'user_stats_structure.dart';
 
 class UserStatsStructureAdapter extends TypeAdapter<UserStatsStructure> {
   @override
-  final int typeId = 0;
+  final int typeId = 4;
 
   @override
   UserStatsStructure read(BinaryReader reader) {
@@ -17,9 +17,9 @@ class UserStatsStructureAdapter extends TypeAdapter<UserStatsStructure> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return UserStatsStructure(
-      loginStreak: fields[0] as double,
+      loginStreak: fields[0] as int,
       lastStreakDate: fields[1] as DateTime,
-      workPeriodStreak: fields[2] as double,
+      workPeriodStreak: fields[2] as int,
       totalProductiveTime: fields[3] as int,
     );
   }

@@ -17,7 +17,7 @@ final List<ModelInit> modelInitFiles = [
 
 /// Initializes Hive and all ModelInit files.
 /// Sets hasRunBefore to true in the end.
-void initializeHive() async {
+Future<void> initializeHive() async {
 
   await Hive.initFlutter();
 
@@ -25,6 +25,6 @@ void initializeHive() async {
     await file.init();
   }
 
-  setHasRunBefore(true);
+  setHasRunBefore(false); //TODO: Change to true before production!
 
 }
