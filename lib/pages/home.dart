@@ -57,7 +57,7 @@ class Home extends StatelessWidget {
                             iconName: 'wrench',
                             mainText: 'Manage',
                             supportText: 'Your Timers',
-                            onPressed: () => navigateTo(context, TimerManagementLandingPage())
+                            onPressed: () => navigateTo(context, TimerManagementLandingPage(), routeName: '/timer_management_landing_page')
                           ),
                         ],
                       ),

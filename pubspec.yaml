@@ -5,7 +5,7 @@ homepage: https://github.com/Katanasoldier/YourBreak
 issue_tracker: https://github.com/Katanasoldier/YourBreak/issues
 
 publish_to: 'none'
-version: 1.0.0
+version: 0.9.0
 
 environment:
   flutter: ^3.32.7
