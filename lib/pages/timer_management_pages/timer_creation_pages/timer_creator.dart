@@ -177,7 +177,7 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
                                   TimePeriodButton(
                                     periodName: currentTimerPeriods[i].periodType.name.toString(),
                                     periodTime: currentTimerPeriods[i].periodTime.toInt(),
-                                    onRemove: () => currentTimerPeriods = List.from(currentTimerPeriods)..removeAt(i)
+                                    onRemove: () => _currentTimerPeriods.value = List.from(currentTimerPeriods)..removeAt(i)
                                   )
                                 ],
                               ),
