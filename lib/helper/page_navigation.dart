@@ -8,7 +8,10 @@ import 'package:yourbreak/constants/animation_constants.dart';
 /// with the ability to drag it away 'iOS' style.
 /// Takes in a required context and newPage, with newPage
 /// being the page that is supposed to be loaded.
-void navigateTo(BuildContext context, Widget newPage) {
+/// Can take in an optional named parameter `routeName` that
+/// sets the name of the pushed page, which can be useful
+/// when wanting to use functions such as `popUntil()`.
+void navigateTo(BuildContext context, Widget newPage, {String? routeName}) {
   
   Navigator.push(
     context,
@@ -22,7 +25,9 @@ void navigateTo(BuildContext context, Widget newPage) {
 
       curve: AnimationCurves.pageTransition,
 
-      child: newPage
+      settings: RouteSettings(name: routeName ?? "unspecified"),
+
+      child: newPage,
     )
   );
 

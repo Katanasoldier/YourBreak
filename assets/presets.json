@@ -50,19 +50,5 @@
                 "periodType": "shortBreak"
             }
         ]
-    },
-    {
-        "name": "test timer",
-        "complexity": "complex",
-        "pattern": [
-            {
-                "periodTime": 1200,
-                "periodType": "work"
-            },
-            {
-                "periodTime": 4138,
-                "periodType": "work"
-            }
-        ]
     }
 ]

@@ -7,7 +7,6 @@ import 'package:yourbreak/constants/font_size_constants.dart';
 import 'package:yourbreak/helper/page_navigation.dart';
 
 import 'package:yourbreak/models/timer_structure/timer_structure.dart';
-import 'package:yourbreak/pages/timer_picker.dart';
 import 'package:yourbreak/templates/basic_divider.dart';
 
 import 'package:yourbreak/templates/page_components.dart';
@@ -65,7 +64,9 @@ class TimerCreatorState extends State<TimerCreator> with TickerProviderStateMixi
 
     if(!mounted) return;
 
-    navigateTo(context, TimerPicker(timerButtonOnPressed: (buttonState) {}));
+    Navigator.popUntil(context, (route) {
+      return route.settings.name == "/timer_management_landing_page";
+    });
 
   }
 

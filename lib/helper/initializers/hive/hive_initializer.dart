@@ -25,6 +25,6 @@ Future<void> initializeHive() async {
     await file.init();
   }
 
-  setHasRunBefore(false); //TODO: Change to true before production!
+  setHasRunBefore(true); //TODO: Change to true before production!
 
 }
