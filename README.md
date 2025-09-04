@@ -2,6 +2,14 @@
 
 <img src="doc_assets/svg/top_banner.svg">
 
+---
+
+# ⚠️ Project Status Notice ⚠️
+
+### YourBreak is currently indefinitely paused by me as I am focusing on backend development. Others are welcome to contribute if they wish, but I will not be adding new features for now.
+
+---
+
 # YourBreak (v0.9)
 
 > "Whatever you do, work at it with all your heart, as working for the Lord, not for human masters." - Colossians 3:23
